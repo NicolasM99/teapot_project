@@ -7,6 +7,18 @@ import "firebase/auth";
 import firebaseConfig from "../Firebase.js";
 import NombreFoto from "./NombreFoto";
 import "./estilos/navbar.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBriefcase,
+  faHome,
+  faInfo,
+  faInfoCircle,
+  faListAlt,
+  faSearch,
+  faSignInAlt,
+  faSignOutAlt,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
@@ -82,10 +94,10 @@ class Navbar extends Component {
                     style={{ fontSize: "1.2em" }}
                   >
                     <Link className="dropdown-item" to="/mi_perfil">
-                      Mi perfil
+                      <FontAwesomeIcon icon={faUser} /> Mi perfil
                     </Link>
                     <Link className="dropdown-item" to="/mis_proyectos">
-                      Mis proyectos
+                      <FontAwesomeIcon icon={faBriefcase} /> Mis proyectos
                     </Link>
                     <Link to="/inicio">
                       <div
@@ -93,7 +105,7 @@ class Navbar extends Component {
                         onClick={signOut}
                         style={{ cursor: "pointer" }}
                       >
-                        Cerrar sesión
+                        <FontAwesomeIcon icon={faSignOutAlt} /> Cerrar sesión
                       </div>
                     </Link>
                   </div>
@@ -111,28 +123,36 @@ class Navbar extends Component {
                     className="btn btn-success btn-lg my-2 mb-1"
                     onClick={signInWithGoogle}
                   >
-                    Iniciar sesión
+                    <FontAwesomeIcon icon={faSignInAlt} /> Iniciar sesión
                   </button>
                 )}
               </li>
               <li className="nav-item mt-2 ml-4">
                 <Link className="nav-link" to="/inicio">
-                  <h4>Inicio</h4>
+                  <h4>
+                    <FontAwesomeIcon icon={faHome} /> Inicio
+                  </h4>
                 </Link>
               </li>
               <li className="nav-item ml-4">
                 <Link className="nav-link" to="/categorias">
-                  <h4>Categorias</h4>
+                  <h4>
+                    <FontAwesomeIcon icon={faListAlt} /> Categorias
+                  </h4>
                 </Link>
               </li>
               <li className="nav-item ml-4">
                 <Link className="nav-link" to="/buscar">
-                  <h4>Buscar</h4>
+                  <h4>
+                    <FontAwesomeIcon icon={faSearch} /> Buscar
+                  </h4>
                 </Link>
               </li>
               <li className="nav-item ml-4">
                 <Link className="nav-link" to="/acerca_de">
-                  <h4>Acerca de...</h4>
+                  <h4>
+                    <FontAwesomeIcon icon={faInfoCircle} /> Acerca de...
+                  </h4>
                 </Link>
               </li>
             </ul>
