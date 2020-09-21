@@ -41,7 +41,7 @@ class Navbar extends Component {
                     marginBottom: "15px",
                   }}
                 >
-                  <Link className="navbar-brand" to="/inicio">
+                  <Link className="navbar-brand m-0" to="/inicio">
                     <div className="text-center mt-5">
                       <img
                         className="multifolioLogo col-lg-8 mb-2"

@@ -11,8 +11,8 @@ class NombreFoto extends Component {
           width="30px"
           style={{
             borderRadius: "50%",
-            marginRight: "10px",
-            marginLeft: "10px",
+            marginRight: "5px",
+            marginLeft: "5px",
           }}
         />
         <span style={{ fontSize: "1em" }}>
