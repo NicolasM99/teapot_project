@@ -42,7 +42,6 @@ class Navbar extends Component {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav flex-column mx-auto">
               <li className="nav-item">
