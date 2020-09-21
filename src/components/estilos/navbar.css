@@ -12,10 +12,7 @@
 }
 
 @media only screen and (max-width: 991px) {
-  html,
   body {
-    margin: 0;
-    height: 100%;
     overflow: hidden;
   }
   .multifolioLogo {

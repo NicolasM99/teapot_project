@@ -16,7 +16,7 @@ class Navbar extends Component {
     return (
       <div className="col-lg-2 col-md-12 p-0">
         <nav
-          className="shadow-lg navbar navbar-dark navbar-expand-lg navbar-custom py-3 px-0"
+          className="shadow-lg navbar navbar-dark navbar-expand-lg navbar-custom py-3 px-0 "
           role="navigation"
         >
           <button
