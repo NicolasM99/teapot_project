@@ -1,0 +1,14 @@
+.container-fluid {
+  background-color: #e2effa;
+}
+
+.titulo {
+  font-weight: bold;
+  font-size: 6em;
+  font-family: "Raleway", sans-serif;
+  margin-bottom: 20px;
+}
+.contenido {
+  height: 100vh;
+  overflow-y: scroll;
+}

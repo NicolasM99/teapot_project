@@ -1,0 +1,30 @@
+.navbar-custom {
+  background-color: #6d90ed;
+}
+.navbar-nav > .active {
+  background-color: aliceblue !important;
+}
+
+@media only screen and (min-width: 992px) {
+  nav {
+    height: 100vh;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  html,
+  body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+  .multifolioLogo {
+    width: 200px;
+  }
+  .brandContainer {
+    width: 100vw;
+  }
+  nav.collapse ul li {
+    display: inline !important;
+  }
+}
