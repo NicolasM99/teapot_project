@@ -1,0 +1,79 @@
+nav {
+  background-color: #6d90ed !important;
+}
+
+html {
+  scroll-behavior: smooth !important;
+}
+
+html,
+body {
+  overflow-y: hidden;
+}
+
+button {
+  font-weight: bold !important;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 1.4em;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.nav-link.active,
+.nav-link:hover,
+.nav-link:focus {
+  color: #fff !important;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: 0.3s;
+}
+
+.brandTitle {
+  text-align: center;
+  font-family: Raleway, sans-serif;
+  font-weight: bold;
+  font-size: 0.9em;
+  color: #fff;
+}
+
+@media only screen and (min-width: 992px) {
+  .my-navbar {
+    height: 100vh;
+    flex-direction: column;
+  }
+  .brandContainer {
+    margin-top: 50px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  .scrollContent {
+    margin-left: 20%;
+    width: 83.5vw;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .multifolioLogo {
+    width: 60px;
+  }
+  .scrollContent {
+    width: 97.5%;
+  }
+  .brandContainer {
+    margin-top: 5px;
+  }
+  .dropdown {
+    margin-left: 20px;
+  }
+
+  .nav-link {
+    padding-left: 20px !important;
+  }
+
+  .navbar-brand {
+    padding-right: 15px;
+    display: flex !important;
+    align-items: center;
+  }
+}

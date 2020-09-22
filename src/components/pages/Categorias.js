@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import "../estilos/contenido.css";
+import "../styles/contenido.css";
 
 class Categorias extends Component {
   render() {
     return (
-      <div className="contenido p-5" data-spy="scroll" data-offset="0">
+      <div className="contenido">
         <h1 className="titulo">CATEGORÍAS</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

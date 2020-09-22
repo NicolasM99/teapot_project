@@ -8,9 +8,9 @@
   font-family: "Raleway", sans-serif;
   margin-bottom: 20px;
 }
+
 .contenido {
-  height: 100vh;
-  overflow-y: scroll;
+  padding: 20px;
 }
 
 @media only screen and (max-width: 768px) {

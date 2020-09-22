@@ -1,13 +1,18 @@
 import React from "react";
 import Bienvenida from "./components/pages/Bienvenida.js";
 import Categorias from "./components/pages/Categorias.js";
-import Navbar from "./components/Navbar.js";
+import MyNavbar from "./components/MyNavbar.js";
+import MyNavbar2 from "./components/MyNavbar2.js";
 import "react-pro-sidebar/dist/css/styles.css";
 import { HashRouter, Redirect, Route } from "react-router-dom";
 
 function App() {
   return (
-    <HashRouter>
+    <div>
+      <MyNavbar2 />
+    </div>
+  );
+  /**<HashRouter>
       <div className="container-fluid">
         <div className="row">
           <Navbar />
@@ -20,8 +25,7 @@ function App() {
           </div>
         </div>
       </div>
-    </HashRouter>
-  );
+    </HashRouter> */
 }
 /**/
 export default App;

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import "../estilos/contenido.css";
+import "../styles/contenido.css";
 
 class Bienvenida extends Component {
   render() {
     return (
       <div className="wrapper">
-        <div className="contenido p-5" data-spy="scroll" data-offset="0">
+        <div className="contenido">
           <h1 className="titulo">BIENVENIDO</h1>
           <p>
             aaa sLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

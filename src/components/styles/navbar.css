@@ -1,0 +1,45 @@
+.navbar-custom {
+  background-color: #6d90ed;
+}
+.navbar-nav > .active {
+  background-color: aliceblue !important;
+}
+
+.brandTitle {
+  text-align: center;
+  font-family: Raleway, sans-serif;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+@media only screen and (min-width: 992px) {
+  nav {
+    height: 100vh;
+  }
+  .brandContainer {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    margin-bottom: 15px;
+  }
+  .dropdown {
+    margin: 0 auto;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .multifolioLogo {
+    width: 60px;
+  }
+
+  .navbar-brand {
+    padding-right: 15px;
+    display: flex !important;
+    align-items: center;
+  }
+  nav.collapse ul li {
+    display: inline !important;
+  }
+
+  .dropdown {
+    margin-left: 2em;
+  }
+}
