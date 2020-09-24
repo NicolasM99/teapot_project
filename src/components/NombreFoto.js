@@ -15,7 +15,7 @@ class NombreFoto extends Component {
             marginLeft: "5px",
           }}
         />
-        <span style={{ fontSize: "1em" }}>
+        <span style={{ fontSize: "1em", textTransform: "none" }}>
           {nombre.substr(0, nombre.indexOf(" "))}
         </span>
       </div>

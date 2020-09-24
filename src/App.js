@@ -1,7 +1,6 @@
 import React from "react";
 import Bienvenida from "./components/pages/Bienvenida.js";
 import Categorias from "./components/pages/Categorias.js";
-import MyNavbar from "./components/MyNavbar.js";
 import MyNavbar2 from "./components/MyNavbar2.js";
 import "react-pro-sidebar/dist/css/styles.css";
 import { HashRouter, Redirect, Route } from "react-router-dom";
