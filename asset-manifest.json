@@ -1,26 +1,26 @@
 {
   "files": {
     "main.css": "/portafolio_multimedia/static/css/main.3c3cf441.chunk.css",
-    "main.js": "/portafolio_multimedia/static/js/main.60d26802.chunk.js",
-    "main.js.map": "/portafolio_multimedia/static/js/main.60d26802.chunk.js.map",
+    "main.js": "/portafolio_multimedia/static/js/main.1407ed7b.chunk.js",
+    "main.js.map": "/portafolio_multimedia/static/js/main.1407ed7b.chunk.js.map",
     "runtime-main.js": "/portafolio_multimedia/static/js/runtime-main.5deda5af.js",
     "runtime-main.js.map": "/portafolio_multimedia/static/js/runtime-main.5deda5af.js.map",
     "static/css/2.edeedb01.chunk.css": "/portafolio_multimedia/static/css/2.edeedb01.chunk.css",
-    "static/js/2.4a1f7848.chunk.js": "/portafolio_multimedia/static/js/2.4a1f7848.chunk.js",
-    "static/js/2.4a1f7848.chunk.js.map": "/portafolio_multimedia/static/js/2.4a1f7848.chunk.js.map",
+    "static/js/2.11356d06.chunk.js": "/portafolio_multimedia/static/js/2.11356d06.chunk.js",
+    "static/js/2.11356d06.chunk.js.map": "/portafolio_multimedia/static/js/2.11356d06.chunk.js.map",
     "index.html": "/portafolio_multimedia/index.html",
-    "precache-manifest.85942067d65bea672c8896d8e8ab7d4a.js": "/portafolio_multimedia/precache-manifest.85942067d65bea672c8896d8e8ab7d4a.js",
+    "precache-manifest.1dc56f177fc307ff86684ef72ec31d5c.js": "/portafolio_multimedia/precache-manifest.1dc56f177fc307ff86684ef72ec31d5c.js",
     "service-worker.js": "/portafolio_multimedia/service-worker.js",
     "static/css/2.edeedb01.chunk.css.map": "/portafolio_multimedia/static/css/2.edeedb01.chunk.css.map",
     "static/css/main.3c3cf441.chunk.css.map": "/portafolio_multimedia/static/css/main.3c3cf441.chunk.css.map",
-    "static/js/2.4a1f7848.chunk.js.LICENSE.txt": "/portafolio_multimedia/static/js/2.4a1f7848.chunk.js.LICENSE.txt",
+    "static/js/2.11356d06.chunk.js.LICENSE.txt": "/portafolio_multimedia/static/js/2.11356d06.chunk.js.LICENSE.txt",
     "static/media/logo_multifolio2Recurso 3.png": "/portafolio_multimedia/static/media/logo_multifolio2Recurso 3.bc798775.png"
   },
   "entrypoints": [
     "static/js/runtime-main.5deda5af.js",
     "static/css/2.edeedb01.chunk.css",
-    "static/js/2.4a1f7848.chunk.js",
+    "static/js/2.11356d06.chunk.js",
     "static/css/main.3c3cf441.chunk.css",
-    "static/js/main.60d26802.chunk.js"
+    "static/js/main.1407ed7b.chunk.js"
   ]
 }
