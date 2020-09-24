@@ -14,6 +14,7 @@ const PrimerRegistro = (props) => {
   const [profilePhoto, setProfilePhoto] = useState(props.photo);
   const [showSemesters, setShowSemesters] = useState(false);
   const [show, setShow] = useState(props.mostrar);
+  const [continuar, setContinuar] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const onImageChange = (event) => {
@@ -30,23 +31,24 @@ const PrimerRegistro = (props) => {
       centered
       {...props}
     >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Crear perfil
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div className="container">
-          <h5 className="text-center mb-3">
-            ¡Gracias por hacer parte de nuestra comunidad! <br />
-            <br />
-            Te invitamos a llenar el siguiente formulario para crear tu perfil.
-            <br />
-            <br /> También puedes dejar los valores por defecto y editarlos en
-            otro momento.
-          </h5>
+      <form method="get">
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Crear perfil
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="container">
+            <h5 className="text-center mb-3">
+              ¡Gracias por hacer parte de nuestra comunidad! <br />
+              <br />
+              Te invitamos a llenar el siguiente formulario para crear tu
+              perfil.
+              <br />
+              <br /> También puedes dejar los valores por defecto y editarlos en
+              otro momento.
+            </h5>
 
-          <form>
             <div className="form-group">
               <div className="row align-items-center  my-3">
                 <label
@@ -330,28 +332,40 @@ const PrimerRegistro = (props) => {
                 </div>
               </div>
             </div>
-          </form>
-        </div>
-      </Modal.Body>
-      <Modal.Footer>
-        <div className="custom-control custom-checkbox">
-          <input
-            type="checkbox"
-            id="termsCheckbox"
-            className="custom-control-input"
-          />
-          <label className="custom-control-label" htmlFor="termsCheckbox">
-            Acepto los <a href="#"> términos y condiciones.</a>
-          </label>
-        </div>
-        <Button
-          style={{ textTransform: "none" }}
-          variant="success"
-          onClick={handleClose}
-        >
-          Continuar
-        </Button>
-      </Modal.Footer>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <div className="custom-control custom-checkbox">
+            <input
+              type="checkbox"
+              id="termsCheckbox"
+              className="custom-control-input"
+              required
+              onChange={() => setContinuar(!continuar)}
+            />
+            <label className="custom-control-label" htmlFor="termsCheckbox">
+              Acepto los <a href="#"> términos y condiciones.</a>
+            </label>
+          </div>
+          {continuar ? (
+            <Button
+              style={{ textTransform: "none" }}
+              variant="success"
+              onClick={handleClose}
+            >
+              Continuar
+            </Button>
+          ) : (
+            <Button
+              style={{ textTransform: "none" }}
+              variant="success"
+              disabled
+            >
+              Continuar
+            </Button>
+          )}
+        </Modal.Footer>
+      </form>
     </Modal>
   );
 };
