@@ -8,9 +8,27 @@ import { HashRouter, Redirect, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div>
-      <MyNavbar2 />
-    </div>
+    <HashRouter>
+      <div className="container-fluid">
+        <div className="row">
+          <MyNavbar2 />
+          <div className="col-lg-10 col-md-12 p-0">
+            <div
+              className="scrollContent"
+              data-spy="scroll"
+              data-target="#myNavbar"
+              data-offset="0"
+            >
+              <Route exact path="/">
+                <Redirect to="/inicio" />
+              </Route>
+              <Route exact path="/inicio" component={Bienvenida} />
+              <Route exact path="/categorias" component={Categorias} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </HashRouter>
   );
   /**<HashRouter>
       <div className="container-fluid">
