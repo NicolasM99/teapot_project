@@ -1,10 +1,14 @@
 import React, { Component, useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import logo from "../img/logo_multifolio2Recurso 3.png";
+/*
 import withFirebaseAuth from "react-with-firebase-auth";
 import * as firebase from "firebase/app";
+import "firebase/firebase-app.js";
+import "firebase/firestore";
 import "firebase/auth";
-import firebaseConfig from "../Firebase.js";
+import firebaseConfig from "./functions/Firebase.js";
+*/
 import NombreFoto from "./NombreFoto";
 import "./styles/navbar2.css";
 import "./styles/scroll.css";
@@ -20,9 +24,10 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import PrimerRegistro from "./pages/PrimerRegistro.js";
-
+/*
 const firebaseApp = firebase.initializeApp(firebaseConfig);
-
+const db = firebase.firestore();
+*/
 class MyNavbar2 extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +37,8 @@ class MyNavbar2 extends Component {
     const addModalClose = () => {
       this.setState({ addModalShow: false });
     };
-    const { user, signOut, signInWithGoogle } = this.props;
+    const { user, signOut, signInWithGoogle, db } = this.props;
+
     return (
       <>
         <Navbar
@@ -127,13 +133,7 @@ class MyNavbar2 extends Component {
           </Navbar.Collapse>
         </Navbar>
         {user ? (
-          <PrimerRegistro
-            nombre={user.displayName}
-            email={user.email}
-            photo={user.photoURL}
-            tel=""
-            mostrar={true}
-          />
+          <PrimerRegistro mydb={db} user={user} tel="" mostrar={true} />
         ) : (
           <></>
         )}
@@ -141,12 +141,7 @@ class MyNavbar2 extends Component {
     );
   }
 }
-/*<PrimerRegistro
-            nombre={user.displayName}
-            email={user.email}
-            photo={user.photoURL}
-            tel=""
-          />*/
+/*
 const firebaseAppAuth = firebaseApp.auth();
 const providers = {
   googleProvider: new firebase.auth.GoogleAuthProvider(),
@@ -156,3 +151,6 @@ export default withFirebaseAuth({
   providers,
   firebaseAppAuth,
 })(MyNavbar2);
+*/
+
+export default MyNavbar2;

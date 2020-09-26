@@ -1,37 +1,86 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import {
   Modal,
   Button,
-  Row,
-  Col,
-  Form,
-  ButtonGroup,
   ToggleButton,
   ToggleButtonGroup,
 } from "react-bootstrap";
+import "firebase/auth";
 
 const PrimerRegistro = (props) => {
-  const [profilePhoto, setProfilePhoto] = useState(props.photo);
+  const db = props.mydb;
+  const user = props.user;
   const [showSemesters, setShowSemesters] = useState(false);
-  const [show, setShow] = useState(props.mostrar);
+  const [mostrar, setShow] = useState(props.mostrar);
   const [continuar, setContinuar] = useState(false);
+  const [addEmail, setAddEmail] = useState(user.email);
+  const [addPhoto, setAddPhoto] = useState(user.photoURL);
+  const [addPhone, setAddPhone] = useState("");
+  const [addExp, setAddExp] = useState("");
+  const [addEstudiante, setAddEstudiante] = useState(false);
+  const [addEgresado, setAddEgresado] = useState(false);
+  const [addEstOrEg, setAddEstOrEg] = useState("");
+  const [addNickname, setAddNickname] = useState(user.displayName);
+  const [addSemester, setAddSemester] = useState("0");
+  function handlePhoneChange(e) {
+    setAddPhone(e.target.value);
+  }
+  function handleNickNameChange(e) {
+    setAddNickname(e.target.value);
+  }
+  function handleEmailChange(e) {
+    setAddEmail(e.target.value);
+  }
+  function handleExpChange(e) {
+    setAddExp(e.target.value);
+  }
+  function EgresadoFunc(e) {
+    setShowSemesters(false);
+    //setAddEstOrEg("egresado");
+    setAddEstudiante(false);
+    setAddEgresado(true);
+    setAddSemester("0");
+  }
+  function EstudianteFunc(e) {
+    setAddEgresado(false);
+    setAddEstudiante(true);
+    setShowSemesters(true);
+    setAddEstOrEg("estudiante");
+  }
+  function handleSemesterChange(e) {
+    setAddSemester(e.target.value);
+  }
   const handleClose = () => setShow(false);
+
   const handleShow = () => setShow(true);
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
-      setProfilePhoto(URL.createObjectURL(event.target.files[0]));
+      setAddPhoto(URL.createObjectURL(event.target.files[0]));
     }
+  };
+  const createProfile = () => {
+    handleClose();
+    return db.collection("users").doc(user.uid).set({
+      nickName: addNickname,
+      email: addEmail,
+      profilePic: addPhoto,
+      tel: addPhone,
+      estudiante: addEstudiante,
+      egresado: addEgresado,
+      semestre: addSemester,
+      exp: addExp,
+    });
   };
   return (
     <Modal
-      show={show}
+      show={mostrar}
       onHide={handleClose}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
       {...props}
     >
-      <form method="get">
+      <form id="perfilForm" method="get">
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             Crear perfil
@@ -55,7 +104,7 @@ const PrimerRegistro = (props) => {
                   className="col-sm-12 col-md-12 col-lg-2"
                   htmlFor="nameInput"
                 >
-                  Nombre:
+                  Nombre de usuario:
                 </label>
                 <input
                   autoComplete="on"
@@ -63,7 +112,8 @@ const PrimerRegistro = (props) => {
                   className="form-control col-sm-11 col-md-11 col-lg-10 mx-auto"
                   id="nameInput"
                   placeholder="Nombre"
-                  defaultValue={props.nombre}
+                  defaultValue={addNickname}
+                  onChange={handleNickNameChange}
                 />
               </div>
               <div className="row align-items-center my-3">
@@ -79,8 +129,17 @@ const PrimerRegistro = (props) => {
                   className="form-control col-sm-11 col-md-11 col-lg-10 mx-auto"
                   id="emailInput"
                   placeholder="Email"
-                  defaultValue={props.email}
+                  defaultValue={user.email}
+                  onChange={handleEmailChange}
                 />
+                <small
+                  id="emailHelp"
+                  className="form-text text-muted col-sm-11 col-md-11 col-lg-10 mx-auto"
+                >
+                  Esta dirección de correo es la que se mostrará en tu sección
+                  de Contacto, pero no se usará para iniciar sesión.{" "}
+                  <b>Tu cuenta seguira asociada con la de Google.</b>
+                </small>
               </div>
               <div className="row align-items-center my-3">
                 <label
@@ -90,7 +149,7 @@ const PrimerRegistro = (props) => {
                   Foto de perfil:
                 </label>
                 <img
-                  src={profilePhoto}
+                  src={addPhoto}
                   style={{
                     width: "200px",
                     height: "200px",
@@ -126,6 +185,7 @@ const PrimerRegistro = (props) => {
                   id="telInput"
                   placeholder="Ej: +57 300 123 45 67"
                   defaultValue={props.tel}
+                  onChange={handlePhoneChange}
                 />
               </div>
               <p>En este momento soy:</p>
@@ -133,14 +193,14 @@ const PrimerRegistro = (props) => {
                 <ToggleButton
                   style={{ textTransform: "none" }}
                   value={1}
-                  onChange={() => setShowSemesters(true)}
+                  onChange={EstudianteFunc}
                 >
                   Estudiante
                 </ToggleButton>
                 <ToggleButton
                   style={{ textTransform: "none" }}
                   value={2}
-                  onChange={() => setShowSemesters(false)}
+                  onChange={EgresadoFunc}
                 >
                   Egresado
                 </ToggleButton>
@@ -148,18 +208,21 @@ const PrimerRegistro = (props) => {
               <div>
                 {showSemesters ? (
                   <>
-                    <select className="custom-select px-3">
+                    <select
+                      className="custom-select px-3"
+                      onChange={handleSemesterChange}
+                    >
                       <option defaultValue="">Semestre actual</option>
-                      <option value="1">Primero</option>
-                      <option value="2">Segundo</option>
-                      <option value="3">Tercero</option>
-                      <option value="4">Cuarto</option>
-                      <option value="5">Quinto</option>
-                      <option value="6">Sexto</option>
-                      <option value="7">Séptimo</option>
-                      <option value="8">Octavo</option>
-                      <option value="9">Noveno</option>
-                      <option value="10">Décimo</option>
+                      <option value="Primer">Primero</option>
+                      <option value="Segundo">Segundo</option>
+                      <option value="Tercer">Tercero</option>
+                      <option value="Cuarto">Cuarto</option>
+                      <option value="Quinto">Quinto</option>
+                      <option value="Sexto">Sexto</option>
+                      <option value="Séptimo">Séptimo</option>
+                      <option value="Octavo">Octavo</option>
+                      <option value="Noveno">Noveno</option>
+                      <option value="Décimo">Décimo</option>
                     </select>
                   </>
                 ) : (
@@ -178,6 +241,7 @@ const PrimerRegistro = (props) => {
                   id="expInput"
                   placeholder="Escribe aquí tu experiencia laboral"
                   rows="3"
+                  onChange={handleExpChange}
                 />
               </div>
               <div className="row align-items-center my-3">
@@ -351,7 +415,8 @@ const PrimerRegistro = (props) => {
             <Button
               style={{ textTransform: "none" }}
               variant="success"
-              onClick={handleClose}
+              onClick={createProfile}
+              href="#mi_perfil"
             >
               Continuar
             </Button>
