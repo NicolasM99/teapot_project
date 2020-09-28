@@ -108,7 +108,7 @@ const MyNavbar2 = (props) => {
                   <Dropdown.Item href="#mis_proyectos">
                     <FontAwesomeIcon icon={faBriefcase} /> Mis proyectos
                   </Dropdown.Item>
-                  <Dropdown.Item href="#">
+                  <Dropdown.Item href="#inicio">
                     <div
                       onClick={() => {
                         signOut();

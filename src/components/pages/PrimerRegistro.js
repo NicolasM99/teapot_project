@@ -409,6 +409,7 @@ const PrimerRegistro = (props) => {
                         type="file"
                         className="btn btn-primary"
                         accept="image/*"
+                        style={{ textTransform: "none" }}
                       />
                     </div>
                   </div>
