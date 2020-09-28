@@ -9,7 +9,7 @@ import { UserContext } from "./functions/UserProvider.js";
 import { signOut, signInWithGoogle, firestore } from "./functions/Firebase.js";
 
 import { Navbar, Nav, Dropdown } from "react-bootstrap";
-import logo from "../img/logo_multifolio2Recurso 3.png";
+import logo from "../img/logo_multifolio_sin_fondo.png";
 import NombreFoto from "./NombreFoto";
 import "./styles/navbar2.css";
 import "./styles/scroll.css";
@@ -67,12 +67,14 @@ const MyNavbar2 = (props) => {
       >
         <div className="brandContainer text-center p-0">
           <Navbar.Brand className="mx-0" href="#inicio">
-            <div className="text-center">
+            <div className="logo_container text-center">
               <img
-                className="multifolioLogo col-lg-8 mb-2"
+                className="multifolioLogo mb-2"
                 src={logo}
                 alt="logo_multifolio"
-                style={{ display: "inline-block" }}
+                style={{
+                  display: "inline-block",
+                }}
               />
             </div>
             <h1 className="brandTitle">MULTIFOLIO</h1>
@@ -89,7 +91,6 @@ const MyNavbar2 = (props) => {
             {!loading && user ? (
               <Dropdown className="dropdown align-self-center mb-2">
                 <Dropdown.Toggle
-                  variant="outline-secondary"
                   className="d-flex dropdown-toggle align-items-center p-2 text-center"
                   style={{ lineHeight: "45px" }}
                 >
@@ -130,9 +131,11 @@ const MyNavbar2 = (props) => {
             ) : (
               <button
                 type="button"
-                className="btn btn-success btn-lg my-2 mx-auto"
+                className="btn btn-primary btn-lg my-2 mx-auto"
                 onClick={signInWithGoogle}
-                style={{ textTransform: "none" }}
+                style={{
+                  textTransform: "none",
+                }}
               >
                 <FontAwesomeIcon icon={faSignInAlt} /> Iniciar sesión
               </button>

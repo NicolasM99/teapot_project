@@ -39,8 +39,10 @@ const Perfil = (props) => {
   if (loading) {
     return (
       <>
-        <h1 className="text-center">Cargando, por favor espera...</h1>
-        <div className="loader" />
+        <div className="contenido">
+          <h1 className="text-center">Cargando, por favor espera...</h1>
+          <div className="loader" />
+        </div>
       </>
     );
   } else {
@@ -52,7 +54,7 @@ const Perfil = (props) => {
               <>
                 <h1 className="titulo">PERFIL</h1>
                 {userData.show_nickname ? (
-                  <p>Nombre de usuario: {userData.nickName} </p>
+                  <h2>Nombre de usuario: {userData.nickName} </h2>
                 ) : null}
                 {userData.show_email ? <p>Email: {userData.email} </p> : null}
                 {userData.show_photo ? (

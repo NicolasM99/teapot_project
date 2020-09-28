@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
+import Resizer from "react-image-file-resizer";
 import { UserContext } from "../functions/UserProvider.js";
 import { firestore, storage } from "../functions/Firebase.js";
 import "../styles/text-input-style.css";
@@ -43,13 +44,31 @@ const PrimerRegistro = (props) => {
     }
   }, [receivedData]);
 
-  const onImageChange = (e) => {
+  const resizeFile = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        300,
+        300,
+        "JPEG",
+        100,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        "blob"
+      );
+    });
+  const onImageChange = async (e) => {
     if (e.target.files && e.target.files[0]) {
       if (e.target.files[0].size > 262144000) {
         alert("La imagen pesa más de 250MB. Por favor, escoge otra.");
       } else {
-        setImage(e.target.files[0]);
-        setPreview(URL.createObjectURL(e.target.files[0]));
+        const file = e.target.files[0];
+        const resizedImage = await resizeFile(file);
+        setImage(resizedImage);
+        console.log(resizedImage);
+        setPreview(URL.createObjectURL(resizedImage));
       }
     }
   };

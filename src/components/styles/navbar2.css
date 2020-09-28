@@ -1,5 +1,5 @@
 nav {
-  background-color: #6d90ed !important;
+  background-color: #5671bb !important;
 }
 
 html {
@@ -22,14 +22,20 @@ button {
   font-size: 1.4em;
   font-weight: bold;
   border-radius: 10px;
+  transition: 0.3s;
 }
 
-.nav-link.active,
 .nav-link:hover,
 .nav-link:focus {
   color: #fff !important;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(0, 0, 0, 0.2);
   transition: 0.3s;
+  transform: translateX(5px);
+}
+
+.nav-link.active {
+  color: #fff !important;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .brandTitle {
@@ -53,11 +59,38 @@ button {
     margin-left: 20%;
     width: 83.5vw;
   }
+  .logo_container {
+    width: 150px;
+    height: 150px;
+    padding: 30px;
+    border-radius: 50%;
+    /*background-color: #fff;*/
+    background-image: linear-gradient(to bottom right, #447ac0, #07b897);
+    /*background-color: rgba(0, 0, 0, 0.3);*/
+    margin-bottom: 10px;
+  }
+  .multifolioLogo {
+    width: 90px;
+    filter: brightness(100);
+  }
 }
 
 @media only screen and (max-width: 991px) {
+  .logo_container {
+    width: 40px;
+    height: 40px;
+    padding: 4px;
+    border-radius: 50%;
+    /*background-color: #fff;*/
+    background-image: linear-gradient(to bottom right, #447ac0, #07b897);
+    /*background-color: rgba(0, 0, 0, 0.3);*/
+    margin: 0 10px 10px;
+  }
+
   .multifolioLogo {
-    width: 60px;
+    filter: brightness(100);
+    width: 24px;
+    height: 24px;
   }
   .scrollContent {
     width: 100%;
