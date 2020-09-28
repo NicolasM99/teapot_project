@@ -13,6 +13,7 @@ body {
 
 button {
   font-weight: bold !important;
+  outline: none !important;
 }
 
 .nav-link {

@@ -80,7 +80,7 @@ const MyNavbar2 = (props) => {
         </div>
         <Navbar.Toggle
           aria-controls="basic-navbar-nav"
-          className="mr-3"
+          className="navbar-dark mr-3"
           style={{ borderColor: "#fff" }}
         />
 
@@ -108,7 +108,7 @@ const MyNavbar2 = (props) => {
                   <Dropdown.Item href="#mis_proyectos">
                     <FontAwesomeIcon icon={faBriefcase} /> Mis proyectos
                   </Dropdown.Item>
-                  <Dropdown.Item href="#inicio">
+                  <Dropdown.Item href="#">
                     <div
                       onClick={() => {
                         signOut();
