@@ -1,27 +1,219 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
+import { UserContext } from "../functions/UserProvider.js";
+import { firestore, storage } from "../functions/Firebase.js";
+import { useHistory } from "react-router-dom";
+import MyNavbar2 from "../MyNavbar2";
 import {
   Modal,
   Button,
   ToggleButton,
   ToggleButtonGroup,
 } from "react-bootstrap";
-import "firebase/auth";
 
 const PrimerRegistro = (props) => {
-  const db = props.mydb;
-  const user = props.user;
+  const history = useHistory();
+  const { user } = useContext(UserContext);
+  const [receivedData, setReceivedData] = useState(false);
+  const db = firestore;
+  const [data, setData] = useState("");
+  const [send, setSend] = useState(false);
+  const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState(null); //AGREGAR EL PREVIEW DE LA IMAGEN QUE SE CARGA
+  const [progress, setProgress] = useState(null);
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [imageURL, setImageURL] = useState("");
+  const isMountedRef = useRef(null);
+
+  useEffect(() => {
+    if (receivedData) {
+      if (user && data) {
+        setAddEmail(data.email);
+        setAddNickname(data.nickName);
+        setShowModal(true);
+        setAddPhoto(data.photo);
+      } else if (user && !data) {
+        setAddPhoto(user.photoURL);
+        setAddEmail(user.email);
+        setAddNickname(user.displayName);
+        setShowModal(true);
+      }
+    }
+  }, [receivedData]);
+
+  const onImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      if (e.target.files[0].size > 262144000) {
+        alert("La imagen pesa más de 250MB. Por favor, escoge otra.");
+      } else {
+        setImage(e.target.files[0]);
+        setPreview(URL.createObjectURL(e.target.files[0]));
+      }
+    }
+  };
+
+  const onCertificateChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      if (e.target.files[0].size > 262144000) {
+        alert("El documento 250MB. Por favor, escoge otro.");
+      } else {
+        setCertificate(e.target.files[0]);
+      }
+    }
+  };
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    if (user) {
+      db.collection("users")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          if (doc && isMountedRef.current) {
+            setData(doc.data());
+            console.log("ENTRO ACA");
+            setReceivedData(true);
+          }
+        });
+      //console.log(user.displayName);
+    } else {
+      if (data) {
+        //setData(null);
+      }
+    }
+
+    return () => (isMountedRef.current = false);
+  }, [user, db]);
+  const handleUpload = () => {
+    setSending(true);
+    isMountedRef.current = true;
+    if (image) {
+      const uploadTask = storage.ref(`images/${user.uid}_photo`).put(image);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          /*
+        if (isMountedRef.current) {
+          setProgress(
+            Math.round((100 * snapshot.bytesTransferred) / snapshot.totalBytes)
+          );
+          setSending(true);
+        }
+        */
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          storage
+            .ref("images")
+            .child(`${user.uid}_photo`)
+            .getDownloadURL()
+            .then((url) => {
+              if (isMountedRef.current) {
+                console.log("imagen: ", url);
+                setAddPhoto(url);
+                setSent(true);
+                handleClose();
+                setSending(false);
+              } else {
+                console.log("NO ENTRÓ");
+              }
+            });
+        }
+      );
+    } else {
+      setAddPhoto(user.photoURL);
+      setSent(true);
+      handleClose();
+      setSending(false);
+    }
+    return () => (isMountedRef.current = false);
+  };
+
+  const createProfile = () => {
+    isMountedRef.current = true;
+    if (!image) {
+      setAddPhoto(user.photoURL);
+    }
+    const newUserData = {
+      nickName: addNickname,
+      email: addEmail,
+      phone: addPhone,
+      photo: addPhoto,
+      bio: addBio,
+      student: addStudent,
+      graduated: addGraduated,
+      semester: addSemester,
+      exp: addExp,
+      certificate: addCertificate,
+      show_nickname: showNickname,
+      show_email: showEmail,
+      show_photo: showPhoto,
+      show_phone: showPhone,
+      show_bio: showBio,
+      show_st_or_grad: showStudentOrGraduated,
+      show_semester: showSemester,
+      show_exp: showExp,
+      show_certificates: showCertificates,
+    };
+    db.collection("users")
+      .doc(user.uid)
+      .set(newUserData)
+      .then(() => {
+        //if (isMountedRef.current) {
+        setData(newUserData);
+        console.log("new user data: ", newUserData);
+        //}
+      })
+      .then(() => {
+        history.push("/mi_perfil");
+        window.location.reload();
+      });
+    return () => (isMountedRef.current = false);
+  };
+
+  useEffect(() => {
+    if (sent) {
+      createProfile();
+    }
+  }, [sent]);
+
+  const [certificate, setCertificate] = useState(null);
   const [showSemesters, setShowSemesters] = useState(false);
-  const [mostrar, setShow] = useState(props.mostrar);
-  const [continuar, setContinuar] = useState(false);
-  const [addEmail, setAddEmail] = useState(user.email);
-  const [addPhoto, setAddPhoto] = useState(user.photoURL);
+  const [showModal, setShowModal] = useState(true);
+  //const [createProfile, setCreateProfile] = useState(false);
+  const [addEmail, setAddEmail] = useState("");
+  const [addPhoto, setAddPhoto] = useState("");
   const [addPhone, setAddPhone] = useState("");
+  const [addBio, setAddBio] = useState("");
   const [addExp, setAddExp] = useState("");
-  const [addEstudiante, setAddEstudiante] = useState(false);
-  const [addEgresado, setAddEgresado] = useState(false);
-  const [addEstOrEg, setAddEstOrEg] = useState("");
-  const [addNickname, setAddNickname] = useState(user.displayName);
+  const [addStudent, setAddStudent] = useState(false);
+  const [addGraduated, setAddGraduated] = useState(false);
+  const [addNickname, setAddNickname] = useState("");
+  const [addCertificate, setAddCertificate] = useState("");
   const [addSemester, setAddSemester] = useState("0");
+
+  const [showNickname, setShowNickname] = useState(true);
+  const [showEmail, setShowEmail] = useState(true);
+  const [showPhoto, setShowPhoto] = useState(true);
+  const [showPhone, setShowPhone] = useState(true);
+  const [showStudentOrGraduated, setShowStudentOrGraduated] = useState(true);
+  const [showBio, setShowBio] = useState(true);
+  const [showSemester, setShowSemester] = useState(true);
+  const [showExp, setShowExp] = useState(true);
+  const [showCertificates, setShowCertificates] = useState(true);
+
+  const [enableContinue, setEnableContinue] = useState(false);
+  /*
+  useEffect(() => {
+    setAddEmail(user.email);
+    setAddPhoto(user.photoURL);
+    setAddNickname(user.displayName);
+    setShowModal(true);
+  }, [user]);
+  */
+
   function handlePhoneChange(e) {
     setAddPhone(e.target.value);
   }
@@ -31,408 +223,681 @@ const PrimerRegistro = (props) => {
   function handleEmailChange(e) {
     setAddEmail(e.target.value);
   }
+  function handleBioChange(e) {
+    setAddBio(e.target.value);
+  }
   function handleExpChange(e) {
     setAddExp(e.target.value);
   }
-  function EgresadoFunc(e) {
+  function GraduatedFunc(e) {
     setShowSemesters(false);
     //setAddEstOrEg("egresado");
-    setAddEstudiante(false);
-    setAddEgresado(true);
+    setAddStudent(false);
+    setAddGraduated(true);
     setAddSemester("0");
   }
-  function EstudianteFunc(e) {
-    setAddEgresado(false);
-    setAddEstudiante(true);
+  function StudentFunc(e) {
+    setAddGraduated(false);
+    setAddStudent(true);
     setShowSemesters(true);
-    setAddEstOrEg("estudiante");
   }
   function handleSemesterChange(e) {
     setAddSemester(e.target.value);
   }
-  const handleClose = () => setShow(false);
 
-  const handleShow = () => setShow(true);
-  const onImageChange = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      setAddPhoto(URL.createObjectURL(event.target.files[0]));
+  function handleShowNickname(e) {
+    setShowNickname(!showNickname);
+  }
+  function handleShowEmail(e) {
+    setShowEmail(!showEmail);
+  }
+  function handleShowPhoto(e) {
+    setShowPhoto(!showPhoto);
+  }
+  function handleShowPhone(e) {
+    setShowPhone(!showPhone);
+  }
+  function handleShowBio(e) {
+    setShowBio(!showBio);
+  }
+  function handleShowStOrGrad(e) {
+    setShowStudentOrGraduated(!showStudentOrGraduated);
+  }
+  function handleShowSemester(e) {
+    setShowSemester(!showSemester);
+  }
+  function handleShowExp(e) {
+    setShowExp(!showExp);
+  }
+  function handleShowCertificates(e) {
+    setShowCertificates(!showCertificates);
+  }
+  const handleClose = () => setShowModal(false);
+
+  /*
+
+
+  const handleUpload = () => {
+    if (image) {
+      const uploadTask = storage.ref(`images/${user.uid}_photo`).put(image);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {},
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          storage
+            .ref("images")
+            .child(`${user.uid}_photo`)
+            .getDownloadURL()
+            .then((url) => {
+              console.log("imagen: ", url);
+              setAddPhoto(url);
+            });
+        }
+      );
     }
   };
-  const createProfile = () => {
+  const [image, setImage] = useState(null);
+  const [certificate, setCertificate] = useState(null);
+  const [showSemesters, setShowSemesters] = useState(false);
+  const [showModal, setShowModal] = useState(true);
+  const [createProfile, setCreateProfile] = useState(false);
+  const [addEmail, setAddEmail] = useState("");
+  const [addPhoto, setAddPhoto] = useState("");
+  const [addPhone, setAddPhone] = useState("");
+  const [addBio, setAddBio] = useState("");
+  const [addExp, setAddExp] = useState("");
+  const [addStudent, setAddStudent] = useState(false);
+  const [addGraduated, setAddGraduated] = useState(false);
+  const [addNickname, setAddNickname] = useState("");
+  const [addCertificate, setAddCertificate] = useState("");
+  const [addSemester, setAddSemester] = useState("0");
+
+  const [showNickname, setShowNickname] = useState(true);
+  const [showEmail, setShowEmail] = useState(true);
+  const [showPhoto, setShowPhoto] = useState(true);
+  const [showPhone, setShowPhone] = useState(true);
+  const [showStudentOrGraduated, setShowStudentOrGraduated] = useState(true);
+  const [showBio, setShowBio] = useState(true);
+  const [showSemester, setShowSemester] = useState(true);
+  const [showExp, setShowExp] = useState(true);
+  const [showCertificates, setShowCertificates] = useState(true);
+
+  useEffect(() => {
+    setAddEmail(user.email);
+    setAddPhoto(user.photoURL);
+    setAddNickname(user.displayName);
+    setShowModal(true);
+  }, [user.email, user.photoURL, user.displayName]);
+
+  function handlePhoneChange(e) {
+    setAddPhone(e.target.value);
+  }
+  function handleNickNameChange(e) {
+    setAddNickname(e.target.value);
+  }
+  function handleEmailChange(e) {
+    setAddEmail(e.target.value);
+  }
+  function handleBioChange(e) {
+    setAddBio(e.target.value);
+  }
+  function handleExpChange(e) {
+    setAddExp(e.target.value);
+  }
+  function GraduatedFunc(e) {
+    setShowSemesters(false);
+    //setAddEstOrEg("egresado");
+    setAddStudent(false);
+    setAddGraduated(true);
+    setAddSemester("0");
+  }
+  function StudentFunc(e) {
+    setAddGraduated(false);
+    setAddStudent(true);
+    setShowSemesters(true);
+  }
+  function handleSemesterChange(e) {
+    setAddSemester(e.target.value);
+  }
+
+  function handleShowNickname(e) {
+    setShowNickname(!showNickname);
+  }
+  function handleShowEmail(e) {
+    setShowEmail(!showEmail);
+  }
+  function handleShowPhoto(e) {
+    setShowPhoto(!showPhoto);
+  }
+  function handleShowPhone(e) {
+    setShowPhone(!showPhone);
+  }
+  function handleShowBio(e) {
+    setShowBio(!showBio);
+  }
+  function handleShowStOrGrad(e) {
+    setShowStudentOrGraduated(!showStudentOrGraduated);
+  }
+  function handleShowSemester(e) {
+    setShowSemester(!showSemester);
+  }
+  function handleShowExp(e) {
+    setShowExp(!showExp);
+  }
+  function handleShowCertificates(e) {
+    setShowCertificates(!showCertificates);
+  }
+  const handleClose = () => setShowModal(false);
+
+  const handleShow = () => setShowModal(true);
+  const onImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      if (e.target.files[0].size > 262144000) {
+        alert("La imagen pesa más de 250MB. Por favor, escoge otra.");
+        setAddPhoto(user.photoURL);
+      } else {
+        setAddPhoto(URL.createObjectURL(e.target.files[0]));
+        setImage(e.target.files[0]);
+      }
+    }
+  };
+  const onCertificateChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      if (e.target.files[0].size > 262144000) {
+        alert("El documento 250MB. Por favor, escoge otro.");
+      } else {
+        setCertificate(e.target.files[0]);
+      }
+    }
+  };
+
+  const createUserProfile = () => {
+    //handleUpload();
     handleClose();
-    return db.collection("users").doc(user.uid).set({
+    console.log(addPhoto);
+    console.log(addCertificate);
+    db.collection("users").doc(user.uid).set({
       nickName: addNickname,
       email: addEmail,
-      profilePic: addPhoto,
-      tel: addPhone,
-      estudiante: addEstudiante,
-      egresado: addEgresado,
-      semestre: addSemester,
+      phone: addPhone,
+      photo: addPhoto,
+      bio: addBio,
+      student: addStudent,
+      graduated: addGraduated,
+      semester: addSemester,
       exp: addExp,
+      certificate: addCertificate,
+      show_nickname: showNickname,
+      show_email: showEmail,
+      show_photo: showPhoto,
+      show_phone: showPhone,
+      show_bio: showBio,
+      show_st_or_grad: showStudentOrGraduated,
+      show_semester: showSemester,
+      show_exp: showExp,
+      show_certificates: showCertificates,
     });
   };
-  return (
-    <Modal
-      show={mostrar}
-      onHide={handleClose}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      {...props}
-    >
-      <form id="perfilForm" method="get">
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Crear perfil
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="container">
-            <h5 className="text-center mb-3">
-              ¡Gracias por hacer parte de nuestra comunidad! <br />
-              <br />
-              Te invitamos a llenar el siguiente formulario para crear tu
-              perfil.
-              <br />
-              <br /> También puedes dejar los valores por defecto y editarlos en
-              otro momento.
-            </h5>
+  */
+  if (sending) {
+    console.log("SENDING...");
+    return (
+      <>
+        <Modal
+          size="lg"
+          show={true}
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <Modal.Body>
+            <h1>SENDING...</h1>
+          </Modal.Body>
+        </Modal>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Modal
+          show={showModal}
+          onHide={handleClose}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <form id="perfilForm" method="get">
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                Crear perfil
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="container">
+                <h5 className="text-center mb-3">
+                  ¡Gracias por hacer parte de nuestra comunidad! <br />
+                  <br />
+                  Te invitamos a llenar el siguiente formulario para crear tu
+                  perfil.
+                  <br />
+                  <br /> También puedes dejar los valores por defecto y
+                  editarlos en otro momento.
+                </h5>
 
-            <div className="form-group">
-              <div className="row align-items-center  my-3">
-                <label
-                  className="col-sm-12 col-md-12 col-lg-2"
-                  htmlFor="nameInput"
-                >
-                  Nombre de usuario:
-                </label>
-                <input
-                  autoComplete="on"
-                  type="text"
-                  className="form-control col-sm-11 col-md-11 col-lg-10 mx-auto"
-                  id="nameInput"
-                  placeholder="Nombre"
-                  defaultValue={addNickname}
-                  onChange={handleNickNameChange}
-                />
-              </div>
-              <div className="row align-items-center my-3">
-                <label
-                  className="col-sm-12 col-md-12 col-lg-2"
-                  htmlFor="emailInput"
-                >
-                  Email:
-                </label>
-                <input
-                  autoComplete="on"
-                  type="text"
-                  className="form-control col-sm-11 col-md-11 col-lg-10 mx-auto"
-                  id="emailInput"
-                  placeholder="Email"
-                  defaultValue={user.email}
-                  onChange={handleEmailChange}
-                />
-                <small
-                  id="emailHelp"
-                  className="form-text text-muted col-sm-11 col-md-11 col-lg-10 mx-auto"
-                >
-                  Esta dirección de correo es la que se mostrará en tu sección
-                  de Contacto, pero no se usará para iniciar sesión.{" "}
-                  <b>Tu cuenta seguira asociada con la de Google.</b>
-                </small>
-              </div>
-              <div className="row align-items-center my-3">
-                <label
-                  className="col-sm-12 col-md-12 col-lg-2"
-                  htmlFor="photoInput"
-                >
-                  Foto de perfil:
-                </label>
-                <img
-                  src={addPhoto}
-                  style={{
-                    width: "200px",
-                    height: "200px",
-                    objectFit: "cover",
-                    borderRadius: "50%",
-                    margin: "auto",
-                    marginBottom: "10px",
-                  }}
-                  alt="profile_photo"
-                  id="photoInput"
-                />
-                <div className="mx-auto col-md-12 col-lg-6">
-                  <input
-                    onChange={onImageChange}
-                    id="group_image"
-                    type="file"
-                    className="filetype form-control-file"
-                    aria-describedby="fileHelp"
-                  />
-                </div>
-              </div>
-              <div className="row align-items-center my-3">
-                <label
-                  className="col-sm-12 col-md-12 col-lg-2"
-                  htmlFor="telInput"
-                >
-                  Número de teléfono:
-                </label>
-                <input
-                  autoComplete="on"
-                  type="tel"
-                  className="form-control col-sm-11 col-md-11 col-lg-10 mx-auto"
-                  id="telInput"
-                  placeholder="Ej: +57 300 123 45 67"
-                  defaultValue={props.tel}
-                  onChange={handlePhoneChange}
-                />
-              </div>
-              <p>En este momento soy:</p>
-              <ToggleButtonGroup type="radio" className="mb-2" name="estOeg">
-                <ToggleButton
-                  style={{ textTransform: "none" }}
-                  value={1}
-                  onChange={EstudianteFunc}
-                >
-                  Estudiante
-                </ToggleButton>
-                <ToggleButton
-                  style={{ textTransform: "none" }}
-                  value={2}
-                  onChange={EgresadoFunc}
-                >
-                  Egresado
-                </ToggleButton>
-              </ToggleButtonGroup>
-              <div>
-                {showSemesters ? (
-                  <>
-                    <select
-                      className="custom-select px-3"
-                      onChange={handleSemesterChange}
+                <div className="form-group">
+                  <div className="row align-items-center  my-3">
+                    <label
+                      className="col-sm-12 col-md-12 col-lg-2"
+                      htmlFor="nickNameInput"
                     >
-                      <option defaultValue="">Semestre actual</option>
-                      <option value="Primer">Primero</option>
-                      <option value="Segundo">Segundo</option>
-                      <option value="Tercer">Tercero</option>
-                      <option value="Cuarto">Cuarto</option>
-                      <option value="Quinto">Quinto</option>
-                      <option value="Sexto">Sexto</option>
-                      <option value="Séptimo">Séptimo</option>
-                      <option value="Octavo">Octavo</option>
-                      <option value="Noveno">Noveno</option>
-                      <option value="Décimo">Décimo</option>
-                    </select>
-                  </>
-                ) : (
-                  <></>
-                )}
+                      Nombre de usuario:
+                    </label>
+                    <input
+                      autoComplete="on"
+                      type="text"
+                      className="form-control col-sm-11 col-md-11 col-lg-10 mx-auto"
+                      id="nickNameInput"
+                      placeholder="Nombre"
+                      defaultValue={addNickname}
+                      onChange={handleNickNameChange}
+                    />
+                  </div>
+                  <div className="row align-items-center my-3">
+                    <label
+                      className="col-sm-12 col-md-12 col-lg-2"
+                      htmlFor="emailInput"
+                    >
+                      Email:
+                    </label>
+                    <input
+                      autoComplete="on"
+                      type="text"
+                      className="form-control col-sm-11 col-md-11 col-lg-10 mx-auto"
+                      id="emailInput"
+                      placeholder="Email"
+                      defaultValue={addEmail}
+                      onChange={handleEmailChange}
+                    />
+                    <small
+                      id="emailHelp"
+                      className="form-text text-muted col-sm-11 col-md-11 col-lg-10 mx-auto"
+                    >
+                      Esta dirección de correo es la que se mostrará en tu
+                      sección de Contacto, pero no se usará para iniciar sesión.{" "}
+                      <b>Tu cuenta seguira asociada con la de Google.</b>
+                    </small>
+                  </div>
+                  <div className="row align-items-center my-3">
+                    <label
+                      className="col-sm-12 col-md-12 col-lg-2"
+                      htmlFor="photoInput"
+                    >
+                      Foto de perfil:
+                    </label>
+                    <img
+                      src={addPhoto}
+                      style={{
+                        width: "150px",
+                        height: "150px",
+                        objectFit: "cover",
+                        borderRadius: "50%",
+                        margin: "auto",
+                        marginBottom: "10px",
+                      }}
+                      alt="profile_photo"
+                      id="photoInput"
+                    />
+                    <br />
+                    {preview ? (
+                      <img
+                        src={preview}
+                        style={{
+                          width: "150px",
+                          height: "150px",
+                          objectFit: "cover",
+                          borderRadius: "50%",
+                          margin: "auto",
+                          marginBottom: "10px",
+                        }}
+                        alt="preview_photo"
+                        id="previewInput"
+                      />
+                    ) : null}
+
+                    <div className="mx-auto col-md-12 col-lg-6">
+                      <input
+                        onChange={onImageChange}
+                        id="group_image"
+                        type="file"
+                        className="btn btn-primary"
+                        accept="image/*"
+                      />
+                    </div>
+                  </div>
+                  <div className="row align-items-center my-3">
+                    <label
+                      className="col-sm-12 col-md-12 col-lg-2"
+                      htmlFor="phoneInput"
+                    >
+                      Número de teléfono:
+                    </label>
+                    <input
+                      autoComplete="on"
+                      type="tel"
+                      className="form-control col-sm-11 col-md-11 col-lg-10 mx-auto"
+                      id="phoneInput"
+                      placeholder="Ej: +57 300 123 45 67"
+                      defaultValue={""}
+                      onChange={handlePhoneChange}
+                    />
+                  </div>
+                  <p>En este momento soy:</p>
+                  <ToggleButtonGroup
+                    type="radio"
+                    className="mb-2"
+                    name="stOrGrad"
+                  >
+                    <ToggleButton
+                      style={{ textTransform: "none" }}
+                      value={1}
+                      onChange={StudentFunc}
+                    >
+                      Estudiante
+                    </ToggleButton>
+                    <ToggleButton
+                      style={{ textTransform: "none" }}
+                      value={2}
+                      onChange={GraduatedFunc}
+                    >
+                      Egresado
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                  <div>
+                    {showSemesters ? (
+                      <>
+                        <select
+                          className="custom-select px-3"
+                          onChange={handleSemesterChange}
+                        >
+                          <option defaultValue="">Semestre actual</option>
+                          <option value="Primer">Primero</option>
+                          <option value="Segundo">Segundo</option>
+                          <option value="Tercer">Tercero</option>
+                          <option value="Cuarto">Cuarto</option>
+                          <option value="Quinto">Quinto</option>
+                          <option value="Sexto">Sexto</option>
+                          <option value="Séptimo">Séptimo</option>
+                          <option value="Octavo">Octavo</option>
+                          <option value="Noveno">Noveno</option>
+                          <option value="Décimo">Décimo</option>
+                        </select>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                  <div className="row align-items-center my-3">
+                    <label
+                      className="col-sm-12 col-md-12 col-lg-2"
+                      htmlFor="bioInput"
+                    >
+                      Biografía
+                    </label>
+                    <textarea
+                      className="form-control col-sm-11 col-md-11 col-lg-10 mx-auto"
+                      id="bioInput"
+                      placeholder="Escribe aquí algo que quieras contar sobre ti..."
+                      rows="3"
+                      onChange={handleBioChange}
+                    />
+                  </div>
+                  <div className="row align-items-center my-3">
+                    <label
+                      className="col-sm-12 col-md-12 col-lg-2"
+                      htmlFor="expInput"
+                    >
+                      Experiencia laboral
+                    </label>
+                    <textarea
+                      className="form-control col-sm-11 col-md-11 col-lg-10 mx-auto"
+                      id="expInput"
+                      placeholder="Escribe aquí tu experiencia laboral..."
+                      rows="3"
+                      onChange={handleExpChange}
+                    />
+                  </div>
+                  <div className="row align-items-center my-3">
+                    <label
+                      className="col-sm-12 col-md-12 col-lg-2"
+                      htmlFor="certInput"
+                    >
+                      Certificados de estudios/cursos (PDF):
+                    </label>
+                    <div className="mx-auto col-md-12 col-lg-6">
+                      <input
+                        id="certInput"
+                        type="file"
+                        className="filetype form-control-file"
+                        aria-describedby="fileHelp"
+                        accept="application/pdf"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="text-center">
+                  <Button
+                    style={{ textTransform: "none" }}
+                    variant="danger"
+                    data-toggle="collapse"
+                    data-target="#public_info"
+                    aria-expanded="false"
+                    aria-controls="public_info"
+                    className="mb-3"
+                  >
+                    Configurar datos personales públicos
+                  </Button>
+                </div>
+                <div className="collapse" id="public_info">
+                  <p>
+                    Por defecto, esta información será la que se mostrará
+                    públicamente en la sección <b>Contacto</b> de tu perfil. Si
+                    quieres personalizar cuáles datos <b>mostrar</b>, por favor
+                    escógelos a continuación:
+                  </p>
+
+                  <div className="form-group">
+                    <div className="custom-control custom-checkbox ">
+                      <input
+                        type="checkbox"
+                        id="nickNameCheckbox"
+                        className="custom-control-input"
+                        onChange={handleShowNickname}
+                        defaultChecked
+                      />
+                      <label
+                        className="custom-control-label"
+                        htmlFor="nickNameCheckbox"
+                      >
+                        Nombre
+                      </label>
+                    </div>
+
+                    <div className="custom-control custom-checkbox">
+                      <input
+                        type="checkbox"
+                        id="emailCheckbox"
+                        className="custom-control-input"
+                        onChange={handleShowEmail}
+                        defaultChecked
+                      />
+                      <label
+                        className="custom-control-label"
+                        htmlFor="emailCheckbox"
+                      >
+                        Email
+                      </label>
+                    </div>
+                    <div className="custom-control custom-checkbox">
+                      <input
+                        type="checkbox"
+                        id="photoCheckbox"
+                        className="custom-control-input"
+                        onChange={handleShowPhoto}
+                        defaultChecked
+                      />
+                      <label
+                        className="custom-control-label"
+                        htmlFor="photoCheckbox"
+                      >
+                        Foto de perfil
+                      </label>
+                    </div>
+                    <div className="custom-control custom-checkbox">
+                      <input
+                        type="checkbox"
+                        id="phoneCheckbox"
+                        className="custom-control-input"
+                        onChange={handleShowPhone}
+                        defaultChecked
+                      />
+                      <label
+                        className="custom-control-label"
+                        htmlFor="phoneCheckbox"
+                      >
+                        Teléfono
+                      </label>
+                    </div>
+
+                    <div className="custom-control custom-checkbox">
+                      <input
+                        type="checkbox"
+                        id="stOrGradCheckbox"
+                        className="custom-control-input"
+                        onChange={handleShowStOrGrad}
+                        defaultChecked
+                      />
+                      <label
+                        className="custom-control-label"
+                        htmlFor="stOrGradCheckbox"
+                      >
+                        Estudiante o egresado
+                      </label>
+                    </div>
+
+                    <div className="custom-control custom-checkbox">
+                      <input
+                        type="checkbox"
+                        id="semesterCheckbox"
+                        className="custom-control-input"
+                        onChange={handleShowSemester}
+                        defaultChecked
+                      />
+                      <label
+                        className="custom-control-label"
+                        htmlFor="semesterCheckbox"
+                      >
+                        Semestre (si es estudiante actualmente)
+                      </label>
+                    </div>
+
+                    <div className="custom-control custom-checkbox">
+                      <input
+                        type="checkbox"
+                        id="bioCheckbox"
+                        className="custom-control-input"
+                        onChange={handleShowBio}
+                        defaultChecked
+                      />
+                      <label
+                        className="custom-control-label"
+                        htmlFor="bioCheckbox"
+                      >
+                        Biografía
+                      </label>
+                    </div>
+
+                    <div className="custom-control custom-checkbox">
+                      <input
+                        type="checkbox"
+                        id="expCheckbox"
+                        className="custom-control-input"
+                        onChange={handleShowExp}
+                        defaultChecked
+                      />
+                      <label
+                        className="custom-control-label"
+                        htmlFor="expCheckbox"
+                      >
+                        Experiencia laboral
+                      </label>
+                    </div>
+
+                    <div className="custom-control custom-checkbox">
+                      <input
+                        type="checkbox"
+                        id="certCheckbox"
+                        className="custom-control-input"
+                        onChange={handleShowCertificates}
+                        defaultChecked
+                      />
+                      <label
+                        className="custom-control-label"
+                        htmlFor="certCheckbox"
+                      >
+                        Certificados de estudios/cursos
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="row align-items-center my-3">
-                <label
-                  className="col-sm-12 col-md-12 col-lg-2"
-                  htmlFor="expInput"
-                >
-                  Experiencia laboral
-                </label>
-                <textarea
-                  className="form-control col-sm-11 col-md-11 col-lg-10 mx-auto"
-                  id="expInput"
-                  placeholder="Escribe aquí tu experiencia laboral"
-                  rows="3"
-                  onChange={handleExpChange}
+            </Modal.Body>
+            <Modal.Footer>
+              <div className="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  id="termsCheckbox"
+                  className="custom-control-input"
+                  required
+                  onChange={() => setEnableContinue(!enableContinue)}
                 />
-              </div>
-              <div className="row align-items-center my-3">
-                <label
-                  className="col-sm-12 col-md-12 col-lg-2"
-                  htmlFor="expInput"
-                >
-                  Certificados de estudios/cursos:
+                <label className="custom-control-label" htmlFor="termsCheckbox">
+                  Acepto los <a href="#"> términos y condiciones.</a>
                 </label>
-                <div className="mx-auto col-md-12 col-lg-6">
-                  <input
-                    id="cert_input"
-                    type="file"
-                    className="filetype form-control-file"
-                    aria-describedby="fileHelp"
-                  />
-                </div>
               </div>
-            </div>
-            <div className="text-center">
-              <Button
-                style={{ textTransform: "none" }}
-                variant="danger"
-                data-toggle="collapse"
-                data-target="#public_info"
-                aria-expanded="false"
-                aria-controls="collapseExample"
-                className="mb-3"
-              >
-                Configuración de datos personales públicos
-              </Button>
-            </div>
-            <div className="collapse" id="public_info">
-              <p>
-                Por defecto, esta información será la que se mostrará
-                públicamente en la sección <b>Contacto</b> de tu perfil. Si
-                quieres personalizar cuáles datos <b>mostrar</b>, por favor
-                escógelos a continuación:
-              </p>
-
-              <div className="form-group">
-                <div className="custom-control custom-checkbox ">
-                  <input
-                    type="checkbox"
-                    id="nameCheckbox"
-                    className="custom-control-input"
-                    defaultChecked
-                  />
-                  <label
-                    className="custom-control-label"
-                    htmlFor="nameCheckbox"
+              {enableContinue ? (
+                <Button
+                  style={{ textTransform: "none" }}
+                  variant="success"
+                  onClick={() => handleUpload()}
+                  href="#inicio"
+                >
+                  Crear perfil
+                </Button>
+              ) : (
+                <>
+                  <Button
+                    style={{ textTransform: "none" }}
+                    variant="success"
+                    disabled
                   >
-                    Nombre
-                  </label>
-                </div>
-
-                <div className="custom-control custom-checkbox">
-                  <input
-                    type="checkbox"
-                    id="emailCheckbox"
-                    className="custom-control-input"
-                    defaultChecked
-                  />
-                  <label
-                    className="custom-control-label"
-                    htmlFor="emailCheckbox"
+                    Crear perfil
+                  </Button>
+                  <small
+                    style={{ textAlign: "right", margin: 0 }}
+                    className="form-text text-muted col-sm-11 col-md-11 col-lg-10 p-0"
                   >
-                    Email
-                  </label>
-                </div>
-                <div className="custom-control custom-checkbox">
-                  <input
-                    type="checkbox"
-                    id="fotoCheckbox"
-                    className="custom-control-input"
-                    defaultChecked
-                  />
-                  <label
-                    className="custom-control-label"
-                    htmlFor="fotoCheckbox"
-                  >
-                    Foto de perfil
-                  </label>
-                </div>
-                <div className="custom-control custom-checkbox">
-                  <input
-                    type="checkbox"
-                    id="telCheckbox"
-                    className="custom-control-input"
-                    defaultChecked
-                  />
-                  <label className="custom-control-label" htmlFor="telCheckbox">
-                    Teléfono
-                  </label>
-                </div>
-
-                <div className="custom-control custom-checkbox">
-                  <input
-                    type="checkbox"
-                    id="estOegCheckbox"
-                    className="custom-control-input"
-                    defaultChecked
-                  />
-                  <label
-                    className="custom-control-label"
-                    htmlFor="estOegCheckbox"
-                  >
-                    Estudiante o egresado
-                  </label>
-                </div>
-
-                <div className="custom-control custom-checkbox">
-                  <input
-                    type="checkbox"
-                    id="semestreCheckbox"
-                    className="custom-control-input"
-                    defaultChecked
-                  />
-                  <label
-                    className="custom-control-label"
-                    htmlFor="semestreCheckbox"
-                  >
-                    Semestre (si es estudiante actualmente)
-                  </label>
-                </div>
-
-                <div className="custom-control custom-checkbox">
-                  <input
-                    type="checkbox"
-                    id="expCheckbox"
-                    className="custom-control-input"
-                    defaultChecked
-                  />
-                  <label className="custom-control-label" htmlFor="expCheckbox">
-                    Experiencia laboral
-                  </label>
-                </div>
-
-                <div className="custom-control custom-checkbox">
-                  <input
-                    type="checkbox"
-                    id="certCheckbox"
-                    className="custom-control-input"
-                    defaultChecked
-                  />
-                  <label
-                    className="custom-control-label"
-                    htmlFor="certCheckbox"
-                  >
-                    Certificados de estudios/cursos
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <div className="custom-control custom-checkbox">
-            <input
-              type="checkbox"
-              id="termsCheckbox"
-              className="custom-control-input"
-              required
-              onChange={() => setContinuar(!continuar)}
-            />
-            <label className="custom-control-label" htmlFor="termsCheckbox">
-              Acepto los <a href="#"> términos y condiciones.</a>
-            </label>
-          </div>
-          {continuar ? (
-            <Button
-              style={{ textTransform: "none" }}
-              variant="success"
-              onClick={createProfile}
-              href="#mi_perfil"
-            >
-              Continuar
-            </Button>
-          ) : (
-            <Button
-              style={{ textTransform: "none" }}
-              variant="success"
-              disabled
-            >
-              Continuar
-            </Button>
-          )}
-        </Modal.Footer>
-      </form>
-    </Modal>
-  );
+                    Debes aceptar los términos y condiciones para continuar.
+                  </small>
+                </>
+              )}
+            </Modal.Footer>
+          </form>
+        </Modal>
+      </>
+    );
+  }
 };
 
 export default PrimerRegistro;
