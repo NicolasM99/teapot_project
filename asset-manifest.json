@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/portafolio_multimedia/static/css/main.538dd00b.chunk.css",
-    "main.js": "/portafolio_multimedia/static/js/main.a1f22e84.chunk.js",
-    "main.js.map": "/portafolio_multimedia/static/js/main.a1f22e84.chunk.js.map",
+    "main.css": "/portafolio_multimedia/static/css/main.78bf207b.chunk.css",
+    "main.js": "/portafolio_multimedia/static/js/main.1a42702b.chunk.js",
+    "main.js.map": "/portafolio_multimedia/static/js/main.1a42702b.chunk.js.map",
     "runtime-main.js": "/portafolio_multimedia/static/js/runtime-main.5deda5af.js",
     "runtime-main.js.map": "/portafolio_multimedia/static/js/runtime-main.5deda5af.js.map",
     "static/css/2.edeedb01.chunk.css": "/portafolio_multimedia/static/css/2.edeedb01.chunk.css",
-    "static/js/2.6c864c1e.chunk.js": "/portafolio_multimedia/static/js/2.6c864c1e.chunk.js",
-    "static/js/2.6c864c1e.chunk.js.map": "/portafolio_multimedia/static/js/2.6c864c1e.chunk.js.map",
+    "static/js/2.77d51bba.chunk.js": "/portafolio_multimedia/static/js/2.77d51bba.chunk.js",
+    "static/js/2.77d51bba.chunk.js.map": "/portafolio_multimedia/static/js/2.77d51bba.chunk.js.map",
     "index.html": "/portafolio_multimedia/index.html",
-    "precache-manifest.e3238ed798ede8ea6da704d75306eab2.js": "/portafolio_multimedia/precache-manifest.e3238ed798ede8ea6da704d75306eab2.js",
+    "precache-manifest.74692ff182171d3a3178b4ee3f72ca37.js": "/portafolio_multimedia/precache-manifest.74692ff182171d3a3178b4ee3f72ca37.js",
     "service-worker.js": "/portafolio_multimedia/service-worker.js",
     "static/css/2.edeedb01.chunk.css.map": "/portafolio_multimedia/static/css/2.edeedb01.chunk.css.map",
-    "static/css/main.538dd00b.chunk.css.map": "/portafolio_multimedia/static/css/main.538dd00b.chunk.css.map",
-    "static/js/2.6c864c1e.chunk.js.LICENSE.txt": "/portafolio_multimedia/static/js/2.6c864c1e.chunk.js.LICENSE.txt",
+    "static/css/main.78bf207b.chunk.css.map": "/portafolio_multimedia/static/css/main.78bf207b.chunk.css.map",
+    "static/js/2.77d51bba.chunk.js.LICENSE.txt": "/portafolio_multimedia/static/js/2.77d51bba.chunk.js.LICENSE.txt",
     "static/media/logo_multifolio2Recurso 3.png": "/portafolio_multimedia/static/media/logo_multifolio2Recurso 3.bc798775.png"
   },
   "entrypoints": [
     "static/js/runtime-main.5deda5af.js",
     "static/css/2.edeedb01.chunk.css",
-    "static/js/2.6c864c1e.chunk.js",
-    "static/css/main.538dd00b.chunk.css",
-    "static/js/main.a1f22e84.chunk.js"
+    "static/js/2.77d51bba.chunk.js",
+    "static/css/main.78bf207b.chunk.css",
+    "static/js/main.1a42702b.chunk.js"
   ]
 }
