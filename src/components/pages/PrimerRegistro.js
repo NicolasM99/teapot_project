@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { UserContext } from "../functions/UserProvider.js";
 import { firestore, storage } from "../functions/Firebase.js";
+import "../styles/text-input-style.css";
+import "../styles/loader.css";
 import { useHistory } from "react-router-dom";
 import MyNavbar2 from "../MyNavbar2";
 import {
@@ -92,14 +94,10 @@ const PrimerRegistro = (props) => {
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          /*
-        if (isMountedRef.current) {
           setProgress(
             Math.round((100 * snapshot.bytesTransferred) / snapshot.totalBytes)
           );
           setSending(true);
-        }
-        */
         },
         (error) => {
           console.log(error);
@@ -205,14 +203,6 @@ const PrimerRegistro = (props) => {
   const [showCertificates, setShowCertificates] = useState(true);
 
   const [enableContinue, setEnableContinue] = useState(false);
-  /*
-  useEffect(() => {
-    setAddEmail(user.email);
-    setAddPhoto(user.photoURL);
-    setAddNickname(user.displayName);
-    setShowModal(true);
-  }, [user]);
-  */
 
   function handlePhoneChange(e) {
     setAddPhone(e.target.value);
@@ -274,186 +264,24 @@ const PrimerRegistro = (props) => {
   }
   const handleClose = () => setShowModal(false);
 
-  /*
-
-
-  const handleUpload = () => {
-    if (image) {
-      const uploadTask = storage.ref(`images/${user.uid}_photo`).put(image);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {},
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          storage
-            .ref("images")
-            .child(`${user.uid}_photo`)
-            .getDownloadURL()
-            .then((url) => {
-              console.log("imagen: ", url);
-              setAddPhoto(url);
-            });
-        }
-      );
-    }
-  };
-  const [image, setImage] = useState(null);
-  const [certificate, setCertificate] = useState(null);
-  const [showSemesters, setShowSemesters] = useState(false);
-  const [showModal, setShowModal] = useState(true);
-  const [createProfile, setCreateProfile] = useState(false);
-  const [addEmail, setAddEmail] = useState("");
-  const [addPhoto, setAddPhoto] = useState("");
-  const [addPhone, setAddPhone] = useState("");
-  const [addBio, setAddBio] = useState("");
-  const [addExp, setAddExp] = useState("");
-  const [addStudent, setAddStudent] = useState(false);
-  const [addGraduated, setAddGraduated] = useState(false);
-  const [addNickname, setAddNickname] = useState("");
-  const [addCertificate, setAddCertificate] = useState("");
-  const [addSemester, setAddSemester] = useState("0");
-
-  const [showNickname, setShowNickname] = useState(true);
-  const [showEmail, setShowEmail] = useState(true);
-  const [showPhoto, setShowPhoto] = useState(true);
-  const [showPhone, setShowPhone] = useState(true);
-  const [showStudentOrGraduated, setShowStudentOrGraduated] = useState(true);
-  const [showBio, setShowBio] = useState(true);
-  const [showSemester, setShowSemester] = useState(true);
-  const [showExp, setShowExp] = useState(true);
-  const [showCertificates, setShowCertificates] = useState(true);
-
-  useEffect(() => {
-    setAddEmail(user.email);
-    setAddPhoto(user.photoURL);
-    setAddNickname(user.displayName);
-    setShowModal(true);
-  }, [user.email, user.photoURL, user.displayName]);
-
-  function handlePhoneChange(e) {
-    setAddPhone(e.target.value);
-  }
-  function handleNickNameChange(e) {
-    setAddNickname(e.target.value);
-  }
-  function handleEmailChange(e) {
-    setAddEmail(e.target.value);
-  }
-  function handleBioChange(e) {
-    setAddBio(e.target.value);
-  }
-  function handleExpChange(e) {
-    setAddExp(e.target.value);
-  }
-  function GraduatedFunc(e) {
-    setShowSemesters(false);
-    //setAddEstOrEg("egresado");
-    setAddStudent(false);
-    setAddGraduated(true);
-    setAddSemester("0");
-  }
-  function StudentFunc(e) {
-    setAddGraduated(false);
-    setAddStudent(true);
-    setShowSemesters(true);
-  }
-  function handleSemesterChange(e) {
-    setAddSemester(e.target.value);
-  }
-
-  function handleShowNickname(e) {
-    setShowNickname(!showNickname);
-  }
-  function handleShowEmail(e) {
-    setShowEmail(!showEmail);
-  }
-  function handleShowPhoto(e) {
-    setShowPhoto(!showPhoto);
-  }
-  function handleShowPhone(e) {
-    setShowPhone(!showPhone);
-  }
-  function handleShowBio(e) {
-    setShowBio(!showBio);
-  }
-  function handleShowStOrGrad(e) {
-    setShowStudentOrGraduated(!showStudentOrGraduated);
-  }
-  function handleShowSemester(e) {
-    setShowSemester(!showSemester);
-  }
-  function handleShowExp(e) {
-    setShowExp(!showExp);
-  }
-  function handleShowCertificates(e) {
-    setShowCertificates(!showCertificates);
-  }
-  const handleClose = () => setShowModal(false);
-
-  const handleShow = () => setShowModal(true);
-  const onImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      if (e.target.files[0].size > 262144000) {
-        alert("La imagen pesa más de 250MB. Por favor, escoge otra.");
-        setAddPhoto(user.photoURL);
-      } else {
-        setAddPhoto(URL.createObjectURL(e.target.files[0]));
-        setImage(e.target.files[0]);
-      }
-    }
-  };
-  const onCertificateChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      if (e.target.files[0].size > 262144000) {
-        alert("El documento 250MB. Por favor, escoge otro.");
-      } else {
-        setCertificate(e.target.files[0]);
-      }
-    }
-  };
-
-  const createUserProfile = () => {
-    //handleUpload();
-    handleClose();
-    console.log(addPhoto);
-    console.log(addCertificate);
-    db.collection("users").doc(user.uid).set({
-      nickName: addNickname,
-      email: addEmail,
-      phone: addPhone,
-      photo: addPhoto,
-      bio: addBio,
-      student: addStudent,
-      graduated: addGraduated,
-      semester: addSemester,
-      exp: addExp,
-      certificate: addCertificate,
-      show_nickname: showNickname,
-      show_email: showEmail,
-      show_photo: showPhoto,
-      show_phone: showPhone,
-      show_bio: showBio,
-      show_st_or_grad: showStudentOrGraduated,
-      show_semester: showSemester,
-      show_exp: showExp,
-      show_certificates: showCertificates,
-    });
-  };
-  */
   if (sending) {
     console.log("SENDING...");
     return (
       <>
         <Modal
-          size="lg"
+          size="md"
           show={true}
           aria-labelledby="contained-modal-title-vcenter"
           centered
         >
           <Modal.Body>
-            <h1>SENDING...</h1>
+            <h1 style={{ textAlign: "center" }}>
+              Creando perfil, por favor espera...
+            </h1>
+            <div className="loader"></div>
+            <div className="mx-auto" style={{ width: "130px" }}>
+              <progress value={progress} max="100" />
+            </div>
           </Modal.Body>
         </Modal>
       </>
@@ -551,19 +379,27 @@ const PrimerRegistro = (props) => {
                     />
                     <br />
                     {preview ? (
-                      <img
-                        src={preview}
-                        style={{
-                          width: "150px",
-                          height: "150px",
-                          objectFit: "cover",
-                          borderRadius: "50%",
-                          margin: "auto",
-                          marginBottom: "10px",
-                        }}
-                        alt="preview_photo"
-                        id="previewInput"
-                      />
+                      <>
+                        <label
+                          className="col-sm-12 col-md-12 col-lg-2"
+                          htmlFor="photoPreview"
+                        >
+                          Nueva foto:
+                        </label>
+                        <img
+                          src={preview}
+                          style={{
+                            width: "150px",
+                            height: "150px",
+                            objectFit: "cover",
+                            borderRadius: "50%",
+                            margin: "auto",
+                            marginBottom: "10px",
+                          }}
+                          alt="preview_photo"
+                          id="photoPreview"
+                        />
+                      </>
                     ) : null}
 
                     <div className="mx-auto col-md-12 col-lg-6">
@@ -646,7 +482,7 @@ const PrimerRegistro = (props) => {
                       Biografía
                     </label>
                     <textarea
-                      className="form-control col-sm-11 col-md-11 col-lg-10 mx-auto"
+                      className="col-sm-11 col-md-11 col-lg-10 mx-auto"
                       id="bioInput"
                       placeholder="Escribe aquí algo que quieras contar sobre ti..."
                       rows="3"
@@ -661,7 +497,7 @@ const PrimerRegistro = (props) => {
                       Experiencia laboral
                     </label>
                     <textarea
-                      className="form-control col-sm-11 col-md-11 col-lg-10 mx-auto"
+                      className="col-sm-11 col-md-11 col-lg-10 mx-auto"
                       id="expInput"
                       placeholder="Escribe aquí tu experiencia laboral..."
                       rows="3"
@@ -873,7 +709,7 @@ const PrimerRegistro = (props) => {
                   onClick={() => handleUpload()}
                   href="#inicio"
                 >
-                  Crear perfil
+                  <b>Crear perfil</b>
                 </Button>
               ) : (
                 <>

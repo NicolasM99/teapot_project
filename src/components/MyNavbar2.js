@@ -8,7 +8,7 @@ import React, {
 import { UserContext } from "./functions/UserProvider.js";
 import { signOut, signInWithGoogle, firestore } from "./functions/Firebase.js";
 
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, Dropdown } from "react-bootstrap";
 import logo from "../img/logo_multifolio2Recurso 3.png";
 import NombreFoto from "./NombreFoto";
 import "./styles/navbar2.css";
@@ -24,6 +24,7 @@ import {
   faSignOutAlt,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const MyNavbar2 = (props) => {
   const { user } = useContext(UserContext);
@@ -35,6 +36,7 @@ const MyNavbar2 = (props) => {
   useEffect(() => {
     isMountedRef.current = true;
     if (user) {
+      setLoading(true);
       db.collection("users")
         .doc(user.uid)
         .get()
@@ -49,8 +51,9 @@ const MyNavbar2 = (props) => {
       if (data) {
         //setData(null);
       }
+      setLoading(false);
     }
-    setLoading(false);
+    //setLoading(false);
     return () => (isMountedRef.current = false);
   }, [user, db]);
 
@@ -84,31 +87,29 @@ const MyNavbar2 = (props) => {
         <Navbar.Collapse id="my-navbar col-6">
           <Nav className="flex-column ">
             {!loading && user ? (
-              <div className="dropdown align-self-center mb-2">
-                <button
-                  className="btn btn-outline-secondary d-flex dropdown-toggle align-items-center p-2 text-center"
-                  data-toggle="dropdown"
-                  type="button"
+              <Dropdown className="dropdown align-self-center mb-2">
+                <Dropdown.Toggle
+                  variant="outline-secondary"
+                  className="d-flex dropdown-toggle align-items-center p-2 text-center"
                   style={{ lineHeight: "45px" }}
                 >
                   <NombreFoto
                     name={data ? data.nickName : user.displayName}
                     photo={data ? data.photo : user.photoURL}
                   />
-                </button>
-                <div
-                  className="dropdown-menu  position-absolute"
+                </Dropdown.Toggle>
+                <Dropdown.Menu
+                  className="position-absolute"
                   style={{ fontSize: "1.2em" }}
                 >
-                  <a className="dropdown-item" href="#mi_perfil">
+                  <Dropdown.Item href="#mi_perfil">
                     <FontAwesomeIcon icon={faUser} /> Mi perfil
-                  </a>
-                  <a className="dropdown-item" href="#mis_proyectos">
+                  </Dropdown.Item>
+                  <Dropdown.Item href="#mis_proyectos">
                     <FontAwesomeIcon icon={faBriefcase} /> Mis proyectos
-                  </a>
-                  <a href="#inicio">
+                  </Dropdown.Item>
+                  <Dropdown.Item href="#inicio">
                     <div
-                      className="dropdown-item"
                       onClick={() => {
                         signOut();
                       }}
@@ -116,11 +117,13 @@ const MyNavbar2 = (props) => {
                     >
                       <FontAwesomeIcon icon={faSignOutAlt} /> Cerrar sesión
                     </div>
-                  </a>
-                </div>
-              </div>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             ) : loading ? (
-              <div>LOADING...</div>
+              <div style={{ color: "#ffffff", textAlign: "center" }}>
+                Cargando...
+              </div>
             ) : null}
             {user ? (
               <div></div>

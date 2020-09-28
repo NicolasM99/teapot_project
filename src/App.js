@@ -3,9 +3,17 @@ import Bienvenida from "./components/pages/Bienvenida.js";
 import Categorias from "./components/pages/Categorias.js";
 import MyNavbar2 from "./components/MyNavbar2.js";
 import PrimerRegistro from "./components/pages/PrimerRegistro.js";
-
+import Container from "./Container.js";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "react-pro-sidebar/dist/css/styles.css";
-import { HashRouter, Redirect, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  HashRouter,
+  Redirect,
+  Route,
+  Switch,
+  withRouter,
+} from "react-router-dom";
 import Perfil from "./components/pages/Perfil.js";
 
 import withFirebaseAuth from "react-with-firebase-auth";
@@ -21,9 +29,9 @@ import ComponentTester from "./ComponentTester.js";
 
 const firebaseAppAuth = auth;
 
-const App = (props) => {
+const App = ({ user }) => {
   //const { user } = this.props;
-  const user = props.user;
+  //const user = props.user;
   const [data, setData] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const db = firestore;
@@ -44,7 +52,6 @@ const App = (props) => {
       .catch((error) => {
         console.log("Error al obtener el documento: ", error);
       });
-    //console.log(user.displayName);
   } else {
     if (data) {
       setData(null);
@@ -67,25 +74,30 @@ const App = (props) => {
                 data-target="#myNavbar"
                 data-offset="0"
               >
-                <Route exact path="/">
-                  <Redirect to="/inicio" />
-                </Route>
-                <Route exact path="/inicio" component={Bienvenida} />
-                <Route exact path="/categorias" component={Categorias} />
-                {user ? (
-                  <Route
-                    exact
-                    path="/mi_perfil"
-                    component={() => <Perfil user={user} />}
-                  />
-                ) : null}
-                {user ? (
-                  <Route
-                    exact
-                    path="/crear_perfil"
-                    component={() => <PrimerRegistro show_modal={true} />}
-                  />
-                ) : null}
+                <Container />
+                {/**
+               * <Switch>
+                      <Route exact path="/">
+                        <Redirect to="/inicio" />
+                      </Route>
+                      <Route exact path="/inicio" component={Bienvenida} />
+                      <Route exact path="/categorias" component={Categorias} />
+                      {user ? (
+                        <Route
+                          exact
+                          path="/mi_perfil"
+                          component={() => <Perfil user={user} />}
+                        />
+                      ) : null}
+                      {user ? (
+                        <Route
+                          exact
+                          path="/crear_perfil"
+                          component={() => <PrimerRegistro show_modal={true} />}
+                        />
+                      ) : null}
+                    </Switch>
+               */}
               </div>
             </div>
           </div>

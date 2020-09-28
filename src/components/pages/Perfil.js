@@ -3,6 +3,7 @@ import { firestore } from "../functions/Firebase.js";
 import "../styles/contenido.css";
 import { Button } from "react-bootstrap";
 import { UserContext } from "../functions/UserProvider";
+import "../styles/loader.css";
 
 const Perfil = (props) => {
   const isMountedRef = useRef(null);
@@ -36,7 +37,12 @@ const Perfil = (props) => {
   }, [user, db]);
   const userData = data;
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        <h1 className="text-center">Cargando, por favor espera...</h1>
+        <div className="loader" />
+      </>
+    );
   } else {
     return (
       <>
@@ -82,6 +88,7 @@ const Perfil = (props) => {
                     )}
                   </>
                 ) : null}
+                {userData.show_bio ? <p>Biografía: {userData.bio}</p> : null}
                 {userData.show_exp ? (
                   <p>Experiencia laboral: {userData.exp}</p>
                 ) : null}
