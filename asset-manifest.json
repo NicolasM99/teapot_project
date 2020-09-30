@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/portafolio_multimedia/static/css/main.13467176.chunk.css",
-    "main.js": "/portafolio_multimedia/static/js/main.b96d2f9e.chunk.js",
-    "main.js.map": "/portafolio_multimedia/static/js/main.b96d2f9e.chunk.js.map",
+    "main.css": "/portafolio_multimedia/static/css/main.01cb6c58.chunk.css",
+    "main.js": "/portafolio_multimedia/static/js/main.1d24c92a.chunk.js",
+    "main.js.map": "/portafolio_multimedia/static/js/main.1d24c92a.chunk.js.map",
     "runtime-main.js": "/portafolio_multimedia/static/js/runtime-main.5deda5af.js",
     "runtime-main.js.map": "/portafolio_multimedia/static/js/runtime-main.5deda5af.js.map",
     "static/css/2.edeedb01.chunk.css": "/portafolio_multimedia/static/css/2.edeedb01.chunk.css",
-    "static/js/2.13825551.chunk.js": "/portafolio_multimedia/static/js/2.13825551.chunk.js",
-    "static/js/2.13825551.chunk.js.map": "/portafolio_multimedia/static/js/2.13825551.chunk.js.map",
+    "static/js/2.53c6340f.chunk.js": "/portafolio_multimedia/static/js/2.53c6340f.chunk.js",
+    "static/js/2.53c6340f.chunk.js.map": "/portafolio_multimedia/static/js/2.53c6340f.chunk.js.map",
     "index.html": "/portafolio_multimedia/index.html",
-    "precache-manifest.7b1dfb1b061e0e996732fda9017809e9.js": "/portafolio_multimedia/precache-manifest.7b1dfb1b061e0e996732fda9017809e9.js",
+    "precache-manifest.d462af4ecba25658ba34b521ccfae0c0.js": "/portafolio_multimedia/precache-manifest.d462af4ecba25658ba34b521ccfae0c0.js",
     "service-worker.js": "/portafolio_multimedia/service-worker.js",
     "static/css/2.edeedb01.chunk.css.map": "/portafolio_multimedia/static/css/2.edeedb01.chunk.css.map",
-    "static/css/main.13467176.chunk.css.map": "/portafolio_multimedia/static/css/main.13467176.chunk.css.map",
-    "static/js/2.13825551.chunk.js.LICENSE.txt": "/portafolio_multimedia/static/js/2.13825551.chunk.js.LICENSE.txt",
+    "static/css/main.01cb6c58.chunk.css.map": "/portafolio_multimedia/static/css/main.01cb6c58.chunk.css.map",
+    "static/js/2.53c6340f.chunk.js.LICENSE.txt": "/portafolio_multimedia/static/js/2.53c6340f.chunk.js.LICENSE.txt",
     "static/media/logo_multifolio_sin_fondo.png": "/portafolio_multimedia/static/media/logo_multifolio_sin_fondo.ed48b1b3.png"
   },
   "entrypoints": [
     "static/js/runtime-main.5deda5af.js",
     "static/css/2.edeedb01.chunk.css",
-    "static/js/2.13825551.chunk.js",
-    "static/css/main.13467176.chunk.css",
-    "static/js/main.b96d2f9e.chunk.js"
+    "static/js/2.53c6340f.chunk.js",
+    "static/css/main.01cb6c58.chunk.css",
+    "static/js/main.1d24c92a.chunk.js"
   ]
 }
