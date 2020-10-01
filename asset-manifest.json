@@ -1,26 +1,26 @@
 {
   "files": {
     "main.css": "/portafolio_multimedia/static/css/main.01cb6c58.chunk.css",
-    "main.js": "/portafolio_multimedia/static/js/main.1d24c92a.chunk.js",
-    "main.js.map": "/portafolio_multimedia/static/js/main.1d24c92a.chunk.js.map",
+    "main.js": "/portafolio_multimedia/static/js/main.32cc8060.chunk.js",
+    "main.js.map": "/portafolio_multimedia/static/js/main.32cc8060.chunk.js.map",
     "runtime-main.js": "/portafolio_multimedia/static/js/runtime-main.5deda5af.js",
     "runtime-main.js.map": "/portafolio_multimedia/static/js/runtime-main.5deda5af.js.map",
     "static/css/2.edeedb01.chunk.css": "/portafolio_multimedia/static/css/2.edeedb01.chunk.css",
-    "static/js/2.53c6340f.chunk.js": "/portafolio_multimedia/static/js/2.53c6340f.chunk.js",
-    "static/js/2.53c6340f.chunk.js.map": "/portafolio_multimedia/static/js/2.53c6340f.chunk.js.map",
+    "static/js/2.f1595a52.chunk.js": "/portafolio_multimedia/static/js/2.f1595a52.chunk.js",
+    "static/js/2.f1595a52.chunk.js.map": "/portafolio_multimedia/static/js/2.f1595a52.chunk.js.map",
     "index.html": "/portafolio_multimedia/index.html",
-    "precache-manifest.d462af4ecba25658ba34b521ccfae0c0.js": "/portafolio_multimedia/precache-manifest.d462af4ecba25658ba34b521ccfae0c0.js",
+    "precache-manifest.5468da0e9ef4ca0d640edce20013dc0a.js": "/portafolio_multimedia/precache-manifest.5468da0e9ef4ca0d640edce20013dc0a.js",
     "service-worker.js": "/portafolio_multimedia/service-worker.js",
     "static/css/2.edeedb01.chunk.css.map": "/portafolio_multimedia/static/css/2.edeedb01.chunk.css.map",
     "static/css/main.01cb6c58.chunk.css.map": "/portafolio_multimedia/static/css/main.01cb6c58.chunk.css.map",
-    "static/js/2.53c6340f.chunk.js.LICENSE.txt": "/portafolio_multimedia/static/js/2.53c6340f.chunk.js.LICENSE.txt",
+    "static/js/2.f1595a52.chunk.js.LICENSE.txt": "/portafolio_multimedia/static/js/2.f1595a52.chunk.js.LICENSE.txt",
     "static/media/logo_multifolio_sin_fondo.png": "/portafolio_multimedia/static/media/logo_multifolio_sin_fondo.ed48b1b3.png"
   },
   "entrypoints": [
     "static/js/runtime-main.5deda5af.js",
     "static/css/2.edeedb01.chunk.css",
-    "static/js/2.53c6340f.chunk.js",
+    "static/js/2.f1595a52.chunk.js",
     "static/css/main.01cb6c58.chunk.css",
-    "static/js/main.1d24c92a.chunk.js"
+    "static/js/main.32cc8060.chunk.js"
   ]
 }
