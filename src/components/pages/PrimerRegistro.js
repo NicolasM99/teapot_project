@@ -12,6 +12,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "react-bootstrap";
+import "../styles/primer_registro.css";
 
 const PrimerRegistro = (props) => {
   const history = useHistory();
@@ -450,13 +451,23 @@ const PrimerRegistro = (props) => {
 
                     <div className="mx-auto col-md-12 col-lg-6">
                       <input
+                        name="image-input"
+                        id="image-input"
+                        className="input"
                         onChange={onImageChange}
-                        id="group_image"
                         type="file"
-                        className="btn btn-primary"
                         accept="image/*"
                         style={{ textTransform: "none" }}
                       />
+                      <div className="input-label">
+                        <label
+                          htmlFor="image-input"
+                          className="btn btn-warning"
+                          style={{ textTransform: "none" }}
+                        >
+                          Subir una nueva foto
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <div className="row align-items-center my-3">
@@ -560,12 +571,22 @@ const PrimerRegistro = (props) => {
                     </label>
                     <div className="mx-auto col-md-12 col-lg-6">
                       <input
-                        id="certInput"
+                        id="cert-input"
+                        name="cert-input"
                         type="file"
-                        className="filetype form-control-file"
+                        className="input"
                         aria-describedby="fileHelp"
                         accept="application/pdf"
                       />
+                      <div className="input-label">
+                        <label
+                          htmlFor="cert-input"
+                          className="btn btn-warning"
+                          style={{ textTransform: "none" }}
+                        >
+                          Subir certificados
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
