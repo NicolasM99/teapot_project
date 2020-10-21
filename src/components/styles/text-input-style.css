@@ -21,3 +21,8 @@ textarea:focus {
   outline: none;
   background-color: #ffffff;
 }
+
+.input_label {
+  font-size: 1.2rem;
+  line-height: 50px;
+}

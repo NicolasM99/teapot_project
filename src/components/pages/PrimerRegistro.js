@@ -569,7 +569,7 @@ const PrimerRegistro = (props) => {
                     >
                       Certificados de estudios/cursos (PDF):
                     </label>
-                    <div className="mx-auto col-md-12 col-lg-6">
+                    <div className="col-md-12 col-lg-6 p-0">
                       <input
                         id="cert-input"
                         name="cert-input"
@@ -582,7 +582,7 @@ const PrimerRegistro = (props) => {
                         <label
                           htmlFor="cert-input"
                           className="btn btn-warning"
-                          style={{ textTransform: "none" }}
+                          style={{ textTransform: "none", textAlign: "left" }}
                         >
                           Subir certificados
                         </label>

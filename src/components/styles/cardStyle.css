@@ -1,5 +1,5 @@
 .cardTitle {
-  font-size: 1.7rem;
+  font-size: 1.3rem;
   font-family: "Raleway", sans-serif;
   font-weight: bold;
 }
@@ -11,14 +11,14 @@
       rgba(0, 0, 0, 0.95)
     ),
     url("../../img/categoria/3d.png");
-  width: 480px;
+  width: 30rem;
   height: 300px;
   background-size: cover;
 }
 .cardContainer {
   cursor: pointer;
   direction: flex;
-  width: 480px;
+  width: 30rem;
   transition: transform 0.2s;
 }
 
@@ -33,7 +33,7 @@
       rgba(0, 0, 0, 0.95)
     ),
     url("../../img/categoria/desarrollo.jpg");
-  width: 480px;
+  width: 30rem;
   height: 300px;
   background-size: cover;
 }
@@ -45,7 +45,7 @@
       rgba(0, 0, 0, 0.95)
     ),
     url("../../img/categoria/produccion.jpg");
-  width: 480px;
+  width: 30rem;
   height: 300px;
   background-size: cover;
 }
@@ -57,7 +57,31 @@
       rgba(0, 0, 0, 0.95)
     ),
     url("../../img/categoria/diseño.jpg");
-  width: 480px;
+  width: 30rem;
   height: 300px;
   background-size: cover;
+}
+
+@media only screen and (max-width: 575px) {
+  .cardSize {
+    width: 20rem !important;
+  }
+  .cardContainer {
+    cursor: pointer;
+    direction: flex;
+    width: 20rem;
+    transition: transform 0.2s;
+  }
+  #produccion3d {
+    width: 20rem;
+  }
+  #desarrollo {
+    width: 20rem;
+  }
+  #produccionAudiovisual {
+    width: 20rem;
+  }
+  #diseño {
+    width: 20rem;
+  }
 }

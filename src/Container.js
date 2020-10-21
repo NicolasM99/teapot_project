@@ -8,6 +8,7 @@ import Perfil from "./components/pages/Perfil.js";
 import MisProyectos from "./components/pages/MisProyectos.js";
 import PrimerRegistro from "./components/pages/PrimerRegistro.js";
 import CategoriaIndividual from "./components/pages/CategoriaIndividual.js";
+import NuevaCategoria from "./components/pages/NuevaCategoria";
 import { LoremIpsum } from "./components/pages/LoremIpsum";
 import { UserContext } from "./components/functions/UserProvider";
 
@@ -70,6 +71,13 @@ const Container = () => {
             exact
             path="/crear_perfil"
             component={() => <PrimerRegistro show_modal={true} />}
+          />
+        ) : null}
+        {user ? (
+          <Route
+            exact
+            path="/nueva_categoria"
+            component={() => <NuevaCategoria />}
           />
         ) : null}
       </Switch>
