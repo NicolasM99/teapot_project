@@ -5,18 +5,21 @@ import { UserContext } from "../functions/UserProvider";
 import CardCategoria from "../CardCategoria";
 import "../styles/loader.css";
 import "../styles/contenido.css";
+import plusIcon from "../../img/plus_icon.png";
 
-import { Card } from "react-bootstrap";
+import { Card, CardColumns, CardGroup, CardDeck } from "react-bootstrap";
+import { ProcessBubbleType } from "react-particles-js";
 
-const Categorias = () => {
+const Categorias = ({ setCategoryInfo }) => {
   const isMountedRef = useRef(null);
-  const [data, setData] = useState("");
+  const [data, setData] = useState(null);
+  const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
   const db = firestore;
   useEffect(() => {
     isMountedRef.current = true;
-    if (user) {
+    if (db) {
       db.collection("categories")
         .get()
         .then((querySnapshot) => {
@@ -24,6 +27,18 @@ const Categorias = () => {
             setData(querySnapshot.docs.map((doc) => doc.data()));
             setLoading(false);
             console.log(querySnapshot.docs.map((doc) => doc.data()));
+          }
+        });
+    }
+    if (user) {
+      db.collection("users")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          if (doc && isMountedRef.current) {
+            setUserData(doc.data());
+            setLoading(false);
+            console.log(doc.data());
           }
         });
       //console.log(user.displayName);
@@ -58,21 +73,39 @@ const Categorias = () => {
                 Descubre los proyectos de estas diferentes categorías
               </p>
             </div>
-            <div className="row">
-              <CardCategoria
-                title="Nueva categoría"
-                image="https://lh3.googleusercontent.com/proxy/NkAenIvavnXftZjE9hLXmpKHSDfouYY8Iqbg1pYBxjrl4hdfWsDcSAIcbvYwzAoCRjYt3R84TEKeZswp-1PQbZCVGZLsGVv-NAUCm_zxAabmIBKFxvukMxR4YZeKQmg"
-                link="nueva_categoria"
-              />
+            {/* <div className="row"> */}
+            <CardDeck>
+              {userData && userData.admin ? (
+                <CardCategoria
+                  title="Nueva categoría"
+                  image={plusIcon}
+                  link="nueva_categoria"
+                  setCategoryInfo={setCategoryInfo}
+                />
+              ) : (
+                user && (
+                  <CardCategoria
+                    title="Solicitar categoría"
+                    image={plusIcon}
+                    link="solicitar_categoria"
+                    setCategoryInfo={setCategoryInfo}
+                  />
+                )
+              )}
+
               {data &&
                 data.map((id) => (
                   <CardCategoria
                     title={id.title}
                     image={id.image}
                     link={id.link}
+                    description={id.description}
+                    setCategoryInfo={setCategoryInfo}
                   />
                 ))}
-            </div>
+            </CardDeck>
+
+            {/* </div> */}
 
             {/* <Row>
               <Col xs={12} lg={6} className="mx-auto">

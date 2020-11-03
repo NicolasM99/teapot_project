@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Spring } from "react-spring/renderprops";
 import "../styles/contenido.css";
 
-const CategoriaIndividual = ({ titulo, descripcion, proyectos }) => {
+const CategoriaIndividual = ({ categoryInfo }) => {
   return (
     <Spring
       from={{ opacity: 0, marginTop: -40 }}
@@ -12,9 +13,21 @@ const CategoriaIndividual = ({ titulo, descripcion, proyectos }) => {
         <div style={props}>
           <div className="wrapper">
             <div className="contenido">
-              <h1 className="titulo">{titulo}</h1>
+              <div className="text-right">
+                <Link to="/categorias">
+                  <button className="btn btn-primary">Volver</button>
+                </Link>
+              </div>
+              <h1 className="titulo">{categoryInfo.title}</h1>
               <div className="contenedor_parrafo mx-auto">
-                <p className="parrafo">{descripcion}</p>
+                <div className="row">
+                  <p className="parrafo col-6">{categoryInfo.description}</p>
+                  <img
+                    className="col-6"
+                    src={categoryInfo.image}
+                    alt="category_image"
+                  />
+                </div>
               </div>
             </div>
           </div>

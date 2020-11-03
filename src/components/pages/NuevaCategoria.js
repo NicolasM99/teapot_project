@@ -25,26 +25,31 @@ const NuevaCategoria = () => {
           if (querySnapshot && isMountedRef.current) {
             setReceivedData(querySnapshot.docs.map((doc) => doc.data()));
             setLoading(false);
-            // console.log(querySnapshot.docs.map((doc) => doc.data()));
-            // console.log(querySnapshot.docs.map((doc) => doc.data()).length);
           }
         });
-      //console.log(user.displayName);
     }
 
     return () => (isMountedRef.current = false);
   }, [user, db]);
 
-  const handleSendData = () => {
+  const handleSendData = (e) => {
+    e.preventDefault();
     const newCategoryData = {
       title: document.getElementById("titleInput").value,
       image: document.getElementById("imageInput").value,
+      description: document.getElementById("descriptionInput").value,
       link: `categoria_${document
         .getElementById("titleInput")
         .value.toLowerCase()
         .replace(/ /g, "_")}`,
     };
-    if (user) {
+    if (
+      user &&
+      newCategoryData.title &&
+      newCategoryData.image &&
+      newCategoryData.link &&
+      newCategoryData.description
+    ) {
       db.collection("categories")
         .doc(`${receiverdData.length + 1}`)
         .set(newCategoryData)
@@ -97,8 +102,9 @@ const NuevaCategoria = () => {
                     type="text"
                     name="titleInput"
                     id="titleInput"
-                    className="form-control col-11 mx-auto"
+                    className="form-control col-md-8 mx-auto"
                     placeholder="Escribe aquí el título de la categoría"
+                    style={{ backgroundColor: "white" }}
                   />
                 </div>
                 <div className="row">
@@ -113,13 +119,36 @@ const NuevaCategoria = () => {
                     type="text"
                     name="imageInput"
                     id="imageInput"
-                    className="form-control col-11 mx-auto"
+                    className="form-control col-md-8 mx-auto"
                     placeholder="URL de la imagen"
+                    style={{ backgroundColor: "white" }}
                   />
                 </div>
-                <button onClick={() => handleSendData()}>
-                  Agregar nueva categoría
-                </button>
+                <div className="row">
+                  <label
+                    className="col-sm-12 col-md-12 col-lg-1 input_label"
+                    htmlFor="descriptionInput"
+                  >
+                    Descripción:
+                  </label>
+                  <textarea
+                    autoComplete="off"
+                    type="text"
+                    name="descriptionInput"
+                    id="descriptionInput"
+                    className="form-control p-2 col-md-8 mx-auto"
+                    placeholder="Descripción de la categoría"
+                    style={{ backgroundColor: "white" }}
+                  />
+                </div>
+                <div className="text-center mt-3">
+                  <button
+                    className="btn btn-primary"
+                    onClick={(e) => handleSendData(e)}
+                  >
+                    Agregar nueva categoría
+                  </button>
+                </div>
               </form>
             </div>
           </div>

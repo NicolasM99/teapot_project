@@ -30,6 +30,32 @@ const PrimerRegistro = (props) => {
   const isMountedRef = useRef(null);
   const [showTerms, setShowTerms] = useState(null);
 
+  const [certificates, setCertificates] = useState(null);
+  const [showSemesters, setShowSemesters] = useState(false);
+  const [showModal, setShowModal] = useState(true);
+  //const [createProfile, setCreateProfile] = useState(false);
+  const [addEmail, setAddEmail] = useState("");
+  const [addPhoto, setAddPhoto] = useState("");
+  const [addPhone, setAddPhone] = useState("");
+  const [addBio, setAddBio] = useState("");
+  const [addExp, setAddExp] = useState("");
+  const [addStudent, setAddStudent] = useState(false);
+  const [addGraduated, setAddGraduated] = useState(false);
+  const [addNickname, setAddNickname] = useState("");
+  const [addCertificate, setAddCertificate] = useState("");
+  const [addSemester, setAddSemester] = useState("0");
+
+  const [showNickname, setShowNickname] = useState(true);
+  const [showEmail, setShowEmail] = useState(true);
+  const [showPhoto, setShowPhoto] = useState(true);
+  const [showPhone, setShowPhone] = useState(true);
+  const [showStudentOrGraduated, setShowStudentOrGraduated] = useState(true);
+  const [showBio, setShowBio] = useState(true);
+  const [showSemester, setShowSemester] = useState(true);
+  const [showExp, setShowExp] = useState(true);
+  const [showCertificates, setShowCertificates] = useState(true);
+
+  const [enableContinue, setEnableContinue] = useState(false);
   useEffect(() => {
     if (receivedData) {
       if (user && data) {
@@ -76,14 +102,26 @@ const PrimerRegistro = (props) => {
   };
 
   const onCertificateChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      if (e.target.files[0].size > 262144000) {
-        alert("El documento 250MB. Por favor, escoge otro.");
-      } else {
-        setCertificate(e.target.files[0]);
+    if (e.target.files) {
+      const Files = e.target.files;
+      var pass = 1;
+      for (var i = 0; i < Files.length; i++) {
+        if (Files[i].size > 262144000) {
+          alert("El documento 250MB. Por favor, escoge otro.");
+          pass = 0;
+          i = Files.length;
+        }
+      }
+      if (pass === 1) {
+        setCertificates(Files);
       }
     }
   };
+
+  useEffect(() => {
+    if (certificates)
+      Array.from(certificates).forEach((file) => console.log(file.name));
+  }, [certificates]);
 
   useEffect(() => {
     isMountedRef.current = true;
@@ -156,6 +194,9 @@ const PrimerRegistro = (props) => {
       setAddPhoto(user.photoURL);
     }
     const newUserData = {
+      admin: false,
+      username: user.displayName,
+      loginEmail: user.email,
       nickName: addNickname,
       email: addEmail,
       phone: addPhone,
@@ -197,33 +238,6 @@ const PrimerRegistro = (props) => {
       createProfile();
     }
   }, [sent]);
-
-  const [certificate, setCertificate] = useState(null);
-  const [showSemesters, setShowSemesters] = useState(false);
-  const [showModal, setShowModal] = useState(true);
-  //const [createProfile, setCreateProfile] = useState(false);
-  const [addEmail, setAddEmail] = useState("");
-  const [addPhoto, setAddPhoto] = useState("");
-  const [addPhone, setAddPhone] = useState("");
-  const [addBio, setAddBio] = useState("");
-  const [addExp, setAddExp] = useState("");
-  const [addStudent, setAddStudent] = useState(false);
-  const [addGraduated, setAddGraduated] = useState(false);
-  const [addNickname, setAddNickname] = useState("");
-  const [addCertificate, setAddCertificate] = useState("");
-  const [addSemester, setAddSemester] = useState("0");
-
-  const [showNickname, setShowNickname] = useState(true);
-  const [showEmail, setShowEmail] = useState(true);
-  const [showPhoto, setShowPhoto] = useState(true);
-  const [showPhone, setShowPhone] = useState(true);
-  const [showStudentOrGraduated, setShowStudentOrGraduated] = useState(true);
-  const [showBio, setShowBio] = useState(true);
-  const [showSemester, setShowSemester] = useState(true);
-  const [showExp, setShowExp] = useState(true);
-  const [showCertificates, setShowCertificates] = useState(true);
-
-  const [enableContinue, setEnableContinue] = useState(false);
 
   function handlePhoneChange(e) {
     setAddPhone(e.target.value);
@@ -571,12 +585,14 @@ const PrimerRegistro = (props) => {
                     </label>
                     <div className="col-md-12 col-lg-6 p-0">
                       <input
+                        multiple
                         id="cert-input"
                         name="cert-input"
                         type="file"
                         className="input"
                         aria-describedby="fileHelp"
                         accept="application/pdf"
+                        onChange={onCertificateChange}
                       />
                       <div className="input-label">
                         <label
@@ -587,6 +603,10 @@ const PrimerRegistro = (props) => {
                           Subir certificados
                         </label>
                       </div>
+                      {certificates &&
+                        Array.from(certificates).forEach((file) => (
+                          <h1>{file.name}</h1>
+                        ))}
                     </div>
                   </div>
                 </div>

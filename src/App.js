@@ -2,7 +2,7 @@ import React, { Component, useContext, useState, useEffect } from "react";
 import Bienvenida from "./components/pages/Bienvenida.js";
 import Categorias from "./components/pages/Categorias.js";
 import MyNavbar2 from "./components/MyNavbar2.js";
-
+import ParticlesScreen from "./components/ParticlesScreen";
 import PrimerRegistro from "./components/pages/PrimerRegistro.js";
 import Container from "./Container.js";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -63,6 +63,11 @@ const App = ({ user }) => {
     <UserProvider>
       <HashRouter>
         <div className="container-fluid">
+          <ParticlesScreen
+            style={{ position: "absolute" }}
+            width="100%"
+            height="100%"
+          />
           <div className="row">
             <MyNavbar2 />
             {loaded && !data && user ? (

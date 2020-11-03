@@ -23,6 +23,8 @@ import {
   faSignInAlt,
   faSignOutAlt,
   faUser,
+  faStream,
+  faUsersCog,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
@@ -44,6 +46,7 @@ const MyNavbar2 = (props) => {
           if (doc && isMountedRef.current) {
             setData(doc.data());
             setLoading(false);
+            console.log(doc.data());
           }
         });
       //console.log(user.displayName);
@@ -91,7 +94,7 @@ const MyNavbar2 = (props) => {
             {!loading && user ? (
               <Dropdown className="dropdown align-self-center mb-2">
                 <Dropdown.Toggle
-                  className="d-flex dropdown-toggle align-items-center p-2 text-center"
+                  className="d-flex dropdown-toggle align-items-center justify-content-between p-2 text-center"
                   style={{ lineHeight: "45px" }}
                 >
                   <NombreFoto
@@ -109,6 +112,18 @@ const MyNavbar2 = (props) => {
                   <Dropdown.Item href="#mis_proyectos">
                     <FontAwesomeIcon icon={faBriefcase} /> Mis proyectos
                   </Dropdown.Item>
+
+                  {data && data.admin && (
+                    <>
+                      <Dropdown.Item href="#solicitudes_proyectos">
+                        <FontAwesomeIcon icon={faStream} /> Solicitudes
+                      </Dropdown.Item>
+                      <Dropdown.Item href="#usuarios">
+                        <FontAwesomeIcon icon={faUsersCog} /> Usuarios
+                      </Dropdown.Item>
+                    </>
+                  )}
+
                   <Dropdown.Item href="#inicio">
                     <div
                       onClick={() => {

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Bienvenida from "./components/pages/Bienvenida.js";
 import Categorias from "./components/pages/Categorias.js";
@@ -11,9 +11,32 @@ import CategoriaIndividual from "./components/pages/CategoriaIndividual.js";
 import NuevaCategoria from "./components/pages/NuevaCategoria";
 import { LoremIpsum } from "./components/pages/LoremIpsum";
 import { UserContext } from "./components/functions/UserProvider";
+import Usuarios from "./components/pages/Usuarios.js";
+import { firestore } from "./components/functions/Firebase.js";
+import SolicitudesProyectos from "./components/pages/SolicitudesProyectos";
 
 const Container = () => {
-  const user = useContext(UserContext);
+  const [categoryInfo, setCategoryInfo] = useState(null);
+  const [userData, setUserData] = useState(null);
+  const db = firestore;
+  const { user } = useContext(UserContext);
+  const isMountedRef = useRef(null);
+  useEffect(() => {
+    isMountedRef.current = true;
+    if (user && db) {
+      db.collection("users")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          if (doc && isMountedRef.current) {
+            setUserData(doc.data());
+            console.log(doc.data());
+          }
+        });
+      //console.log(user.displayName);
+    }
+    return () => (isMountedRef.current = false);
+  }, [user, db]);
   return (
     <div className="Wrapper">
       <Switch>
@@ -21,43 +44,18 @@ const Container = () => {
           <Redirect to="/inicio" />
         </Route>
         <Route exact path="/inicio" component={Bienvenida} />
-        <Route exact path="/categorias" component={Categorias} />
+        <Route
+          exact
+          path="/categorias"
+          component={() => <Categorias setCategoryInfo={setCategoryInfo} />}
+        />
         <Route exact path="/buscar" component={Buscar} />
         <Route exact path="/acerca_de" component={AcercaDe} />
         <Route exact path="/mis_proyectos" component={MisProyectos} />
         <Route
           exact
-          path="/categoria_produccion_3d"
-          component={() => (
-            <CategoriaIndividual
-              titulo="PRODUCCIÓN 3D"
-              descripcion={LoremIpsum}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/categoria_desarrollo"
-          component={() => (
-            <CategoriaIndividual titulo="DESARROLLO" descripcion={LoremIpsum} />
-          )}
-        />
-        <Route
-          exact
-          path="/categoria_produccion_audiovisual"
-          component={() => (
-            <CategoriaIndividual
-              titulo="PRODUCCIÓN AUDIOVISUAL"
-              descripcion={LoremIpsum}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/categoria_diseno"
-          component={() => (
-            <CategoriaIndividual titulo="DISEÑO" descripcion={LoremIpsum} />
-          )}
+          path="/categoria"
+          component={() => <CategoriaIndividual categoryInfo={categoryInfo} />}
         />
         {user ? (
           <Route
@@ -73,11 +71,21 @@ const Container = () => {
             component={() => <PrimerRegistro show_modal={true} />}
           />
         ) : null}
-        {user ? (
+        {user && userData && userData.admin ? (
           <Route
             exact
             path="/nueva_categoria"
             component={() => <NuevaCategoria />}
+          />
+        ) : null}
+        {user && userData && userData.admin ? (
+          <Route exact path="/usuarios" component={() => <Usuarios />} />
+        ) : null}
+        {user && userData && userData.admin ? (
+          <Route
+            exact
+            path="/solicitudes_proyectos"
+            component={() => <SolicitudesProyectos />}
           />
         ) : null}
       </Switch>
