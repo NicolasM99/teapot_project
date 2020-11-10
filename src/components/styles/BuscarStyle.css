@@ -1,0 +1,11 @@
+.person-image {
+  transition: 0.2s;
+}
+
+.person-image:hover {
+  transform: scale(0.95);
+  -webkit-filter: brightness(0.7);
+  filter: brightness(0.7);
+  cursor: pointer;
+  transition: 0.2s;
+}

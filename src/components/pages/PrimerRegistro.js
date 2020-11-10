@@ -42,7 +42,7 @@ const PrimerRegistro = (props) => {
   const [addStudent, setAddStudent] = useState(false);
   const [addGraduated, setAddGraduated] = useState(false);
   const [addNickname, setAddNickname] = useState("");
-  const [addCertificate, setAddCertificate] = useState("");
+  const [addCertificate, setAddCertificate] = useState([]);
   const [addSemester, setAddSemester] = useState("0");
 
   const [showNickname, setShowNickname] = useState(true);
@@ -54,6 +54,10 @@ const PrimerRegistro = (props) => {
   const [showSemester, setShowSemester] = useState(true);
   const [showExp, setShowExp] = useState(true);
   const [showCertificates, setShowCertificates] = useState(true);
+  const [finishedImage, setFinishedImage] = useState(false);
+  const [finishedCert, setFinishedCert] = useState(false);
+
+  const [nombresCerts, setNombresCerts] = useState([]);
 
   const [enableContinue, setEnableContinue] = useState(false);
   useEffect(() => {
@@ -119,8 +123,16 @@ const PrimerRegistro = (props) => {
   };
 
   useEffect(() => {
-    if (certificates)
-      Array.from(certificates).forEach((file) => console.log(file.name));
+    var certAux = [];
+    if (certificates) {
+      Array.from(certificates).forEach((file) => {
+        certAux.push(file.name);
+        console.log(file.name);
+      });
+    }
+    if (certAux.length > 0) {
+      setNombresCerts(certAux);
+    }
   }, [certificates]);
 
   useEffect(() => {
@@ -170,9 +182,8 @@ const PrimerRegistro = (props) => {
               if (isMountedRef.current) {
                 console.log("imagen: ", url);
                 setAddPhoto(url);
-                setSent(true);
-                handleClose();
-                setSending(false);
+
+                setFinishedImage(true);
               } else {
                 console.log("NO ENTRÓ");
               }
@@ -181,12 +192,75 @@ const PrimerRegistro = (props) => {
       );
     } else {
       setAddPhoto(user.photoURL);
+      setFinishedImage(true);
+    }
+
+    if (certificates) {
+      console.log("certificates state: ", certificates[0].name);
+      var sendCertificates = [];
+      var finished = false;
+      for (var i = 0; i < certificates.length; i++) {
+        const auxI = i;
+        const name = certificates[i].name;
+        const uploadTaskCert = storage
+          .ref(`certificates/${user.uid}_certificate_${name}`)
+          .put(certificates[i]);
+
+        uploadTaskCert.on(
+          "state_changed",
+          (snapshot) => {
+            setProgress(
+              Math.round(
+                (100 * snapshot.bytesTransferred) / snapshot.totalBytes
+              )
+            );
+            setSending(true);
+          },
+          (error) => {
+            console.log(error);
+          },
+          () => {
+            storage
+              .ref("certificates")
+              .child(`${user.uid}_certificate_${name}`)
+              .getDownloadURL()
+              .then((url) => {
+                if (isMountedRef.current) {
+                  sendCertificates.push(url);
+                  console.log(sendCertificates);
+                } else {
+                  console.log("NO ENTRÓ");
+                }
+              })
+              .then(() => {
+                if (sendCertificates.length === certificates.length) {
+                  // console.log("ENTRÓ A VALIDAR AUXILIAR", sendCertificates);
+                  setAddCertificate(sendCertificates);
+                  // setFinishedCert(true);
+                }
+              })
+              .then(() => {
+                if (sendCertificates.length === certificates.length) {
+                  // console.log("ENTRÓ A VALIDAR AUXILIAR", sendCertificates);
+                  // setAddCertificate(sendCertificates);
+                  console.log(auxI, certificates.length);
+                  console.log("ADD CERTIFICATE: ", addCertificate);
+                  setFinishedCert(true);
+                }
+              });
+          }
+        );
+      }
+    } else setFinishedCert(true);
+    return () => (isMountedRef.current = false);
+  };
+  useEffect(() => {
+    if (finishedImage && finishedCert) {
       setSent(true);
       handleClose();
       setSending(false);
     }
-    return () => (isMountedRef.current = false);
-  };
+  }, [finishedCert, finishedImage]);
 
   const createProfile = () => {
     isMountedRef.current = true;
@@ -228,7 +302,7 @@ const PrimerRegistro = (props) => {
         //}
       })
       .then(() => {
-        history.push("/mi_perfil");
+        history.push("/perfil");
         window.location.reload();
       });
     return () => (isMountedRef.current = false);
@@ -302,7 +376,7 @@ const PrimerRegistro = (props) => {
   const handleCloseTerms = () => setShowTerms(false);
 
   if (sending) {
-    console.log("SENDING...");
+    // console.log("SENDING...");
     return (
       <>
         <Modal
@@ -604,10 +678,8 @@ const PrimerRegistro = (props) => {
                           Subir certificados
                         </label>
                       </div>
-                      {certificates &&
-                        Array.from(certificates).forEach((file) => (
-                          <h1>{file.name}</h1>
-                        ))}
+                      {nombresCerts &&
+                        nombresCerts.map((item) => <p>{item}</p>)}
                     </div>
                   </div>
                 </div>

@@ -14,10 +14,14 @@ import { UserContext } from "./components/functions/UserProvider";
 import Usuarios from "./components/pages/Usuarios.js";
 import { firestore } from "./components/functions/Firebase.js";
 import SolicitudesProyectos from "./components/pages/SolicitudesProyectos";
+import NuevoProyecto from "./components/pages/NuevoProyecto.js";
+import ProyectoIndividual from "./components/pages/ProyectoIndividual.js";
 
-const Container = () => {
+const Container = ({ publicUserData, setPublicUserData }) => {
   const [categoryInfo, setCategoryInfo] = useState(null);
+  const [projectInfo, setProjectInfo] = useState(null);
   const [userData, setUserData] = useState(null);
+
   const db = firestore;
   const { user } = useContext(UserContext);
   const isMountedRef = useRef(null);
@@ -49,19 +53,43 @@ const Container = () => {
           path="/categorias"
           component={() => <Categorias setCategoryInfo={setCategoryInfo} />}
         />
-        <Route exact path="/buscar" component={Buscar} />
+        <Route
+          exact
+          path="/buscar"
+          component={() => (
+            <Buscar
+              publicUserData={publicUserData}
+              setPublicUserData={setPublicUserData}
+            />
+          )}
+        />
         <Route exact path="/acerca_de" component={AcercaDe} />
-        <Route exact path="/mis_proyectos" component={MisProyectos} />
+        <Route
+          exact
+          path="/mis_proyectos"
+          component={() => <MisProyectos setProjectInfo={setProjectInfo} />}
+        />
         <Route
           exact
           path="/categoria"
           component={() => <CategoriaIndividual categoryInfo={categoryInfo} />}
         />
+        <Route
+          exact
+          path="/proyecto"
+          component={() => <ProyectoIndividual projectInfo={projectInfo} />}
+        />
         {user ? (
           <Route
             exact
-            path="/mi_perfil"
-            component={() => <Perfil user={user} />}
+            path="/perfil"
+            component={() => (
+              <Perfil
+                user={user}
+                setProjectInfo={setProjectInfo}
+                publicUserData={publicUserData}
+              />
+            )}
           />
         ) : null}
         {user ? (
@@ -78,8 +106,19 @@ const Container = () => {
             component={() => <NuevaCategoria />}
           />
         ) : null}
+        {user && userData ? (
+          <Route
+            exact
+            path="/nuevo_proyecto"
+            component={() => <NuevoProyecto />}
+          />
+        ) : null}
         {user && userData && userData.admin ? (
-          <Route exact path="/usuarios" component={() => <Usuarios />} />
+          <Route
+            exact
+            path="/usuarios"
+            component={() => <Usuarios setPublicUserData={setPublicUserData} />}
+          />
         ) : null}
         {user && userData && userData.admin ? (
           <Route

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { Table } from "react-bootstrap";
+import { Image, Table } from "react-bootstrap";
 import { firestore } from "../functions/Firebase.js";
 import { Spring } from "react-spring/renderprops";
 import { UserContext } from "../functions/UserProvider";
@@ -14,8 +14,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Modal, Button } from "react-bootstrap";
 import NuevoUsuario from "./NuevoUsuario";
+import { Link } from "react-router-dom";
 
-const Usuarios = () => {
+const Usuarios = ({ setPublicUserData }) => {
   const isMountedRef = useRef(null);
   const [data, setData] = useState(null);
   const [userData, setUserData] = useState(null);
@@ -25,6 +26,7 @@ const Usuarios = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [deleteID, setDeleteID] = useState(null);
   const [showNewUser, setShowNewUser] = useState(false);
+  const [projectsData, setProjectsData] = useState(null);
   const db = firestore;
   useEffect(() => {
     isMountedRef.current = true;
@@ -34,6 +36,16 @@ const Usuarios = () => {
         .then((querySnapshot) => {
           if (querySnapshot && isMountedRef.current) {
             setData(querySnapshot.docs.map((doc) => doc.data()));
+            setLoading(false);
+          }
+        });
+    }
+    if (db) {
+      db.collection("projects")
+        .get()
+        .then((querySnapshot) => {
+          if (querySnapshot && isMountedRef.current) {
+            setProjectsData(querySnapshot.docs.map((doc) => doc.data()));
             setLoading(false);
           }
         });
@@ -79,6 +91,14 @@ const Usuarios = () => {
           console.log("Se elimino el PERFIL");
         })
         .catch((error) => console.error("Error al borrar el documento:", error))
+        .then(() => {
+          db.collection("projects")
+            .doc(id)
+            .delete()
+            .then(() => {
+              console.log("Se eliminaron LOS PROEYCTOS");
+            });
+        })
         .then(() => window.location.reload());
     }
   };
@@ -145,7 +165,7 @@ const Usuarios = () => {
             <Table responsive striped bordered hover variant="dark">
               <thead>
                 <tr className="text-center">
-                  <th>N°</th>
+                  <th>FOTO</th>
                   <th>NOMBRE</th>
                   <th>CORREO</th>
                   <th>ACCIONES</th>
@@ -153,20 +173,37 @@ const Usuarios = () => {
               </thead>
               <tbody>
                 {usersData &&
-                  usersData.map((id, index) => {
+                  usersData.map((id) => {
                     if (id.id !== userData.id) {
                       return (
                         <tr>
-                          <td>{index + 1}</td>
+                          <td className="text-center">
+                            <Image
+                              src={id.photo}
+                              width="40px"
+                              height="40px"
+                              alt="user_photo"
+                              style={{
+                                borderRadius: "50%",
+                                backgroundColor: "rgba(255,255,255,0.1)",
+                                objectFit: "cover",
+                              }}
+                            />
+                          </td>
                           <td>{id.username}</td>
                           <td>{id.loginEmail}</td>
                           <td
                             colSpan="3"
                             className="d-flex justify-content-between"
                           >
-                            <button className="btn btn-success mx-2">
-                              <FontAwesomeIcon icon={faEye} /> Ver perfil
-                            </button>
+                            <Link
+                              to="/perfil"
+                              onClick={() => setPublicUserData(id)}
+                            >
+                              <button className="btn btn-success mx-2">
+                                <FontAwesomeIcon icon={faEye} /> Ver perfil
+                              </button>
+                            </Link>
 
                             <button className="btn btn-warning mx-2">
                               <FontAwesomeIcon icon={faPencilAlt} /> Editar

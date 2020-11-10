@@ -106,7 +106,10 @@ const MyNavbar2 = (props) => {
                   className="position-absolute"
                   style={{ fontSize: "1.2em" }}
                 >
-                  <Dropdown.Item href="#mi_perfil">
+                  <Dropdown.Item
+                    onClick={() => props.setPublicUserData(null)}
+                    href="#perfil"
+                  >
                     <FontAwesomeIcon icon={faUser} /> Mi perfil
                   </Dropdown.Item>
                   <Dropdown.Item href="#mis_proyectos">

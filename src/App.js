@@ -31,8 +31,7 @@ import ComponentTester from "./ComponentTester.js";
 const firebaseAppAuth = auth;
 
 const App = ({ user }) => {
-  //const { user } = this.props;
-  //const user = props.user;
+  const [publicUserData, setPublicUserData] = useState(null);
   const [data, setData] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const db = firestore;
@@ -69,7 +68,7 @@ const App = ({ user }) => {
             height="100%"
           />
           <div className="row">
-            <MyNavbar2 />
+            <MyNavbar2 setPublicUserData={setPublicUserData} />
             {loaded && !data && user ? (
               <PrimerRegistro show_modal={true} />
             ) : null}
@@ -80,7 +79,10 @@ const App = ({ user }) => {
                 data-target="#myNavbar"
                 data-offset="0"
               >
-                <Container />
+                <Container
+                  publicUserData={publicUserData}
+                  setPublicUserData={setPublicUserData}
+                />
               </div>
             </div>
           </div>
