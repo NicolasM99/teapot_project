@@ -194,6 +194,7 @@ const PrimerRegistro = (props) => {
       setAddPhoto(user.photoURL);
     }
     const newUserData = {
+      id: user.uid,
       admin: false,
       username: user.displayName,
       loginEmail: user.email,
