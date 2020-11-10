@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/portafolio_multimedia/static/css/main.3931b68d.chunk.css",
-    "main.js": "/portafolio_multimedia/static/js/main.a48c18e0.chunk.js",
-    "main.js.map": "/portafolio_multimedia/static/js/main.a48c18e0.chunk.js.map",
+    "main.css": "/portafolio_multimedia/static/css/main.ccaf06d6.chunk.css",
+    "main.js": "/portafolio_multimedia/static/js/main.f5c65d0c.chunk.js",
+    "main.js.map": "/portafolio_multimedia/static/js/main.f5c65d0c.chunk.js.map",
     "runtime-main.js": "/portafolio_multimedia/static/js/runtime-main.5deda5af.js",
     "runtime-main.js.map": "/portafolio_multimedia/static/js/runtime-main.5deda5af.js.map",
     "static/css/2.edeedb01.chunk.css": "/portafolio_multimedia/static/css/2.edeedb01.chunk.css",
-    "static/js/2.b3fecf09.chunk.js": "/portafolio_multimedia/static/js/2.b3fecf09.chunk.js",
-    "static/js/2.b3fecf09.chunk.js.map": "/portafolio_multimedia/static/js/2.b3fecf09.chunk.js.map",
+    "static/js/2.e33fdb1b.chunk.js": "/portafolio_multimedia/static/js/2.e33fdb1b.chunk.js",
+    "static/js/2.e33fdb1b.chunk.js.map": "/portafolio_multimedia/static/js/2.e33fdb1b.chunk.js.map",
     "index.html": "/portafolio_multimedia/index.html",
-    "precache-manifest.f61cb26c69047973852e42bbdfc413a8.js": "/portafolio_multimedia/precache-manifest.f61cb26c69047973852e42bbdfc413a8.js",
+    "precache-manifest.016a070b2a995d4efdfe85512f65a6da.js": "/portafolio_multimedia/precache-manifest.016a070b2a995d4efdfe85512f65a6da.js",
     "service-worker.js": "/portafolio_multimedia/service-worker.js",
     "static/css/2.edeedb01.chunk.css.map": "/portafolio_multimedia/static/css/2.edeedb01.chunk.css.map",
-    "static/css/main.3931b68d.chunk.css.map": "/portafolio_multimedia/static/css/main.3931b68d.chunk.css.map",
-    "static/js/2.b3fecf09.chunk.js.LICENSE.txt": "/portafolio_multimedia/static/js/2.b3fecf09.chunk.js.LICENSE.txt",
+    "static/css/main.ccaf06d6.chunk.css.map": "/portafolio_multimedia/static/css/main.ccaf06d6.chunk.css.map",
+    "static/js/2.e33fdb1b.chunk.js.LICENSE.txt": "/portafolio_multimedia/static/js/2.e33fdb1b.chunk.js.LICENSE.txt",
     "static/media/cardStyle.css": "/portafolio_multimedia/static/media/3d.57bc5bfe.png",
     "static/media/logo_multifolio_sin_fondo.png": "/portafolio_multimedia/static/media/logo_multifolio_sin_fondo.ed48b1b3.png",
     "static/media/plus_icon.png": "/portafolio_multimedia/static/media/plus_icon.58cc2efd.png"
@@ -21,8 +21,8 @@
   "entrypoints": [
     "static/js/runtime-main.5deda5af.js",
     "static/css/2.edeedb01.chunk.css",
-    "static/js/2.b3fecf09.chunk.js",
-    "static/css/main.3931b68d.chunk.css",
-    "static/js/main.a48c18e0.chunk.js"
+    "static/js/2.e33fdb1b.chunk.js",
+    "static/css/main.ccaf06d6.chunk.css",
+    "static/js/main.f5c65d0c.chunk.js"
   ]
 }
