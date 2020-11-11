@@ -79,19 +79,19 @@ const Container = ({ publicUserData, setPublicUserData }) => {
           path="/proyecto"
           component={() => <ProyectoIndividual projectInfo={projectInfo} />}
         />
-        {user ? (
-          <Route
-            exact
-            path="/perfil"
-            component={() => (
-              <Perfil
-                user={user}
-                setProjectInfo={setProjectInfo}
-                publicUserData={publicUserData}
-              />
-            )}
-          />
-        ) : null}
+
+        <Route
+          exact
+          path="/perfil"
+          component={() => (
+            <Perfil
+              user={user}
+              setProjectInfo={setProjectInfo}
+              publicUserData={publicUserData}
+            />
+          )}
+        />
+
         {user ? (
           <Route
             exact
