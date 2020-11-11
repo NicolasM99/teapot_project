@@ -43,7 +43,7 @@ const Buscar = (props) => {
         });
       //console.log(user.displayName);
     }
-    if (user) {
+    if (db) {
       db.collection("users")
         .get()
         .then((querySnapshot) => {

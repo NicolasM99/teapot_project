@@ -13,6 +13,8 @@ import {
   ToggleButtonGroup,
 } from "react-bootstrap";
 import "../styles/primer_registro.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 
 const PrimerRegistro = (props) => {
   const history = useHistory();
@@ -679,7 +681,11 @@ const PrimerRegistro = (props) => {
                         </label>
                       </div>
                       {nombresCerts &&
-                        nombresCerts.map((item) => <p>{item}</p>)}
+                        nombresCerts.map((item) => (
+                          <p>
+                            <FontAwesomeIcon icon={faFilePdf} /> {item}
+                          </p>
+                        ))}
                     </div>
                   </div>
                 </div>
