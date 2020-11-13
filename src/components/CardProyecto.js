@@ -2,7 +2,14 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import "./styles/cardStyle.css";
-const CardProyecto = ({ title, image, link, setProjectInfo, description }) => {
+const CardProyecto = ({
+  title,
+  image,
+  link,
+  setProjectInfo,
+  description,
+  category,
+}) => {
   return (
     <>
       {/* <div className="card-body d-flex justify-content-center col-lg-4 col-md-6"> */}
@@ -41,6 +48,19 @@ const CardProyecto = ({ title, image, link, setProjectInfo, description }) => {
                 style={{ backgroundColor: "rgba(0,0,0,0.8)" }}
               >
                 {title}
+                {category && (
+                  <>
+                    <br />
+                    <span
+                      style={{
+                        fontWeight: "normal",
+                        color: "rgba(255,255,255,0.7)",
+                      }}
+                    >
+                      {category}
+                    </span>
+                  </>
+                )}
               </Card.Title>
             </Card.ImgOverlay>
           </Card>

@@ -19,6 +19,7 @@ import {
   faMedal,
   faPhone,
   faUserGraduate,
+  faUserShield,
 } from "@fortawesome/free-solid-svg-icons";
 import CardCategoria from "../CardCategoria.js";
 import CardProyecto from "../CardProyecto.js";
@@ -26,7 +27,9 @@ import CardProyecto from "../CardProyecto.js";
 const Perfil = (functionProps) => {
   const isMountedRef = useRef(null);
   const [data, setData] = useState("");
+  const [filteredData, setFilteredData] = useState(null);
   const [projectsData, setProjectsData] = useState(null);
+  const [categories, setCategories] = useState(null);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
   const db = firestore;
@@ -34,7 +37,7 @@ const Perfil = (functionProps) => {
     isMountedRef.current = true;
     if (functionProps.publicUserData) {
       setData(functionProps.publicUserData);
-      setLoading(false);
+
       console.log("ENTRO ACA");
     } else if (user) {
       db.collection("users")
@@ -46,15 +49,31 @@ const Perfil = (functionProps) => {
             console.log("ENTRO ACA");
           }
         });
-      //console.log(user.displayName);
-    } else {
-      if (data) {
-        //setData(null);
-      }
     }
-
+    db.collection("categories")
+      .get()
+      .then((querySnapshot) => {
+        if (querySnapshot && isMountedRef.current) {
+          setCategories(querySnapshot.docs.map((doc) => doc.data()));
+        }
+        setLoading(false);
+      });
     return () => (isMountedRef.current = false);
   }, [user, db]);
+  const userData = data;
+  const filterProjects = () => {
+    if (categories && data) {
+      setFilteredData(
+        categories.map((category) =>
+          category.projects.filter((project) => project.authorID === data.id)
+        )
+      );
+    }
+  };
+  useEffect(() => {
+    console.log("PROYECTOS", categories);
+    filterProjects();
+  }, [categories]);
   useEffect(() => {
     if (data && data.id) {
       db.collection("projects")
@@ -72,7 +91,7 @@ const Perfil = (functionProps) => {
   useEffect(() => {
     console.log("PROYECTOS: ", projectsData);
   }, [projectsData]);
-  const userData = data;
+
   if (loading) {
     return (
       <>
@@ -152,6 +171,14 @@ const Perfil = (functionProps) => {
                               backgroundColor: "rgba(0,0,0,0.5)",
                             }}
                           >
+                            {userData.admin && (
+                              <>
+                                <h1 style={styles.titulo}>
+                                  <FontAwesomeIcon icon={faUserShield} />{" "}
+                                  Administrador
+                                </h1>
+                              </>
+                            )}
                             {userData.show_st_or_grad ? (
                               <>
                                 {userData.student ? (
@@ -236,10 +263,23 @@ const Perfil = (functionProps) => {
                             <h1 style={styles.titulo} className="text-center">
                               <b>PROYECTOS</b>
                             </h1>
-                            {projectsData &&
-                            projectsData.projects.length > 0 ? (
+                            {filteredData && categories && (
                               <CardDeck>
-                                {projectsData.projects.map((item) => (
+                                {filteredData.map((item, index) =>
+                                  item.map((project) => (
+                                    <CardProyecto
+                                      title={project.title}
+                                      image={project.image}
+                                      link={project.link}
+                                      description={project.description}
+                                      setProjectInfo={
+                                        functionProps.setProjectInfo
+                                      }
+                                      category={categories[index].title}
+                                    />
+                                  ))
+                                )}
+                                {/* {projectsData.projects.map((item) => (
                                   <CardProyecto
                                     title={item.title}
                                     image={item.image}
@@ -249,12 +289,8 @@ const Perfil = (functionProps) => {
                                       functionProps.setProjectInfo
                                     }
                                   />
-                                ))}
+                                ))} */}
                               </CardDeck>
-                            ) : (
-                              <p className="text-center">
-                                Aún no ha publicado proyectos
-                              </p>
                             )}
                             <p>{LoremIpsum}</p>
                           </Container>

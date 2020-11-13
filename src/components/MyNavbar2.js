@@ -118,9 +118,9 @@ const MyNavbar2 = (props) => {
 
                   {data && data.admin && (
                     <>
-                      <Dropdown.Item href="#solicitudes_proyectos">
+                      {/* <Dropdown.Item href="#solicitudes_proyectos">
                         <FontAwesomeIcon icon={faStream} /> Solicitudes
-                      </Dropdown.Item>
+                      </Dropdown.Item> */}
                       <Dropdown.Item href="#usuarios">
                         <FontAwesomeIcon icon={faUsersCog} /> Usuarios
                       </Dropdown.Item>

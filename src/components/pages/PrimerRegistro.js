@@ -82,8 +82,8 @@ const PrimerRegistro = (props) => {
     new Promise((resolve) => {
       Resizer.imageFileResizer(
         file,
-        600,
-        600,
+        800,
+        800,
         "JPEG",
         100,
         0,

@@ -205,9 +205,9 @@ const Usuarios = ({ setPublicUserData }) => {
                               </button>
                             </Link>
 
-                            <button className="btn btn-warning mx-2">
+                            {/* <button className="btn btn-warning mx-2">
                               <FontAwesomeIcon icon={faPencilAlt} /> Editar
-                            </button>
+                            </button> */}
 
                             <button
                               onClick={() => {
