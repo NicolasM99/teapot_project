@@ -308,7 +308,6 @@ const Perfil = (functionProps) => {
                                 )}
                               </CardDeck>
                             )}
-                            <p>{LoremIpsum}</p>
                           </Container>
                         </Col>
                       </Row>

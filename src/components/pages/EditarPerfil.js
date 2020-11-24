@@ -165,7 +165,7 @@ const EditarPerfil = ({ showEditModal, setShowEditModal, existingData }) => {
     // let mounted = true;
     // let mounted2 = true;
     if (image) {
-      const uploadTask = storage.ref(`images/${user.uid}_photo`).put(image);
+      const uploadTask = storage.ref(`images/${user.uid}_photo.jpg`).put(image);
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -180,7 +180,7 @@ const EditarPerfil = ({ showEditModal, setShowEditModal, existingData }) => {
         () => {
           storage
             .ref("images")
-            .child(`${user.uid}_photo`)
+            .child(`${user.uid}_photo.jpg`)
             .getDownloadURL()
             .then((url) => {
               if (isMountedRef.current) {

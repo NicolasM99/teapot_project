@@ -1,0 +1,17 @@
+.welcomeButton {
+  cursor: pointer;
+  transition: 0.2s;
+  background-color: #09738d;
+}
+
+.welcomeButton:hover {
+  background-color: #098d6e;
+  transition: 0.2s;
+}
+
+.paragraph {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+
+  align-items: center;
+}

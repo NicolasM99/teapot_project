@@ -5,7 +5,9 @@
 }
 
 .genericCard {
+  border-radius: 0 30px 0 30px;
   background-color: white;
+  transition: 0.2s;
 }
 
 #produccion3d {
@@ -29,6 +31,11 @@
 .cardContainer:hover {
   transform: scale(1.04) !important;
 }
+.cardContainer:hover .genericCard {
+  transition: 0.2s;
+  border-radius: 0% 0% 0% 0% !important;
+}
+
 @media only screen and (max-width: 575px) {
   .cardContainer {
     cursor: pointer;

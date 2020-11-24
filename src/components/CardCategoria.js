@@ -50,8 +50,7 @@ const CardCategoria = ({
               className="genericCard"
               style={{
                 objectFit: "cover",
-                borderTopRightRadius: "30px",
-                borderBottomLeftRadius: "30px",
+
                 height: "100%",
                 border: 0,
                 outline: 0,
