@@ -16,6 +16,7 @@ import { firestore } from "./components/functions/Firebase.js";
 import SolicitudesProyectos from "./components/pages/SolicitudesProyectos";
 import NuevoProyecto from "./components/pages/NuevoProyecto.js";
 import ProyectoIndividual from "./components/pages/ProyectoIndividual.js";
+import EditarCategoria from "./components/pages/EditarCategoria.js";
 
 const Container = ({ publicUserData, setPublicUserData }) => {
   const [categoryInfo, setCategoryInfo] = useState(null);
@@ -72,12 +73,22 @@ const Container = ({ publicUserData, setPublicUserData }) => {
         <Route
           exact
           path="/categoria"
-          component={() => <CategoriaIndividual categoryInfo={categoryInfo} />}
+          component={() => (
+            <CategoriaIndividual
+              setProjectInfo={setProjectInfo}
+              categoryInfo={categoryInfo}
+            />
+          )}
         />
         <Route
           exact
           path="/proyecto"
-          component={() => <ProyectoIndividual projectInfo={projectInfo} />}
+          component={() => (
+            <ProyectoIndividual
+              setPublicUserData={setPublicUserData}
+              projectInfo={projectInfo}
+            />
+          )}
         />
 
         <Route
@@ -106,6 +117,13 @@ const Container = ({ publicUserData, setPublicUserData }) => {
             component={() => <NuevaCategoria />}
           />
         ) : null}
+        {user && userData && userData.admin ? (
+          <Route
+            exact
+            path="/editar_categoria"
+            component={() => <EditarCategoria categoryInfo={categoryInfo} />}
+          />
+        ) : null}
         {user && userData ? (
           <Route
             exact
@@ -113,6 +131,7 @@ const Container = ({ publicUserData, setPublicUserData }) => {
             component={() => <NuevoProyecto />}
           />
         ) : null}
+
         {user && userData && userData.admin ? (
           <Route
             exact

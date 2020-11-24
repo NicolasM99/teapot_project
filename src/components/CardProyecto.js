@@ -9,6 +9,7 @@ const CardProyecto = ({
   setProjectInfo,
   description,
   category,
+  authorID,
 }) => {
   return (
     <>
@@ -17,6 +18,7 @@ const CardProyecto = ({
         <Link
           onClick={() =>
             setProjectInfo({
+              authorID: authorID,
               title: title,
               image: image,
               link: link,
@@ -27,19 +29,20 @@ const CardProyecto = ({
           to={link === "nuevo_proyecto" ? link : `/proyecto#${link}`}
         >
           <Card
-            className="text-white cardSize m-3"
-            style={{ backgroundColor: "transparent" }}
+            className="text-white cardSize py-4 m-3 h-100"
+            style={{ backgroundColor: "transparent", boxShadow: "none" }}
           >
             <Card.Img
               hover
               src={image}
               overlay="white-slight"
               alt="card_image"
-              className="genericCard"
+              className="genericCard h-100"
               style={{
                 objectFit: "cover",
                 borderTopRightRadius: "30px",
                 borderBottomLeftRadius: "30px",
+                objectPosition: "center",
               }}
             />
             <Card.ImgOverlay className="d-flex align-items-end ">

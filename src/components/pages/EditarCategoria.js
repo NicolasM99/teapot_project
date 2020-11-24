@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Spring } from "react-spring/renderprops";
 import { UserContext } from "../functions/UserProvider";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import { firestore, storage } from "../functions/Firebase.js";
 import "../styles/contenido.css";
@@ -10,12 +10,13 @@ import "../styles/loader.css";
 import Resizer from "react-image-file-resizer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faFileUpload,
   faSave,
   faTimesCircle,
   faUpload,
 } from "@fortawesome/free-solid-svg-icons";
 
-const NuevaCategoria = () => {
+const EditarCategoria = ({ categoryInfo }) => {
   const isMountedRef = useRef(null);
   const history = useHistory();
   const [sending, setSending] = useState(false);
@@ -26,11 +27,17 @@ const NuevaCategoria = () => {
   const { user } = useContext(UserContext);
   const [progress, setProgress] = useState(null);
   const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState(null);
-  const [addPhoto, setAddPhoto] = useState("");
+  const [preview, setPreview] = useState(
+    categoryInfo ? categoryInfo.image : null
+  );
+  const [addPhoto, setAddPhoto] = useState(
+    categoryInfo ? categoryInfo.image : null
+  );
   const [finishedImage, setFinishedImage] = useState(false);
-  const [title, setTitle] = useState(null);
-  const [description, setDescription] = useState(null);
+  const [title, setTitle] = useState(categoryInfo ? categoryInfo.title : null);
+  const [description, setDescription] = useState(
+    categoryInfo ? categoryInfo.description : null
+  );
 
   useEffect(() => {
     isMountedRef.current = true;
@@ -49,6 +56,7 @@ const NuevaCategoria = () => {
   }, [user, db]);
   const handleUpload = (e) => {
     const imageID = Date.now();
+
     e.preventDefault();
     if (title && description) {
       if (image) {
@@ -88,7 +96,7 @@ const NuevaCategoria = () => {
           }
         );
       } else {
-        setAddPhoto("");
+        setAddPhoto(categoryInfo.image);
         setFinishedImage(true);
       }
     }
@@ -101,8 +109,7 @@ const NuevaCategoria = () => {
         image: addPhoto,
         description: description,
         link: `categoria_${title.toLowerCase().replace(/ /g, "_")}`,
-        id: `${receivedData.length + 1}`,
-        projects: [],
+        id: categoryInfo.id,
       };
       if (
         user &&
@@ -114,7 +121,7 @@ const NuevaCategoria = () => {
       ) {
         db.collection("categories")
           .doc(newCategoryData.id)
-          .set(newCategoryData)
+          .update(newCategoryData)
           .then(() => {
             //if (isMountedRef.current) {
             setData(newCategoryData);
@@ -204,92 +211,104 @@ const NuevaCategoria = () => {
         {(props) => (
           <div style={props}>
             <div className="contenido">
-              <h1 className="titulo">NUEVA CATEGORIA</h1>
-              <form>
-                <div className="row">
-                  <label
-                    className="col-sm-12 col-md-12 col-lg-1 input_label"
-                    htmlFor="titleInput"
-                  >
-                    Título:
-                  </label>
-                  <input
-                    autoComplete="off"
-                    type="text"
-                    name="titleInput"
-                    id="titleInput"
-                    onChange={(event) => setTitle(event.target.value)}
-                    className="form-control col-md-8 mx-auto"
-                    placeholder="Escribe aquí el título de la categoría"
-                    style={{ backgroundColor: "white" }}
-                  />
-                </div>
-
-                <div className="row">
-                  <label
-                    className="col-sm-12 col-md-12 col-lg-1 input_label"
-                    htmlFor="descriptionInput"
-                  >
-                    Descripción:
-                  </label>
-                  <textarea
-                    onChange={(event) => setDescription(event.target.value)}
-                    autoComplete="off"
-                    type="text"
-                    name="descriptionInput"
-                    id="descriptionInput"
-                    className="form-control p-2 col-md-8 mx-auto"
-                    placeholder="Descripción de la categoría"
-                    style={{ backgroundColor: "white" }}
-                  />
-                </div>
-                <div className="row">
-                  <input
-                    name="image-input"
-                    id="image-input"
-                    className="input"
-                    onChange={onImageChange}
-                    type="file"
-                    accept="image/*"
-                    style={{ textTransform: "none" }}
-                  />
-                  <div className="input-label col px-0">
+              <h1 className="titulo">EDITAR CATEGORIA</h1>
+              {categoryInfo ? (
+                <form>
+                  <div className="row">
                     <label
-                      htmlFor="image-input"
-                      className="btn btn-warning mx-auto col-md-4 "
+                      className="col-sm-12 col-md-12 col-lg-1 input_label"
+                      htmlFor="titleInput"
                     >
-                      <FontAwesomeIcon icon={faUpload} />
-                      <b> Subir imagen de categoría</b>
+                      Título:
                     </label>
-                  </div>
-                </div>
-                {preview ? (
-                  <div className="text-center col-12">
-                    <img
-                      src={preview}
-                      className="col-md-6"
-                      alt="preview_photo"
-                      id="photoPreview"
+                    <input
+                      defaultValue={categoryInfo.title}
+                      autoComplete="off"
+                      type="text"
+                      name="titleInput"
+                      id="titleInput"
+                      onChange={(event) => setTitle(event.target.value)}
+                      className="form-control col-md-8 mx-auto"
+                      placeholder="Escribe aquí el título de la categoría"
+                      style={{ backgroundColor: "white" }}
                     />
                   </div>
-                ) : null}
-                <div className="text-center mt-3">
-                  <Button
-                    className="m-4"
-                    variant="primary"
-                    onClick={(e) => handleUpload(e)}
-                  >
-                    <FontAwesomeIcon icon={faSave} /> Agregar nueva categoría
-                  </Button>
-                  <Button
-                    className="m-4"
-                    variant="danger"
-                    onClick={() => history.push("/categorias")}
-                  >
-                    <FontAwesomeIcon icon={faTimesCircle} /> Cancelar
-                  </Button>
-                </div>
-              </form>
+
+                  <div className="row">
+                    <label
+                      className="col-sm-12 col-md-12 col-lg-1 input_label"
+                      htmlFor="descriptionInput"
+                    >
+                      Descripción:
+                    </label>
+                    <textarea
+                      defaultValue={categoryInfo.description}
+                      onChange={(event) => setDescription(event.target.value)}
+                      autoComplete="off"
+                      type="text"
+                      name="descriptionInput"
+                      id="descriptionInput"
+                      className="form-control p-2 col-md-8 mx-auto"
+                      placeholder="Descripción de la categoría"
+                      style={{ backgroundColor: "white" }}
+                    />
+                  </div>
+                  <div className="row">
+                    <input
+                      name="image-input"
+                      id="image-input"
+                      className="input"
+                      onChange={onImageChange}
+                      type="file"
+                      accept="image/*"
+                      style={{ textTransform: "none" }}
+                    />
+                    <div className="input-label col px-0">
+                      <label
+                        htmlFor="image-input"
+                        className="btn btn-warning mx-auto col-md-4 "
+                      >
+                        <FontAwesomeIcon icon={faUpload} />
+                        <b> Subir imagen de categoría</b>
+                      </label>
+                    </div>
+                  </div>
+                  {preview ? (
+                    <div className="text-center col-12">
+                      <img
+                        src={preview}
+                        className="col-md-6"
+                        alt="preview_photo"
+                        id="photoPreview"
+                      />
+                    </div>
+                  ) : null}
+                  <div className="text-center mt-3">
+                    <Button
+                      className="m-4"
+                      variant="primary"
+                      onClick={(e) => handleUpload(e)}
+                    >
+                      <FontAwesomeIcon icon={faSave} /> Actualizar categoría
+                    </Button>
+                    <Button
+                      className="m-4"
+                      variant="danger"
+                      onClick={() => history.push("/categorias")}
+                    >
+                      <FontAwesomeIcon icon={faTimesCircle} /> Cancelar
+                    </Button>
+                  </div>
+                </form>
+              ) : (
+                <p className="text-center">
+                  <b>
+                    Parece que no has seleccionado una categoría. Por favor,
+                    vuelve a la sección de{" "}
+                    <Link to="/categorias">Categorías</Link> y selecciona una
+                  </b>
+                </p>
+              )}
             </div>
           </div>
         )}
@@ -298,4 +317,4 @@ const NuevaCategoria = () => {
   }
 };
 
-export default NuevaCategoria;
+export default EditarCategoria;

@@ -69,33 +69,34 @@ const Categorias = ({ setCategoryInfo }) => {
           <div style={props}>
             <div className="contenido">
               <h1 className="titulo">CATEGORÍAS</h1>
-              <p className="parrafo">
-                Descubre los proyectos de estas diferentes categorías
+              <p className="parrafo w-100 text-center">
+                <b>Descubre los proyectos de estas diferentes categorías</b>
               </p>
             </div>
             {/* <div className="row"> */}
             <CardDeck>
-              {userData && userData.admin ? (
+              {userData && userData.admin && (
                 <CardCategoria
                   title="Nueva categoría"
                   image={plusIcon}
                   link="nueva_categoria"
                   setCategoryInfo={setCategoryInfo}
                 />
-              ) : (
-                user && (
-                  <CardCategoria
-                    title="Solicitar categoría"
-                    image={plusIcon}
-                    link="solicitar_categoria"
-                    setCategoryInfo={setCategoryInfo}
-                  />
-                )
               )}
+              {/* //   {user && (
+              //     <CardCategoria
+              //       title="Solicitar categoría"
+              //       image={plusIcon}
+              //       link="solicitar_categoria"
+              //       setCategoryInfo={setCategoryInfo}
+              //     />
+              //   )
+              // } */}
 
               {data &&
                 data.map((id) => (
                   <CardCategoria
+                    id={id.id}
                     title={id.title}
                     image={id.image}
                     link={id.link}

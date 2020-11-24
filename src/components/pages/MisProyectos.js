@@ -101,6 +101,7 @@ const MisProyectos = ({ setProjectInfo }) => {
                           title={project.title}
                           image={project.image}
                           link={project.link}
+                          authorID={project.authorID}
                           description={project.description}
                           setProjectInfo={setProjectInfo}
                           category={receivedData[index].title}

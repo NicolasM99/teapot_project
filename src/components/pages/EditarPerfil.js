@@ -16,12 +16,12 @@ import "../styles/primer_registro.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faFilePdf, faUpload } from "@fortawesome/free-solid-svg-icons";
 
-const PrimerRegistro = (props) => {
+const EditarPerfil = ({ showEditModal, setShowEditModal, existingData }) => {
   const history = useHistory();
   const { user } = useContext(UserContext);
   const [receivedData, setReceivedData] = useState(false);
   const db = firestore;
-  const [data, setData] = useState("");
+  const [data, setData] = useState(existingData);
   //const [send, setSend] = useState(false);
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null); //AGREGAR EL PREVIEW DE LA IMAGEN QUE SE CARGA
@@ -33,19 +33,21 @@ const PrimerRegistro = (props) => {
   const [showTerms, setShowTerms] = useState(null);
 
   const [certificates, setCertificates] = useState(null);
-  const [showSemesters, setShowSemesters] = useState(false);
+  const [showSemesters, setShowSemesters] = useState(existingData.student);
   const [showModal, setShowModal] = useState(true);
   //const [createProfile, setCreateProfile] = useState(false);
-  const [addEmail, setAddEmail] = useState("");
-  const [addPhoto, setAddPhoto] = useState("");
-  const [addPhone, setAddPhone] = useState("");
-  const [addBio, setAddBio] = useState("");
-  const [addExp, setAddExp] = useState("");
-  const [addStudent, setAddStudent] = useState(false);
-  const [addGraduated, setAddGraduated] = useState(false);
-  const [addNickname, setAddNickname] = useState("");
-  const [addCertificate, setAddCertificate] = useState([]);
-  const [addSemester, setAddSemester] = useState("0");
+  const [addEmail, setAddEmail] = useState(existingData.email);
+  const [addPhoto, setAddPhoto] = useState(existingData.photo);
+  const [addPhone, setAddPhone] = useState(existingData.phone);
+  const [addBio, setAddBio] = useState(existingData.bio);
+  const [addExp, setAddExp] = useState(existingData.exp);
+  const [addStudent, setAddStudent] = useState(existingData.student);
+  const [addGraduated, setAddGraduated] = useState(existingData.graduated);
+  const [addNickname, setAddNickname] = useState(existingData.nickName);
+  const [addCertificate, setAddCertificate] = useState(
+    existingData.certificate
+  );
+  const [addSemester, setAddSemester] = useState(existingData.semester);
 
   const [showNickname, setShowNickname] = useState(true);
   const [showEmail, setShowEmail] = useState(true);
@@ -59,25 +61,17 @@ const PrimerRegistro = (props) => {
   const [finishedImage, setFinishedImage] = useState(false);
   const [finishedCert, setFinishedCert] = useState(false);
 
-  const [nombresCerts, setNombresCerts] = useState([]);
+  const [nombresCerts, setNombresCerts] = useState(
+    existingData.certificate.map(
+      (cert) =>
+        cert
+          .substring(cert.lastIndexOf("_certificate_"), cert.indexOf(".pdf"))
+          .replace("_certificate_", "")
+          .replace(/%20/g, " ") + ".pdf"
+    )
+  );
 
   const [enableContinue, setEnableContinue] = useState(false);
-  useEffect(() => {
-    if (receivedData) {
-      if (user && data) {
-        setAddEmail(data.email);
-        setAddNickname(data.nickName);
-        setShowModal(true);
-        setAddPhoto(data.photo);
-      } else if (user && !data) {
-        setAddPhoto(user.photoURL);
-        setAddEmail(user.email);
-        setAddNickname(user.displayName);
-        setShowModal(true);
-      }
-    }
-  }, [receivedData]);
-
   const resizeFile = (file) =>
     new Promise((resolve) => {
       Resizer.imageFileResizer(
@@ -108,6 +102,8 @@ const PrimerRegistro = (props) => {
   };
 
   const onCertificateChange = (e) => {
+    var certAux = nombresCerts;
+
     if (e.target.files) {
       const Files = e.target.files;
       var pass = 1;
@@ -119,23 +115,27 @@ const PrimerRegistro = (props) => {
         }
       }
       if (pass === 1) {
+        Array.from(Files).forEach((file) => {
+          nombresCerts.push(file.name);
+          console.log(file.name);
+        });
         setCertificates(Files);
       }
     }
   };
 
-  useEffect(() => {
-    var certAux = [];
-    if (certificates) {
-      Array.from(certificates).forEach((file) => {
-        certAux.push(file.name);
-        console.log(file.name);
-      });
-    }
-    if (certAux.length > 0) {
-      setNombresCerts(certAux);
-    }
-  }, [certificates]);
+  //   useEffect(() => {
+  //     // var certAux = nombresCerts;
+  //     if (certificates) {
+  //       Array.from(certificates).forEach((file) => {
+  //         certAux.push(file.name);
+  //         console.log(file.name);
+  //       });
+  //     }
+  //     if (certAux.length > 0) {
+  //       //   setNombresCerts(certAux);
+  //     }
+  //   }, [certificates]);
 
   useEffect(() => {
     isMountedRef.current = true;
@@ -147,7 +147,7 @@ const PrimerRegistro = (props) => {
           if (doc && isMountedRef.current) {
             setData(doc.data());
             console.log("ENTRO ACA");
-            setReceivedData(true);
+            // setReceivedData(true);
           }
         });
       //console.log(user.displayName);
@@ -160,8 +160,10 @@ const PrimerRegistro = (props) => {
     return () => (isMountedRef.current = false);
   }, [user, db]);
   const handleUpload = () => {
-    setSending(true);
     isMountedRef.current = true;
+    setSending(true);
+    // let mounted = true;
+    // let mounted2 = true;
     if (image) {
       const uploadTask = storage.ref(`images/${user.uid}_photo`).put(image);
       uploadTask.on(
@@ -184,23 +186,20 @@ const PrimerRegistro = (props) => {
               if (isMountedRef.current) {
                 console.log("imagen: ", url);
                 setAddPhoto(url);
-
                 setFinishedImage(true);
               } else {
-                console.log("NO ENTRÓ");
+                console.log("NO ENTRÓ A LA FOTO");
               }
             });
         }
       );
     } else {
-      setAddPhoto(user.photoURL);
+      setAddPhoto(existingData.photo);
       setFinishedImage(true);
     }
-
     if (certificates) {
       console.log("certificates state: ", certificates[0].name);
-      var sendCertificates = [];
-      var finished = false;
+      var sendCertificates = existingData.certificate;
       for (var i = 0; i < certificates.length; i++) {
         const auxI = i;
         const name = certificates[i].name;
@@ -229,22 +228,24 @@ const PrimerRegistro = (props) => {
               .then((url) => {
                 if (isMountedRef.current) {
                   sendCertificates.push(url);
-                  console.log(sendCertificates);
+                  console.log(
+                    sendCertificates.length,
+                    certificates.length,
+                    existingData.certificate.length,
+                    nombresCerts.length
+                  );
                 } else {
-                  console.log("NO ENTRÓ");
+                  console.log("NO ENTRÓ AL CERTIFICADO");
                 }
               })
               .then(() => {
-                if (sendCertificates.length === certificates.length) {
-                  // console.log("ENTRÓ A VALIDAR AUXILIAR", sendCertificates);
+                if (sendCertificates.length === nombresCerts.length) {
+                  console.log("ENTRÓ A VALIDAR AUXILIAR", sendCertificates);
                   setAddCertificate(sendCertificates);
-                  // setFinishedCert(true);
                 }
               })
               .then(() => {
-                if (sendCertificates.length === certificates.length) {
-                  // console.log("ENTRÓ A VALIDAR AUXILIAR", sendCertificates);
-                  // setAddCertificate(sendCertificates);
+                if (sendCertificates.length === nombresCerts.length) {
                   console.log(auxI, certificates.length);
                   console.log("ADD CERTIFICATE: ", addCertificate);
                   setFinishedCert(true);
@@ -254,7 +255,9 @@ const PrimerRegistro = (props) => {
         );
       }
     } else setFinishedCert(true);
-    return () => (isMountedRef.current = false);
+    return () => {
+      isMountedRef.current = false;
+    };
   };
   useEffect(() => {
     if (finishedImage && finishedCert) {
@@ -267,11 +270,11 @@ const PrimerRegistro = (props) => {
   const createProfile = () => {
     isMountedRef.current = true;
     if (!image) {
-      setAddPhoto(user.photoURL);
+      setAddPhoto(existingData.photo);
     }
     const newUserData = {
       id: user.uid,
-      admin: false,
+      //   admin: false,
       username: user.displayName,
       loginEmail: user.email,
       nickName: addNickname,
@@ -296,7 +299,7 @@ const PrimerRegistro = (props) => {
     };
     db.collection("users")
       .doc(user.uid)
-      .set(newUserData)
+      .update(newUserData)
       .then(() => {
         //if (isMountedRef.current) {
         setData(newUserData);
@@ -309,7 +312,6 @@ const PrimerRegistro = (props) => {
       });
     return () => (isMountedRef.current = false);
   };
-
   useEffect(() => {
     if (sent) {
       createProfile();
@@ -374,7 +376,7 @@ const PrimerRegistro = (props) => {
   function handleShowCertificates(e) {
     setShowCertificates(!showCertificates);
   }
-  const handleClose = () => setShowModal(false);
+  const handleClose = () => setShowEditModal(false);
   const handleCloseTerms = () => setShowTerms(false);
 
   if (sending) {
@@ -403,32 +405,7 @@ const PrimerRegistro = (props) => {
     return (
       <>
         <Modal
-          show={showTerms}
-          onHide={handleCloseTerms}
-          size="md"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-        >
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">
-              <b>Términos y condiciones</b>
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <TerminosCondiciones />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              style={{ textTransform: "none" }}
-              variant="danger"
-              onClick={() => handleCloseTerms()}
-            >
-              <b>Cerrar</b>
-            </Button>
-          </Modal.Footer>
-        </Modal>
-        <Modal
-          show={showModal}
+          show={showEditModal}
           onHide={handleClose}
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
@@ -437,21 +414,11 @@ const PrimerRegistro = (props) => {
           <form id="perfilForm" method="get">
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">
-                <b>Crear perfil</b>
+                <b>Editar perfil</b>
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <div className="container">
-                <h5 className="text-center mb-3">
-                  ¡Gracias por hacer parte de nuestra comunidad! <br />
-                  <br />
-                  Te invitamos a llenar el siguiente formulario para crear tu
-                  perfil.
-                  <br />
-                  <br /> También puedes dejar los valores por defecto y
-                  editarlos en otro momento.
-                </h5>
-
                 <div className="form-group">
                   <div className="row align-items-center  my-3">
                     <label
@@ -575,7 +542,7 @@ const PrimerRegistro = (props) => {
                       className="form-control col-sm-11 col-md-11 col-lg-10 mx-auto"
                       id="phoneInput"
                       placeholder="Ej: +57 300 123 45 67"
-                      defaultValue={""}
+                      defaultValue={addPhone}
                       onChange={handlePhoneChange}
                     />
                   </div>
@@ -584,6 +551,9 @@ const PrimerRegistro = (props) => {
                     type="radio"
                     className="mb-2"
                     name="stOrGrad"
+                    defaultValue={
+                      existingData.student ? 1 : existingData.graduated ? 2 : 0
+                    }
                   >
                     <ToggleButton
                       style={{ textTransform: "none" }}
@@ -595,6 +565,7 @@ const PrimerRegistro = (props) => {
                     <ToggleButton
                       style={{ textTransform: "none" }}
                       value={2}
+                      defaultChecked={true}
                       onChange={GraduatedFunc}
                     >
                       Egresado
@@ -606,8 +577,11 @@ const PrimerRegistro = (props) => {
                         <select
                           className="custom-select px-3"
                           onChange={handleSemesterChange}
+                          defaultValue={
+                            existingData.student ? existingData.semester : ""
+                          }
                         >
-                          <option defaultValue="">Semestre actual</option>
+                          <option value="">Semestre actual</option>
                           <option value="Primer">Primero</option>
                           <option value="Segundo">Segundo</option>
                           <option value="Tercer">Tercero</option>
@@ -637,6 +611,7 @@ const PrimerRegistro = (props) => {
                       placeholder="Escribe aquí algo que quieras contar sobre ti..."
                       rows="3"
                       onChange={handleBioChange}
+                      defaultValue={addBio}
                     />
                   </div>
                   <div className="row align-items-center my-3">
@@ -652,6 +627,7 @@ const PrimerRegistro = (props) => {
                       placeholder="Escribe aquí tu experiencia laboral..."
                       rows="3"
                       onChange={handleExpChange}
+                      defaultValue={addExp}
                     />
                   </div>
                   <div className="row align-items-center my-3">
@@ -859,47 +835,13 @@ const PrimerRegistro = (props) => {
               </div>
             </Modal.Body>
             <Modal.Footer>
-              <div className="custom-control custom-checkbox">
-                <input
-                  type="checkbox"
-                  id="termsCheckbox"
-                  className="custom-control-input"
-                  required
-                  onChange={() => setEnableContinue(!enableContinue)}
-                />
-                <label className="custom-control-label" htmlFor="termsCheckbox">
-                  Acepto los{" "}
-                  <a href="#" onClick={() => setShowTerms(true)}>
-                    {" "}
-                    términos y condiciones.
-                  </a>
-                </label>
-              </div>
-              {enableContinue ? (
-                <Button
-                  style={{ textTransform: "none" }}
-                  variant="success"
-                  onClick={() => handleUpload()}
-                >
-                  <b>Crear perfil</b>
-                </Button>
-              ) : (
-                <>
-                  <Button
-                    style={{ textTransform: "none" }}
-                    variant="success"
-                    disabled
-                  >
-                    Crear perfil
-                  </Button>
-                  <small
-                    style={{ textAlign: "right", margin: 0 }}
-                    className="form-text text-muted col-sm-11 col-md-11 col-lg-10 p-0"
-                  >
-                    Debes aceptar los términos y condiciones para continuar.
-                  </small>
-                </>
-              )}
+              <Button
+                style={{ textTransform: "none" }}
+                variant="success"
+                onClick={() => handleUpload()}
+              >
+                <b>Actualizar perfil</b>
+              </Button>
             </Modal.Footer>
           </form>
         </Modal>
@@ -908,4 +850,4 @@ const PrimerRegistro = (props) => {
   }
 };
 
-export default PrimerRegistro;
+export default EditarPerfil;

@@ -8,6 +8,7 @@ const CardCategoria = ({
   link,
   setCategoryInfo,
   description,
+  id,
 }) => {
   return (
     <>
@@ -20,6 +21,7 @@ const CardCategoria = ({
               image: image,
               link: link,
               description: description,
+              id: id,
             })
           }
           className="m-0 p-0"
@@ -32,8 +34,13 @@ const CardCategoria = ({
           }
         >
           <Card
-            className="text-white cardSize m-3"
-            style={{ backgroundColor: "transparent" }}
+            className="text-white cardSize h-100 py-4 m-3"
+            style={{
+              backgroundColor: "transparent",
+              border: 0,
+              outline: 0,
+              boxShadow: "none",
+            }}
           >
             <Card.Img
               hover
@@ -45,6 +52,9 @@ const CardCategoria = ({
                 objectFit: "cover",
                 borderTopRightRadius: "30px",
                 borderBottomLeftRadius: "30px",
+                height: "100%",
+                border: 0,
+                outline: 0,
               }}
             />
             <Card.ImgOverlay className="d-flex align-items-end ">

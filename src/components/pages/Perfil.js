@@ -17,27 +17,32 @@ import {
   faFeatherAlt,
   faFilePdf,
   faMedal,
+  faPencilAlt,
   faPhone,
   faUserGraduate,
   faUserShield,
 } from "@fortawesome/free-solid-svg-icons";
 import CardCategoria from "../CardCategoria.js";
 import CardProyecto from "../CardProyecto.js";
+import UserIcon from "../../img/user_icon.png";
+import { Link } from "react-router-dom";
+import EditarPerfil from "./EditarPerfil.js";
 
 const Perfil = (functionProps) => {
   const isMountedRef = useRef(null);
-  const [data, setData] = useState("");
+  const [userData, setUserData] = useState("");
   const [filteredData, setFilteredData] = useState(null);
   const [projectsData, setProjectsData] = useState(null);
   const [categories, setCategories] = useState(null);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
+  const [showEditModal, setShowEditModal] = useState(false);
   const db = firestore;
   useEffect(() => {
     isMountedRef.current = true;
     if (functionProps.publicUserData) {
-      setData(functionProps.publicUserData);
-
+      setUserData(functionProps.publicUserData);
+      console.log("DATA DEL PERFIL", functionProps.publicUserData);
       console.log("ENTRO ACA");
     } else if (user) {
       db.collection("users")
@@ -45,7 +50,7 @@ const Perfil = (functionProps) => {
         .get()
         .then((doc) => {
           if (doc && isMountedRef.current) {
-            setData(doc.data());
+            setUserData(doc.data());
             console.log("ENTRO ACA");
           }
         });
@@ -60,12 +65,13 @@ const Perfil = (functionProps) => {
       });
     return () => (isMountedRef.current = false);
   }, [user, db]);
-  const userData = data;
   const filterProjects = () => {
-    if (categories && data) {
+    if (categories && userData) {
       setFilteredData(
         categories.map((category) =>
-          category.projects.filter((project) => project.authorID === data.id)
+          category.projects.filter(
+            (project) => project.authorID === userData.id
+          )
         )
       );
     }
@@ -75,9 +81,9 @@ const Perfil = (functionProps) => {
     filterProjects();
   }, [categories]);
   useEffect(() => {
-    if (data && data.id) {
+    if (userData && userData.id) {
       db.collection("projects")
-        .doc(data.id)
+        .doc(userData.id)
         .get()
         .then((doc) => {
           if (doc) {
@@ -87,7 +93,7 @@ const Perfil = (functionProps) => {
         });
     }
     setLoading(false);
-  }, [data]);
+  }, [userData]);
   useEffect(() => {
     console.log("PROYECTOS: ", projectsData);
   }, [projectsData]);
@@ -112,8 +118,27 @@ const Perfil = (functionProps) => {
             <>
               <div className="wrapper">
                 <div className="contenido">
+                  {userData && (
+                    <EditarPerfil
+                      showEditModal={showEditModal}
+                      setShowEditModal={setShowEditModal}
+                      existingData={userData}
+                    />
+                  )}
+
                   {userData ? (
                     <>
+                      {user && userData.id === user.uid && (
+                        <Button
+                          className="mb-4"
+                          onClick={() => setShowEditModal(true)}
+                          variant="success"
+                        >
+                          <b>Editar perfil </b>
+                          <FontAwesomeIcon icon={faPencilAlt} />
+                        </Button>
+                      )}
+
                       <h1 className="titulo">
                         {userData.show_nickname
                           ? userData.nickName
@@ -129,21 +154,22 @@ const Perfil = (functionProps) => {
                               top: 0,
                             }}
                           >
-                            {userData.show_photo ? (
-                              <Image
-                                src={userData.photo}
-                                alt="profilePic"
-                                className="col-12 p-0"
-                                style={{
-                                  objectFit: "cover",
-                                  borderTopRightRadius: "30px",
-                                  borderBottomLeftRadius: "30px",
-                                  margin: "auto",
-                                  marginBottom: "10px",
-                                  backgroundColor: "rgba(255,255,255,0.1)",
-                                }}
-                              />
-                            ) : null}
+                            <Image
+                              src={
+                                userData.show_photo ? userData.photo : UserIcon
+                              }
+                              alt="profilePic"
+                              className="col-12 p-0"
+                              style={{
+                                objectFit: "cover",
+                                borderTopRightRadius: "30px",
+                                borderBottomLeftRadius: "30px",
+                                margin: "auto",
+                                marginBottom: "10px",
+                                backgroundColor: "rgba(255,255,255,0.1)",
+                              }}
+                            />
+
                             <div className="text-center">
                               <h1 style={styles.titulo}>Contacto</h1>
 
@@ -268,6 +294,7 @@ const Perfil = (functionProps) => {
                                 {filteredData.map((item, index) =>
                                   item.map((project) => (
                                     <CardProyecto
+                                      authorID={project.authorID}
                                       title={project.title}
                                       image={project.image}
                                       link={project.link}
@@ -279,17 +306,6 @@ const Perfil = (functionProps) => {
                                     />
                                   ))
                                 )}
-                                {/* {projectsData.projects.map((item) => (
-                                  <CardProyecto
-                                    title={item.title}
-                                    image={item.image}
-                                    link={item.link}
-                                    description={item.description}
-                                    setProjectInfo={
-                                      functionProps.setProjectInfo
-                                    }
-                                  />
-                                ))} */}
                               </CardDeck>
                             )}
                             <p>{LoremIpsum}</p>

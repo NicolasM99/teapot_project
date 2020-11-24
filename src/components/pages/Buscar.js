@@ -9,6 +9,7 @@ import "../styles/BuscarStyle.css";
 import "../styles/contenido.css";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import UserIcon from "../../img/user_icon.png";
 
 const Buscar = (props) => {
   const isMountedRef = useRef(null);
@@ -122,7 +123,7 @@ const Buscar = (props) => {
                     />
                   </Col>
                 </Row>
-                <Row>
+                <Row className="justify-content-center">
                   {filteredData && filteredData.length > 0 ? (
                     filteredData.map((id, index) => (
                       <Spring
@@ -145,7 +146,7 @@ const Buscar = (props) => {
                                   backgroundColor: "rgba(255,255,255,0.1)",
                                   objectPosition: "center",
                                 }}
-                                src={id.photo}
+                                src={id.show_photo ? id.photo : UserIcon}
                                 alt="user_photo"
                               />
                               <p

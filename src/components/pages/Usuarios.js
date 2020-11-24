@@ -138,30 +138,21 @@ const Usuarios = ({ setPublicUserData }) => {
               <Modal.Footer>
                 <Button
                   style={{ textTransform: "none" }}
-                  variant="danger"
-                  onClick={() => setShowConfirm(false)}
-                >
-                  No
-                </Button>
-                <Button
-                  style={{ textTransform: "none" }}
                   variant="success"
                   onClick={() => handleDeleteUser(deleteID)}
                 >
                   Sí
                 </Button>
+                <Button
+                  style={{ textTransform: "none" }}
+                  variant="danger"
+                  onClick={() => setShowConfirm(false)}
+                >
+                  No
+                </Button>
               </Modal.Footer>
             </Modal>
             <h1 className="titulo">ADMINISTRAR PERFILES</h1>
-            {/* <div>
-              <button
-                onClick={() => setShowNewUser(true)}
-                className="btn btn-primary w-100 my-3"
-              >
-                <FontAwesomeIcon icon={faUserPlus} /> AGREGAR PERFIL
-              </button>
-            </div> */}
-
             <Table responsive striped bordered hover variant="dark">
               <thead>
                 <tr className="text-center">
@@ -204,11 +195,6 @@ const Usuarios = ({ setPublicUserData }) => {
                                 <FontAwesomeIcon icon={faEye} /> Ver perfil
                               </button>
                             </Link>
-
-                            {/* <button className="btn btn-warning mx-2">
-                              <FontAwesomeIcon icon={faPencilAlt} /> Editar
-                            </button> */}
-
                             <button
                               onClick={() => {
                                 setShowConfirm(true);

@@ -137,12 +137,6 @@ const NuevoProyecto = () => {
         db.collection("categories")
           .doc(selectedCategory)
           .set({ projects: categoryProjects }, { merge: true })
-          // .then(() => {
-          //   //if (isMountedRef.current) {
-          //   setData(newCategoryData);
-          //   console.log("new category data: ", newCategoryData);
-          //   //}
-          // })
           .then(() => {
             history.push("/mis_proyectos");
             window.location.reload();
