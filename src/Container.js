@@ -17,7 +17,7 @@ import SolicitudesProyectos from "./components/pages/SolicitudesProyectos";
 import NuevoProyecto from "./components/pages/NuevoProyecto.js";
 import ProyectoIndividual from "./components/pages/ProyectoIndividual.js";
 import EditarCategoria from "./components/pages/EditarCategoria.js";
-
+import "./App.css";
 const Container = ({ publicUserData, setPublicUserData }) => {
   const [categoryInfo, setCategoryInfo] = useState(null);
   const [projectInfo, setProjectInfo] = useState(null);

@@ -7,6 +7,7 @@ import "../styles/loader.css";
 import "../styles/bienvenidaStyle.css";
 import { firestore, signInWithGoogle } from "../functions/Firebase.js";
 import { Link } from "react-router-dom";
+import MultimediaLogo from "../../img/logo_multimedia.png";
 
 const Bienvenida = () => {
   const isMountedRef = useRef(null);

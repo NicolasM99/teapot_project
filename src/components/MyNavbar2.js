@@ -7,9 +7,8 @@ import React, {
 } from "react";
 import { UserContext } from "./functions/UserProvider.js";
 import { signOut, signInWithGoogle, firestore } from "./functions/Firebase.js";
-
 import { Navbar, Nav, Dropdown } from "react-bootstrap";
-import logo from "../img/logo_multifolio_sin_fondo.png";
+import logo from "../img/logo_con_gradiente.png";
 import NombreFoto from "./NombreFoto";
 import "./styles/navbar2.css";
 import "./styles/scroll.css";
@@ -72,15 +71,15 @@ const MyNavbar2 = (props) => {
           <Navbar.Brand className="mx-0" href="#inicio">
             <div className="logo_container text-center">
               <img
-                className="multifolioLogo mb-2"
+                className="multifolioLogo"
                 src={logo}
                 alt="logo_multifolio"
                 style={{
-                  display: "inline-block",
+                  display: "flex",
                 }}
               />
             </div>
-            <h1 className="brandTitle">MULTIFOLIO</h1>
+            <h1 className="brandTitle m-0">MULTIFOLIO</h1>
           </Navbar.Brand>
         </div>
         <Navbar.Toggle

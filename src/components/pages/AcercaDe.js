@@ -43,7 +43,7 @@ const AcercaDe = () => {
                   className="align-items-center d-flex"
                 >
                   <p className="my-3  w-100 mx-auto text-center">
-                    Esta página fue realizada por estudiantes de Ingeniería en
+                    Multifolio fue realizado por estudiantes de Ingeniería en
                     Multimedia de la Universidad Militar Nueva Granada, como
                     proyecto de las materias Gestión Integral de Proyectos y
                     Tecnologías de Internet, a cargo de la Docente Karen Linares
@@ -114,18 +114,30 @@ const AcercaDe = () => {
             <div className="contenido mt-3">
               <Row className="py-3">
                 <Col className="text-center">
-                  <Image
-                    className="mr-2"
-                    width="100rem"
-                    src={UmngLogo}
-                    alt="umng_logo"
-                  />
-                  <Image
-                    className="ml-2"
-                    width="100rem"
-                    src={MultimediaLogo}
-                    alt="multimedia_logo"
-                  />
+                  <a
+                    href="https://umng.edu.co/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Image
+                      className="mr-2"
+                      width="100rem"
+                      src={UmngLogo}
+                      alt="umng_logo"
+                    />
+                  </a>
+                  <a
+                    href="https://www.umng.edu.co/programas/pregrados/ingenieria-multimedia"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Image
+                      className="ml-2"
+                      width="100rem"
+                      src={MultimediaLogo}
+                      alt="multimedia_logo"
+                    />
+                  </a>
                 </Col>
               </Row>
               <Row>
