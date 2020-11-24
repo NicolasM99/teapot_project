@@ -63,7 +63,7 @@ const AcercaDe = () => {
                   </Col>
                   <Col>
                     <h2>Karen Linares Luque</h2>
-                    <p>Docente de las materias</p>
+                    <p>Docente en la UMNG de Ingeniería en Multimedia</p>
                   </Col>
                 </Col>
               </Row>

@@ -216,7 +216,7 @@ const Bienvenida = () => {
                     </p>
                   </Col>
                   <Col lg={5} className="m-0 welcomeButton">
-                    <Link to="/crear_perfil" style={{ textDecoration: "none" }}>
+                    <Link to="/buscar" style={{ textDecoration: "none" }}>
                       <p
                         className="parrafo text-center align-items-center d-flex justify-content-center text-center m-0 p-5"
                         style={{ color: "white" }}
