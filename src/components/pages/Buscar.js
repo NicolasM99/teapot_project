@@ -113,8 +113,8 @@ const Buscar = (props) => {
                       }
                       type="text"
                       required
-                      className="form-control col-12"
-                      placeholder="Escribe un nombre de usuario"
+                      className="searchbar col-12"
+                      placeholder="Escribe el nombre de usuario a buscar"
                       style={{
                         backgroundColor: "#E5EEFF",
                         borderRadius: 400,

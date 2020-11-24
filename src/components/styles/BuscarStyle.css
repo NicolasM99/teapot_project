@@ -1,3 +1,18 @@
+.searchbar {
+  padding: 1rem !important;
+  text-align: center;
+  transition: 0.2s;
+  background-color: white !important;
+}
+.searchbar:focus::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+.searchbar:focus {
+  color: white !important;
+  transition: 0.2s;
+  background-color: #0087cf !important;
+}
+
 .person-image {
   transition: 0.2s;
 }

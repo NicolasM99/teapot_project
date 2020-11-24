@@ -1,5 +1,5 @@
-import React from "react";
-import { Carousel, Col, Image, Row } from "react-bootstrap";
+import React, { useEffect, useRef } from "react";
+import { Col, Image, Row } from "react-bootstrap";
 import { Spring } from "react-spring/renderprops";
 import "../styles/contenido.css";
 import "../styles/acercaDeStyle.css";
@@ -12,6 +12,10 @@ import MultifolioLogo from "../../img/logo_multifolio_sin_fondo.png";
 import MultimediaLogo from "../../img/logo_multimedia.png";
 import UmngLogo from "../../img/LOGO_UMNG.png";
 const AcercaDe = () => {
+  const titleRef = useRef();
+  useEffect(() => {
+    titleRef.current.scrollIntoView({ behavior: "smooth" });
+  }, []);
   return (
     <Spring
       from={{ opacity: 0, marginTop: -40 }}
@@ -19,10 +23,10 @@ const AcercaDe = () => {
     >
       {(props) => (
         <div style={props}>
-          <div className="wrapper acercaDe">
+          <div className="wrapper acercaDe" ref={titleRef}>
             <h1 className="titulo w-100">ACERCA DE</h1>
 
-            <div className="contenido ">
+            <div className="contenido pt-4">
               <Row className="p-2 col-sm-10 col-xl-6  mx-auto">
                 <Col
                   xs={8}
@@ -31,9 +35,10 @@ const AcercaDe = () => {
                   className="text-center mx-auto align-self-center"
                 >
                   <Image
-                    className="w-100 p-3"
+                    className="w-100 h-100"
                     src={MultifolioLogo}
                     alt="multi_logo"
+                    style={{ objectFit: "contain" }}
                   />
                 </Col>
                 <Col
@@ -69,9 +74,7 @@ const AcercaDe = () => {
                   </Col>
                   <Col>
                     <h2>Sebastian Viveros</h2>
-                    <p>
-                      Estudiante de Ingeniería en Multimedia. Product Owner.
-                    </p>
+                    <p>Estudiante de Ingeniería en Multimedia. Scrum Master.</p>
                   </Col>
                 </Col>
                 <Col className="parent" lg={6}>
@@ -80,7 +83,9 @@ const AcercaDe = () => {
                   </Col>
                   <Col>
                     <h2>Sergio Beltrán</h2>
-                    <p>Estudiante de Ingeniería en Multimedia. Scrum Master.</p>
+                    <p>
+                      Estudiante de Ingeniería en Multimedia. Product Owner.
+                    </p>
                   </Col>
                 </Col>
               </Row>

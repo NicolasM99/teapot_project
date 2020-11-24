@@ -1,10 +1,4 @@
-import React, {
-  Component,
-  useContext,
-  useState,
-  useEffect,
-  useRef,
-} from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { UserContext } from "./functions/UserProvider.js";
 import { signOut, signInWithGoogle, firestore } from "./functions/Firebase.js";
 import { Navbar, Nav, Dropdown } from "react-bootstrap";

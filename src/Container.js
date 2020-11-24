@@ -9,7 +9,6 @@ import MisProyectos from "./components/pages/MisProyectos.js";
 import PrimerRegistro from "./components/pages/PrimerRegistro.js";
 import CategoriaIndividual from "./components/pages/CategoriaIndividual.js";
 import NuevaCategoria from "./components/pages/NuevaCategoria";
-import { LoremIpsum } from "./components/pages/LoremIpsum";
 import { UserContext } from "./components/functions/UserProvider";
 import Usuarios from "./components/pages/Usuarios.js";
 import { firestore } from "./components/functions/Firebase.js";

@@ -7,7 +7,15 @@ import "../styles/loader.css";
 import "../styles/bienvenidaStyle.css";
 import { firestore, signInWithGoogle } from "../functions/Firebase.js";
 import { Link } from "react-router-dom";
-import MultimediaLogo from "../../img/logo_multimedia.png";
+import MultifolioLogo from "../../img/logo_multifolio_sin_fondo.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faInfo,
+  faInfoCircle,
+  faListAlt,
+  faSearch,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Bienvenida = () => {
   const isMountedRef = useRef(null);
@@ -16,6 +24,11 @@ const Bienvenida = () => {
   const [loading, setLoading] = useState(true);
   const { user } = useContext(UserContext);
   const db = firestore;
+  // const scrollWithOffset = (el) => {
+  //   const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
+  //   const yOffset = 0;
+  //   window.scrollTo({ top: yCoordinate + yOffset, behavior: "smooth" });
+  // };
   useEffect(() => {
     isMountedRef.current = true;
     if (db) {
@@ -72,18 +85,40 @@ const Bienvenida = () => {
                 <Row>
                   <h1 className="titulo w-100">BIENVENIDO</h1>
                 </Row>
-                <Row>
-                  <Col lg={10} className="mx-auto  paragraph">
-                    <p className="parrafo text-center">
+                <Row className="justify-content-center">
+                  <Col lg={3} className="paragraph text-center">
+                    <Image
+                      className="w-100 h-100"
+                      src={MultifolioLogo}
+                      alt="multi_logo"
+                      style={{ objectFit: "contain", maxWidth: "15rem" }}
+                    />
+                  </Col>
+                  <Col lg={7} className="paragraph">
+                    <p className="parrafo text-center p-5">
                       <b>Multifolio</b> es un espacio donde verás proyectos
                       realizados por estudiantes de{" "}
-                      <b>Ingeniería en Multimedia</b> de la <b>UMNG</b>.
+                      <a
+                        href="https://www.umng.edu.co/programas/pregrados/ingenieria-multimedia"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <b>Ingeniería en Multimedia</b>
+                      </a>{" "}
+                      de la{" "}
+                      <a
+                        href="https://umng.edu.co/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <b>UMNG</b>
+                      </a>
                     </p>
                   </Col>
                 </Row>
 
                 <Row className="justify-content-center">
-                  <Carousel className="col-lg-4 p-0">
+                  <Carousel className="col-10 p-0">
                     {data &&
                       data.map((category) => (
                         <Carousel.Item className="text-center">
@@ -111,12 +146,25 @@ const Bienvenida = () => {
                         </Carousel.Item>
                       ))}
                   </Carousel>
-                  <Col lg={6} className="m-0  paragraph">
-                    <Link to="/categorias" style={{ color: "inherit" }}>
-                      <p className="parrafo align-items-center d-flex text-center h-100 ">
-                        Estos proyectos están organizados por categorías para
-                        que encuentres con mayor facilidad los de tu interés.
-                        Presiona acá para ver todas las Categorías.
+                </Row>
+                <Row className="justify-content-center">
+                  <Col
+                    lg={5}
+                    className="m-0 d-flex align-items-center paragraph"
+                  >
+                    <p className="parrafo align-items-center d-flex text-center h-100 ">
+                      Estos proyectos están organizados por categorías para que
+                      encuentres con mayor facilidad los de tu interés.
+                    </p>
+                  </Col>
+                  <Col lg={5} className="m-0 welcomeButton">
+                    <Link to="/categorias" style={{ textDecoration: "none" }}>
+                      <p
+                        className="parrafo text-center align-items-center d-flex justify-content-center h-100 text-center m-0 p-5"
+                        style={{ color: "white" }}
+                      >
+                        <FontAwesomeIcon icon={faListAlt} className="mr-2" />
+                        Ver todas las Categorías
                       </p>
                     </Link>
                   </Col>
@@ -138,6 +186,7 @@ const Bienvenida = () => {
                           className="parrafo text-center align-items-center justify-content-center m-0 d-flex text-center p-5"
                           style={{ color: "white" }}
                         >
+                          <FontAwesomeIcon icon={faUser} className="mr-2" />{" "}
                           ¡Inicia sesión y crea tu perfil ahora!
                         </p>
                       </Col>
@@ -151,6 +200,7 @@ const Bienvenida = () => {
                             className="parrafo text-center align-items-center d-flex justify-content-center text-center m-0 p-5"
                             style={{ color: "white" }}
                           >
+                            <FontAwesomeIcon icon={faUser} className="mr-2" />{" "}
                             ¡Crea tu perfil ahora!
                           </p>
                         </Link>
@@ -158,6 +208,47 @@ const Bienvenida = () => {
                     )}
                   </Row>
                 )}
+                <Row className="justify-content-center">
+                  <Col lg={5} className="m-0 p-0">
+                    <p className="parrafo m-0 h-100 text-center align-items-center d-flex text-center paragraph">
+                      Si tienes el mente el nombre de un Usuario de Multifolio,
+                      puedes buscarlo para ver su perfil.
+                    </p>
+                  </Col>
+                  <Col lg={5} className="m-0 welcomeButton">
+                    <Link to="/crear_perfil" style={{ textDecoration: "none" }}>
+                      <p
+                        className="parrafo text-center align-items-center d-flex justify-content-center text-center m-0 p-5"
+                        style={{ color: "white" }}
+                      >
+                        <FontAwesomeIcon icon={faSearch} className="mr-2" />{" "}
+                        Buscar usuarios
+                      </p>
+                    </Link>
+                  </Col>
+                </Row>
+                <Row className="justify-content-center">
+                  <Col lg={5} className="m-0 p-0">
+                    <p className="parrafo m-0 h-100 text-center align-items-center justify-content-center d-flex text-center paragraph">
+                      ¿Quiénes realizaron este proyecto?
+                    </p>
+                  </Col>
+                  <Col lg={5} className="m-0 welcomeButton">
+                    <Link
+                      // scroll={scrollWithOffset}
+                      to="/acerca_de"
+                      style={{ textDecoration: "none" }}
+                    >
+                      <p
+                        className="parrafo text-center align-items-center d-flex justify-content-center text-center m-0 p-5"
+                        style={{ color: "white" }}
+                      >
+                        <FontAwesomeIcon icon={faInfoCircle} className="mr-2" />{" "}
+                        Saber más acerca de esta página
+                      </p>
+                    </Link>
+                  </Col>
+                </Row>
               </div>
             </div>
           </div>
