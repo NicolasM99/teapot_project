@@ -391,7 +391,7 @@ const EditarPerfil = ({ showEditModal, setShowEditModal, existingData }) => {
         >
           <Modal.Body>
             <h1 style={{ textAlign: "center" }}>
-              Creando perfil, por favor espera...
+              Actualizando perfil, por favor espera...
             </h1>
             <div className="loader"></div>
             <div className="mx-auto" style={{ width: "130px" }}>
