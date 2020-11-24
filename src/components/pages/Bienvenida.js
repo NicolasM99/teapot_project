@@ -118,7 +118,7 @@ const Bienvenida = () => {
                 </Row>
 
                 <Row className="justify-content-center">
-                  <Carousel className="col-10 p-0">
+                  <Carousel className="col-lg-10 p-0">
                     {data &&
                       data.map((category) => (
                         <Carousel.Item className="text-center">
