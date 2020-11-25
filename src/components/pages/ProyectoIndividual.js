@@ -89,6 +89,7 @@ const ProyectoIndividual = ({ projectInfo, setPublicUserData }) => {
                                 style={{
                                   borderRadius: "50%",
                                   marginRight: "10px",
+                                  objectFit: "cover",
                                 }}
                                 width="80px"
                                 height="80px"
