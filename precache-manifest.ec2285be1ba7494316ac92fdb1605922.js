@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e30622cb73a21056052e8d335f48f720",
+    "revision": "f00f42c860772b5f32e4acc3de9b2571",
     "url": "/portafolio_multimedia/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/portafolio_multimedia/static/css/2.edeedb01.chunk.css"
   },
   {
-    "revision": "8c3c42b388b167520e7c",
+    "revision": "35a4303bd9caaefe9f2e",
     "url": "/portafolio_multimedia/static/css/main.2269c81b.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/portafolio_multimedia/static/js/2.9dc4cc47.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "8c3c42b388b167520e7c",
-    "url": "/portafolio_multimedia/static/js/main.297c143f.chunk.js"
+    "revision": "35a4303bd9caaefe9f2e",
+    "url": "/portafolio_multimedia/static/js/main.0a9c4872.chunk.js"
   },
   {
     "revision": "061d8228061202212c9e",
@@ -36,12 +36,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/portafolio_multimedia/static/media/LOGO_UMNG.2846ede3.png"
   },
   {
-    "revision": "88b0c0718e6c4418dcec17859e4a1972",
-    "url": "/portafolio_multimedia/static/media/carlos.88b0c071.jpg"
+    "revision": "e34efcffb5f9d0491a948f7721751700",
+    "url": "/portafolio_multimedia/static/media/carlos.e34efcff.jpg"
   },
   {
-    "revision": "22dab1500074426eb363b7a3770506bf",
-    "url": "/portafolio_multimedia/static/media/karen.22dab150.jfif"
+    "revision": "089f28ec651f6a2c3a658ac4751aa16b",
+    "url": "/portafolio_multimedia/static/media/karen.089f28ec.jpg"
   },
   {
     "revision": "c4419599934c7b18c50b47fb84cc5477",
@@ -52,8 +52,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/portafolio_multimedia/static/media/logo_multimedia.ab509363.png"
   },
   {
-    "revision": "80f97a07472bc157603960ad4d5f164c",
-    "url": "/portafolio_multimedia/static/media/nicolas.80f97a07.jpg"
+    "revision": "cd2b43223790ba606c703a7459d88f31",
+    "url": "/portafolio_multimedia/static/media/nicolas.cd2b4322.jpg"
   },
   {
     "revision": "d8c2966aa1ee9947fcc528e1a21a1e86",
@@ -62,5 +62,9 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "680aface51a2a4ed25ffcf6855ea8379",
     "url": "/portafolio_multimedia/static/media/sebastian.680aface.jpg"
+  },
+  {
+    "revision": "80ce3db264a2248925b4da1a3ee77b59",
+    "url": "/portafolio_multimedia/static/media/sergio.80ce3db2.jpg"
   }
 ]);
