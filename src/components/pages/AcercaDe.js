@@ -7,7 +7,7 @@ import SebastianImg from "../../img/sebastian.jpg";
 import NicolasImg from "../../img/nicolas.jpg";
 import CarlosImg from "../../img/carlos.jpg";
 import SergioImg from "../../img/sergio.jpg";
-import KarenImg from "../../img/karen.jfif";
+import KarenImg from "../../img/karen.jpg";
 import MultifolioLogo from "../../img/logo_multifolio_sin_fondo.png";
 import MultimediaLogo from "../../img/logo_multimedia.png";
 import UmngLogo from "../../img/LOGO_UMNG.png";
