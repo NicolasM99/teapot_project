@@ -45,12 +45,12 @@ const App = ({ user }) => {
             setData(doc.data());
           }
         } else {
-          console.log("No se encontró el documento");
+          // console.log("No se encontró el documento");
         }
         setLoaded(true);
       })
       .catch((error) => {
-        console.log("Error al obtener el documento: ", error);
+        // console.log("Error al obtener el documento: ", error);
       });
   } else {
     if (data) {

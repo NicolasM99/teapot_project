@@ -101,7 +101,7 @@ const PrimerRegistro = (props) => {
         const file = e.target.files[0];
         const resizedImage = await resizeFile(file);
         setImage(resizedImage);
-        console.log(resizedImage);
+        // console.log(resizedImage);
         setPreview(URL.createObjectURL(resizedImage));
       }
     }
@@ -129,7 +129,7 @@ const PrimerRegistro = (props) => {
     if (certificates) {
       Array.from(certificates).forEach((file) => {
         certAux.push(file.name);
-        console.log(file.name);
+        // console.log(file.name);
       });
     }
     if (certAux.length > 0) {
@@ -146,11 +146,11 @@ const PrimerRegistro = (props) => {
         .then((doc) => {
           if (doc && isMountedRef.current) {
             setData(doc.data());
-            console.log("ENTRO ACA");
+            // console.log("ENTRO ACA");
             setReceivedData(true);
           }
         });
-      //console.log(user.displayName);
+      // //console.log(user.displayName);
     } else {
       if (data) {
         //setData(null);
@@ -173,7 +173,7 @@ const PrimerRegistro = (props) => {
           setSending(true);
         },
         (error) => {
-          console.log(error);
+          // console.log(error);
         },
         () => {
           storage
@@ -182,12 +182,12 @@ const PrimerRegistro = (props) => {
             .getDownloadURL()
             .then((url) => {
               if (isMountedRef.current) {
-                console.log("imagen: ", url);
+                // console.log("imagen: ", url);
                 setAddPhoto(url);
 
                 setFinishedImage(true);
               } else {
-                console.log("NO ENTRÓ");
+                // console.log("NO ENTRÓ");
               }
             });
         }
@@ -198,7 +198,7 @@ const PrimerRegistro = (props) => {
     }
 
     if (certificates) {
-      console.log("certificates state: ", certificates[0].name);
+      // console.log("certificates state: ", certificates[0].name);
       var sendCertificates = [];
       var finished = false;
       for (var i = 0; i < certificates.length; i++) {
@@ -219,7 +219,7 @@ const PrimerRegistro = (props) => {
             setSending(true);
           },
           (error) => {
-            console.log(error);
+            // console.log(error);
           },
           () => {
             storage
@@ -229,24 +229,24 @@ const PrimerRegistro = (props) => {
               .then((url) => {
                 if (isMountedRef.current) {
                   sendCertificates.push(url);
-                  console.log(sendCertificates);
+                  // console.log(sendCertificates);
                 } else {
-                  console.log("NO ENTRÓ");
+                  // console.log("NO ENTRÓ");
                 }
               })
               .then(() => {
                 if (sendCertificates.length === certificates.length) {
-                  // console.log("ENTRÓ A VALIDAR AUXILIAR", sendCertificates);
+                  // // console.log("ENTRÓ A VALIDAR AUXILIAR", sendCertificates);
                   setAddCertificate(sendCertificates);
                   // setFinishedCert(true);
                 }
               })
               .then(() => {
                 if (sendCertificates.length === certificates.length) {
-                  // console.log("ENTRÓ A VALIDAR AUXILIAR", sendCertificates);
+                  // // console.log("ENTRÓ A VALIDAR AUXILIAR", sendCertificates);
                   // setAddCertificate(sendCertificates);
-                  console.log(auxI, certificates.length);
-                  console.log("ADD CERTIFICATE: ", addCertificate);
+                  // console.log(auxI, certificates.length);
+                  // console.log("ADD CERTIFICATE: ", addCertificate);
                   setFinishedCert(true);
                 }
               });
@@ -300,7 +300,7 @@ const PrimerRegistro = (props) => {
       .then(() => {
         //if (isMountedRef.current) {
         setData(newUserData);
-        console.log("new user data: ", newUserData);
+        // console.log("new user data: ", newUserData);
         //}
       })
       .then(() => {
@@ -378,7 +378,7 @@ const PrimerRegistro = (props) => {
   const handleCloseTerms = () => setShowTerms(false);
 
   if (sending) {
-    // console.log("SENDING...");
+    // // console.log("SENDING...");
     return (
       <>
         <Modal

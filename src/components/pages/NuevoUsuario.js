@@ -12,11 +12,11 @@ const NuevoUsuario = ({ show, setShowNewUser }) => {
   }, [show, setShowNewUser]);
 
   const onSubmit = (data) => {
-    console.log("ON SUBMIT", data);
+    // console.log("ON SUBMIT", data);
   };
   const { control, register, getValues, handleSubmit, errors } = useForm();
   useEffect(() => {
-    console.log(errors);
+    // console.log(errors);
   }, [errors]);
   return (
     <Container>

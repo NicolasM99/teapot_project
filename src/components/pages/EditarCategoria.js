@@ -76,7 +76,7 @@ const EditarCategoria = ({ categoryInfo }) => {
             setSending(true);
           },
           (error) => {
-            console.log(error);
+            // console.log(error);
           },
           () => {
             storage
@@ -85,12 +85,12 @@ const EditarCategoria = ({ categoryInfo }) => {
               .getDownloadURL()
               .then((url) => {
                 if (isMountedRef.current) {
-                  console.log("imagen: ", url);
+                  // console.log("imagen: ", url);
                   setAddPhoto(url);
 
                   setFinishedImage(true);
                 } else {
-                  console.log("NO ENTRÓ");
+                  // console.log("NO ENTRÓ");
                 }
               });
           }
@@ -125,14 +125,14 @@ const EditarCategoria = ({ categoryInfo }) => {
           .then(() => {
             //if (isMountedRef.current) {
             setData(newCategoryData);
-            console.log("new category data: ", newCategoryData);
+            // console.log("new category data: ", newCategoryData);
             //}
           })
           .then(() => {
             history.push("/categorias");
             window.location.reload();
           });
-        //console.log(user.displayName);
+        // //console.log(user.displayName);
       } else {
         if (data) {
           //setData(null);
@@ -166,7 +166,7 @@ const EditarCategoria = ({ categoryInfo }) => {
         const file = e.target.files[0];
         const resizedImage = await resizeFile(file);
         setImage(resizedImage);
-        console.log(resizedImage);
+        // console.log(resizedImage);
         setPreview(URL.createObjectURL(resizedImage));
       }
     }
@@ -181,7 +181,7 @@ const EditarCategoria = ({ categoryInfo }) => {
       </>
     );
   } else if (sending) {
-    // console.log("SENDING...");
+    // // console.log("SENDING...");
     return (
       <>
         <Modal

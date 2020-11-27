@@ -34,7 +34,7 @@ const MisProyectos = ({ setProjectInfo }) => {
         .then((doc) => {
           if (doc && isMountedRef.current) {
             setData(doc.data());
-            console.log("ENTRO ACA");
+            // console.log("ENTRO ACA");
           }
         })
         .then(() =>
@@ -61,10 +61,10 @@ const MisProyectos = ({ setProjectInfo }) => {
     }
   };
   useEffect(() => {
-    console.log("FILTRADO", filteredData);
+    // console.log("FILTRADO", filteredData);
   }, [filteredData]);
   useEffect(() => {
-    console.log("PROYECTOS", receivedData);
+    // console.log("PROYECTOS", receivedData);
     filterProjects();
   }, [receivedData]);
   if (loading) {

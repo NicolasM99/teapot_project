@@ -34,7 +34,7 @@ const Container = ({ publicUserData, setPublicUserData }) => {
         .then((doc) => {
           if (doc && isMountedRef.current) {
             setUserData(doc.data());
-            console.log(doc.data());
+            // console.log(doc.data());
           }
         });
       //console.log(user.displayName);

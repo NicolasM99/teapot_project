@@ -42,8 +42,8 @@ const Perfil = (functionProps) => {
     isMountedRef.current = true;
     if (functionProps.publicUserData) {
       setUserData(functionProps.publicUserData);
-      console.log("DATA DEL PERFIL", functionProps.publicUserData);
-      console.log("ENTRO ACA");
+      // console.log("DATA DEL PERFIL", functionProps.publicUserData);
+      // console.log("ENTRO ACA");
     } else if (user) {
       db.collection("users")
         .doc(user.uid)
@@ -51,7 +51,7 @@ const Perfil = (functionProps) => {
         .then((doc) => {
           if (doc && isMountedRef.current) {
             setUserData(doc.data());
-            console.log("ENTRO ACA");
+            // console.log("ENTRO ACA");
           }
         });
     }
@@ -77,7 +77,7 @@ const Perfil = (functionProps) => {
     }
   };
   useEffect(() => {
-    console.log("PROYECTOS", categories);
+    // console.log("PROYECTOS", categories);
     filterProjects();
   }, [categories]);
   useEffect(() => {
@@ -88,14 +88,14 @@ const Perfil = (functionProps) => {
         .then((doc) => {
           if (doc) {
             setProjectsData(doc.data());
-            console.log("ENTRO ACA");
+            // console.log("ENTRO ACA");
           }
         });
     }
     setLoading(false);
   }, [userData]);
   useEffect(() => {
-    console.log("PROYECTOS: ", projectsData);
+    // console.log("PROYECTOS: ", projectsData);
   }, [projectsData]);
 
   if (loading) {
@@ -321,7 +321,7 @@ const Perfil = (functionProps) => {
                         Parece que no has creado un perfil. ¡Es un buen momento
                         para crearlo!
                       </h1>
-                      {console.log(loading)}
+                      {/* {console.log(loading)} */}
                       <Button variant="success" href="#crear_perfil">
                         Crear perfil
                       </Button>

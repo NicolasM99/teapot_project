@@ -26,7 +26,7 @@ const Categorias = ({ setCategoryInfo }) => {
           if (querySnapshot && isMountedRef.current) {
             setData(querySnapshot.docs.map((doc) => doc.data()));
             setLoading(false);
-            console.log(querySnapshot.docs.map((doc) => doc.data()));
+            // console.log(querySnapshot.docs.map((doc) => doc.data()));
           }
         });
     }
@@ -38,10 +38,10 @@ const Categorias = ({ setCategoryInfo }) => {
           if (doc && isMountedRef.current) {
             setUserData(doc.data());
             setLoading(false);
-            console.log(doc.data());
+            // console.log(doc.data());
           }
         });
-      //console.log(user.displayName);
+      // //console.log(user.displayName);
     } else {
       if (data) {
         //setData(null);

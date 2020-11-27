@@ -46,7 +46,7 @@ const ComponentTester = () => {
             setLoading(false);
           }
         });
-      //console.log(user.displayName);
+      // //console.log(user.displayName);
     } else {
       if (data) {
         //setData(null);
@@ -67,7 +67,7 @@ const ComponentTester = () => {
         setSending(true);
       },
       (error) => {
-        console.log(error);
+        // console.log(error);
       },
       () => {
         storage
@@ -75,7 +75,7 @@ const ComponentTester = () => {
           .child(`${user.uid}_photo`)
           .getDownloadURL()
           .then((url) => {
-            console.log("imagen: ", url);
+            // console.log("imagen: ", url);
             setImageURL(url);
             setSent(true);
             setSending(false);
@@ -86,7 +86,7 @@ const ComponentTester = () => {
   };
 
   const createProfile = () => {
-    console.log("entro aca: ", data);
+    // console.log("entro aca: ", data);
     isMountedRef.current = true;
     const newUserData = {
       nickName: user.displayName,
@@ -98,7 +98,7 @@ const ComponentTester = () => {
       .then(() => {
         if (isMountedRef.current) {
           setData(newUserData);
-          console.log("new user data: ", newUserData);
+          // console.log("new user data: ", newUserData);
         }
       });
     return () => (isMountedRef.current = false);
@@ -147,9 +147,9 @@ const ComponentTester = () => {
       ) : null}
 
       <p>
-        {sent ? (
-          <>enviado!!!!!!!!!!! {console.log("se envio estos datos: ", data)} </>
-        ) : null}
+        {/* {sent ? (
+          // <>enviado!!!!!!!!!!! {console.log("se envio estos datos: ", data)} </>
+        ) : null} */}
       </p>
     </>
   );

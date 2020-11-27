@@ -25,18 +25,18 @@ const ProyectoIndividual = ({ projectInfo, setPublicUserData }) => {
         .then((doc) => {
           if (doc && isMountedRef.current) {
             setUserData(doc.data());
-            console.log(doc.data());
+            // console.log(doc.data());
           }
           setLoading(false);
         });
-      //console.log(user.displayName);
+      // //console.log(user.displayName);
     } else {
       setLoading(false);
     }
     return () => (isMountedRef.current = false);
   }, [projectInfo, db]);
   useEffect(() => {
-    if (userData) console.log("AUTOR: ", userData);
+    // if (userData) console.log("AUTOR: ", userData);
   }, [userData]);
   const handleUserProfile = (id) => {
     setPublicUserData(id);

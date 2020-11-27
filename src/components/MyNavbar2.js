@@ -39,7 +39,7 @@ const MyNavbar2 = (props) => {
           if (doc && isMountedRef.current) {
             setData(doc.data());
             setLoading(false);
-            console.log(doc.data());
+            // console.log(doc.data());
           }
         });
       //console.log(user.displayName);

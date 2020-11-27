@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 const LinearGradientPhoto = ({ className, style, image }) => {
   useEffect(() => {
-    console.log(image);
+    // console.log(image);
   }, []);
   return (
     <div

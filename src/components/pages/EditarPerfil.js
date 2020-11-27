@@ -95,7 +95,7 @@ const EditarPerfil = ({ showEditModal, setShowEditModal, existingData }) => {
         const file = e.target.files[0];
         const resizedImage = await resizeFile(file);
         setImage(resizedImage);
-        console.log(resizedImage);
+        // console.log(resizedImage);
         setPreview(URL.createObjectURL(resizedImage));
       }
     }
@@ -117,7 +117,7 @@ const EditarPerfil = ({ showEditModal, setShowEditModal, existingData }) => {
       if (pass === 1) {
         Array.from(Files).forEach((file) => {
           nombresCerts.push(file.name);
-          console.log(file.name);
+          // console.log(file.name);
         });
         setCertificates(Files);
       }
@@ -129,7 +129,7 @@ const EditarPerfil = ({ showEditModal, setShowEditModal, existingData }) => {
   //     if (certificates) {
   //       Array.from(certificates).forEach((file) => {
   //         certAux.push(file.name);
-  //         console.log(file.name);
+  // //         console.log(file.name);
   //       });
   //     }
   //     if (certAux.length > 0) {
@@ -146,11 +146,11 @@ const EditarPerfil = ({ showEditModal, setShowEditModal, existingData }) => {
         .then((doc) => {
           if (doc && isMountedRef.current) {
             setData(doc.data());
-            console.log("ENTRO ACA");
+            // console.log("ENTRO ACA");
             // setReceivedData(true);
           }
         });
-      //console.log(user.displayName);
+      // //console.log(user.displayName);
     } else {
       if (data) {
         //setData(null);
@@ -175,7 +175,7 @@ const EditarPerfil = ({ showEditModal, setShowEditModal, existingData }) => {
           setSending(true);
         },
         (error) => {
-          console.log(error);
+          // console.log(error);
         },
         () => {
           storage
@@ -184,11 +184,11 @@ const EditarPerfil = ({ showEditModal, setShowEditModal, existingData }) => {
             .getDownloadURL()
             .then((url) => {
               if (isMountedRef.current) {
-                console.log("imagen: ", url);
+                // console.log("imagen: ", url);
                 setAddPhoto(url);
                 setFinishedImage(true);
               } else {
-                console.log("NO ENTRÓ A LA FOTO");
+                // console.log("NO ENTRÓ A LA FOTO");
               }
             });
         }
@@ -198,7 +198,7 @@ const EditarPerfil = ({ showEditModal, setShowEditModal, existingData }) => {
       setFinishedImage(true);
     }
     if (certificates) {
-      console.log("certificates state: ", certificates[0].name);
+      // console.log("certificates state: ", certificates[0].name);
       var sendCertificates = existingData.certificate;
       for (var i = 0; i < certificates.length; i++) {
         const auxI = i;
@@ -218,7 +218,7 @@ const EditarPerfil = ({ showEditModal, setShowEditModal, existingData }) => {
             setSending(true);
           },
           (error) => {
-            console.log(error);
+            // console.log(error);
           },
           () => {
             storage
@@ -228,26 +228,21 @@ const EditarPerfil = ({ showEditModal, setShowEditModal, existingData }) => {
               .then((url) => {
                 if (isMountedRef.current) {
                   sendCertificates.push(url);
-                  console.log(
-                    sendCertificates.length,
-                    certificates.length,
-                    existingData.certificate.length,
-                    nombresCerts.length
-                  );
+                  // console.log(
                 } else {
-                  console.log("NO ENTRÓ AL CERTIFICADO");
+                  // console.log("NO ENTRÓ AL CERTIFICADO");
                 }
               })
               .then(() => {
                 if (sendCertificates.length === nombresCerts.length) {
-                  console.log("ENTRÓ A VALIDAR AUXILIAR", sendCertificates);
+                  // console.log("ENTRÓ A VALIDAR AUXILIAR", sendCertificates);
                   setAddCertificate(sendCertificates);
                 }
               })
               .then(() => {
                 if (sendCertificates.length === nombresCerts.length) {
-                  console.log(auxI, certificates.length);
-                  console.log("ADD CERTIFICATE: ", addCertificate);
+                  // console.log(auxI, certificates.length);
+                  // console.log("ADD CERTIFICATE: ", addCertificate);
                   setFinishedCert(true);
                 }
               });
@@ -303,7 +298,7 @@ const EditarPerfil = ({ showEditModal, setShowEditModal, existingData }) => {
       .then(() => {
         //if (isMountedRef.current) {
         setData(newUserData);
-        console.log("new user data: ", newUserData);
+        // console.log("new user data: ", newUserData);
         //}
       })
       .then(() => {
@@ -380,7 +375,7 @@ const EditarPerfil = ({ showEditModal, setShowEditModal, existingData }) => {
   const handleCloseTerms = () => setShowTerms(false);
 
   if (sending) {
-    // console.log("SENDING...");
+    // // console.log("SENDING...");
     return (
       <>
         <Modal

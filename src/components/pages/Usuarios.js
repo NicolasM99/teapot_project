@@ -60,19 +60,19 @@ const Usuarios = ({ setPublicUserData }) => {
             setLoading(false);
           }
         });
-      //console.log(user.displayName);
+      // //console.log(user.displayName);
     }
     if (user) {
       db.collection("users")
         .get()
         .then((querySnapshot) => {
           if (querySnapshot && isMountedRef.current) {
-            console.log(querySnapshot.docs.map((doc) => doc.data()));
+            // console.log(querySnapshot.docs.map((doc) => doc.data()));
             setUsersData(querySnapshot.docs.map((doc) => doc.data()));
             setLoading(false);
           }
         });
-      //console.log(user.displayName);
+      // //console.log(user.displayName);
     } else {
       if (data) {
         //setData(null);
@@ -82,21 +82,21 @@ const Usuarios = ({ setPublicUserData }) => {
     return () => (isMountedRef.current = false);
   }, [user, db]);
   const handleDeleteUser = (id) => {
-    console.log(id);
+    // console.log(id);
     if (id) {
       db.collection("users")
         .doc(id)
         .delete()
         .then(() => {
-          console.log("Se elimino el PERFIL");
+          // console.log("Se elimino el PERFIL");
         })
-        .catch((error) => console.error("Error al borrar el documento:", error))
+        // .catch((error) => console.error("Error al borrar el documento:", error))
         .then(() => {
           db.collection("projects")
             .doc(id)
             .delete()
             .then(() => {
-              console.log("Se eliminaron LOS PROEYCTOS");
+              // console.log("Se eliminaron LOS PROEYCTOS");
             });
         })
         .then(() => window.location.reload());

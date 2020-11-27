@@ -37,7 +37,7 @@ const NuevoProyecto = () => {
         .then((doc) => {
           if (doc && isMountedRef.current) {
             setReceivedData(doc.data());
-            console.log("ENTRO ACA");
+            // console.log("ENTRO ACA");
           }
         })
         .then(() => {
@@ -46,7 +46,7 @@ const NuevoProyecto = () => {
             .then((querySnapshot) => {
               if (querySnapshot && isMountedRef.current) {
                 setCategoryList(querySnapshot.docs.map((doc) => doc.data()));
-                console.log(querySnapshot.docs.map((doc) => doc.data()));
+                // console.log(querySnapshot.docs.map((doc) => doc.data()));
               }
               setLoading(false);
             });
@@ -76,7 +76,7 @@ const NuevoProyecto = () => {
             setSending(true);
           },
           (error) => {
-            console.log(error);
+            // console.log(error);
           },
           () => {
             storage
@@ -85,12 +85,12 @@ const NuevoProyecto = () => {
               .getDownloadURL()
               .then((url) => {
                 if (isMountedRef.current) {
-                  console.log("imagen: ", url);
+                  // console.log("imagen: ", url);
                   setAddPhoto(url);
 
                   setFinishedImage(true);
                 } else {
-                  console.log("NO ENTRÓ");
+                  // console.log("NO ENTRÓ");
                 }
               });
           }
@@ -141,7 +141,7 @@ const NuevoProyecto = () => {
             history.push("/mis_proyectos");
             window.location.reload();
           });
-        //console.log(user.displayName);
+        // //console.log(user.displayName);
       }
     }
   }, [finishedImage]);
@@ -171,7 +171,7 @@ const NuevoProyecto = () => {
         const file = e.target.files[0];
         const resizedImage = await resizeFile(file);
         setImage(resizedImage);
-        console.log(resizedImage);
+        // console.log(resizedImage);
         setPreview(URL.createObjectURL(resizedImage));
       }
     }
@@ -185,7 +185,7 @@ const NuevoProyecto = () => {
         .then((doc) => {
           if (doc && isMountedRef.current) {
             categoryProjects = doc.data().projects;
-            console.log(categoryProjects);
+            // console.log(categoryProjects);
           }
         });
     }
@@ -200,7 +200,7 @@ const NuevoProyecto = () => {
       </>
     );
   } else if (sending) {
-    // console.log("SENDING...");
+    // // console.log("SENDING...");
     return (
       <>
         <Modal

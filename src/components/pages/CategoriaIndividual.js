@@ -27,7 +27,7 @@ const CategoriaIndividual = ({ categoryInfo, setProjectInfo }) => {
 
   const db = firestore;
   useEffect(() => {
-    // console.log("categoryinfo: ", categoryInfo);
+    // // console.log("categoryinfo: ", categoryInfo);
     isMountedRef.current = true;
     if (user) {
       db.collection("users")
@@ -36,7 +36,7 @@ const CategoriaIndividual = ({ categoryInfo, setProjectInfo }) => {
         .then((doc) => {
           if (doc && isMountedRef.current) {
             setUserData(doc.data());
-            console.log("ENTRO ACA");
+            // console.log("ENTRO ACA");
           }
           setLoading(false);
         });
@@ -57,13 +57,13 @@ const CategoriaIndividual = ({ categoryInfo, setProjectInfo }) => {
     return () => (isMountedRef.current = false);
   }, [db]);
   const handleDeleteCategory = (id) => {
-    console.log(id);
+    // console.log(id);
     if (id) {
       db.collection("categories")
         .doc(id)
         .delete()
         .then(() => {
-          console.log("Se elimino la CATEGORÍA");
+          // console.log("Se elimino la CATEGORÍA");
         })
         .catch((error) => console.error("Error al borrar el documento:", error))
         .then(() => {

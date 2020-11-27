@@ -38,19 +38,19 @@ const SolicitudesProyectos = () => {
             setLoading(false);
           }
         });
-      //console.log(user.displayName);
+      // //console.log(user.displayName);
     }
     if (user) {
       db.collection("project_requests")
         .get()
         .then((querySnapshot) => {
           if (querySnapshot && isMountedRef.current) {
-            console.log(querySnapshot.docs.map((doc) => doc.data()));
+            // console.log(querySnapshot.docs.map((doc) => doc.data()));
             setProjectsData(querySnapshot.docs.map((doc) => doc.data()));
             setLoading(false);
           }
         });
-      //console.log(user.displayName);
+      // //console.log(user.displayName);
     } else {
       if (data) {
         //setData(null);

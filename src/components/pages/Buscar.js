@@ -49,7 +49,7 @@ const Buscar = (props) => {
         .get()
         .then((querySnapshot) => {
           if (querySnapshot && isMountedRef.current) {
-            console.log(querySnapshot.docs.map((doc) => doc.data()));
+            // console.log(querySnapshot.docs.map((doc) => doc.data()));
             setUsersData(querySnapshot.docs.map((doc) => doc.data()));
             setLoading(false);
           }

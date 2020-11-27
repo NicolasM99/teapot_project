@@ -68,7 +68,7 @@ const NuevaCategoria = () => {
             setSending(true);
           },
           (error) => {
-            console.log(error);
+            // console.log(error);
           },
           () => {
             storage
@@ -77,12 +77,12 @@ const NuevaCategoria = () => {
               .getDownloadURL()
               .then((url) => {
                 if (isMountedRef.current) {
-                  console.log("imagen: ", url);
+                  // console.log("imagen: ", url);
                   setAddPhoto(url);
 
                   setFinishedImage(true);
                 } else {
-                  console.log("NO ENTRÓ");
+                  // console.log("NO ENTRÓ");
                 }
               });
           }
@@ -118,14 +118,14 @@ const NuevaCategoria = () => {
           .then(() => {
             //if (isMountedRef.current) {
             setData(newCategoryData);
-            console.log("new category data: ", newCategoryData);
+            // console.log("new category data: ", newCategoryData);
             //}
           })
           .then(() => {
             history.push("/categorias");
             window.location.reload();
           });
-        //console.log(user.displayName);
+        // //console.log(user.displayName);
       } else {
         if (data) {
           //setData(null);
@@ -159,7 +159,7 @@ const NuevaCategoria = () => {
         const file = e.target.files[0];
         const resizedImage = await resizeFile(file);
         setImage(resizedImage);
-        console.log(resizedImage);
+        // console.log(resizedImage);
         setPreview(URL.createObjectURL(resizedImage));
       }
     }
@@ -174,7 +174,7 @@ const NuevaCategoria = () => {
       </>
     );
   } else if (sending) {
-    // console.log("SENDING...");
+    // // console.log("SENDING...");
     return (
       <>
         <Modal
