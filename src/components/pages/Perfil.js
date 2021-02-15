@@ -27,6 +27,7 @@ import CardProyecto from "../CardProyecto.js";
 import UserIcon from "../../img/user_icon.png";
 import { Link } from "react-router-dom";
 import EditarPerfil from "./EditarPerfil.js";
+import { ROUTES } from "../../constants/routes.js";
 
 const Perfil = (functionProps) => {
   const isMountedRef = useRef(null);
@@ -322,7 +323,7 @@ const Perfil = (functionProps) => {
                         para crearlo!
                       </h1>
                       {/* {console.log(loading)} */}
-                      <Button variant="success" href="#crear_perfil">
+                      <Button variant="success" href={ROUTES.CREATE_PROFILE}>
                         Crear perfil
                       </Button>
                     </div>
