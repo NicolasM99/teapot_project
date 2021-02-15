@@ -1,4 +1,4 @@
-//COMPONENTE PARA PRUEBAS EN GENERAL
+//****************COMPONENTE PARA PRUEBAS EN GENERAL*********
 
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { UserContext } from "./components/functions/UserProvider.js";
