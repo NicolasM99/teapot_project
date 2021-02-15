@@ -1,0 +1,15 @@
+export const ROUTES = {
+  LANDING: "/inicio",
+  CATEGORIES: "/categorias",
+  SEARCH: "/buscar",
+  MY_PROJECTS: "/mis_proyectos",
+  CATEGORY: "/categoria",
+  PROJECT: "/proyecto",
+  PROFILE: "/perfil",
+  CREATE_PROFILE: "/crear_perfil",
+  NEW_CATEGORY: "/nueva_categoria",
+  EDIT_CATEGORY: "/editar_categoria",
+  NEW_PROJECT: "/nuevo_proyecto",
+  USERS: "/usuarios",
+  ABOUT: "/acerca_de",
+};

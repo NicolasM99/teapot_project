@@ -10,6 +10,7 @@ import "../styles/contenido.css";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import UserIcon from "../../img/user_icon.png";
+import { ROUTES } from "../../constants/routes.js";
 
 const Buscar = (props) => {
   const isMountedRef = useRef(null);
@@ -135,7 +136,7 @@ const Buscar = (props) => {
                           <Col style={props} key={index} sm={6} xs={12} md={3}>
                             <Link
                               style={{ textDecoration: "none", color: "white" }}
-                              to="/perfil"
+                              to={ROUTES.PROFILE}
                               onClick={() => handleUserProfile(id)}
                             >
                               <Image

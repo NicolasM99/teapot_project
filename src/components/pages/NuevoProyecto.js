@@ -8,6 +8,7 @@ import "../styles/contenido.css";
 import "../styles/text-input-style.css";
 import "../styles/loader.css";
 import Resizer from "react-image-file-resizer";
+import { ROUTES } from "../../constants/routes";
 
 const NuevoProyecto = () => {
   const isMountedRef = useRef(null);
@@ -138,7 +139,7 @@ const NuevoProyecto = () => {
           .doc(selectedCategory)
           .set({ projects: categoryProjects }, { merge: true })
           .then(() => {
-            history.push("/mis_proyectos");
+            history.push(ROUTES.MY_PROJECTS);
             window.location.reload();
           });
         // //console.log(user.displayName);

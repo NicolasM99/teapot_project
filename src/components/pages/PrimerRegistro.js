@@ -15,6 +15,7 @@ import {
 import "../styles/primer_registro.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faFilePdf, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { ROUTES } from "../../constants/routes.js";
 
 const PrimerRegistro = (props) => {
   const history = useHistory();
@@ -304,7 +305,7 @@ const PrimerRegistro = (props) => {
         //}
       })
       .then(() => {
-        history.push("/perfil");
+        history.push(ROUTES.PROFILE);
         window.location.reload();
       });
     return () => (isMountedRef.current = false);

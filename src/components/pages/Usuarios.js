@@ -15,6 +15,7 @@ import {
 import { Modal, Button } from "react-bootstrap";
 import NuevoUsuario from "./NuevoUsuario";
 import { Link } from "react-router-dom";
+import { ROUTES } from "../../constants/routes.js";
 
 const Usuarios = ({ setPublicUserData }) => {
   const isMountedRef = useRef(null);
@@ -188,7 +189,7 @@ const Usuarios = ({ setPublicUserData }) => {
                             className="d-flex justify-content-between"
                           >
                             <Link
-                              to="/perfil"
+                              to={ROUTES.PROFILE}
                               onClick={() => setPublicUserData(id)}
                             >
                               <button className="btn btn-success mx-2">

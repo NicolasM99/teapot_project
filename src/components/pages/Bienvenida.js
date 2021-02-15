@@ -16,6 +16,7 @@ import {
   faSearch,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { ROUTES } from "../../constants/routes.js";
 
 const Bienvenida = () => {
   const isMountedRef = useRef(null);
@@ -158,7 +159,10 @@ const Bienvenida = () => {
                     </p>
                   </Col>
                   <Col lg={5} className="m-0 welcomeButton">
-                    <Link to="/categorias" style={{ textDecoration: "none" }}>
+                    <Link
+                      to={ROUTES.CATEGORIES}
+                      style={{ textDecoration: "none" }}
+                    >
                       <p
                         className="parrafo text-center align-items-center d-flex justify-content-center h-100 text-center m-0 p-5"
                         style={{ color: "white" }}
@@ -193,7 +197,7 @@ const Bienvenida = () => {
                     ) : (
                       <Col lg={5} className="m-0 welcomeButton">
                         <Link
-                          to="/crear_perfil"
+                          to={ROUTES.CREATE_PROFILE}
                           style={{ textDecoration: "none" }}
                         >
                           <p
@@ -216,7 +220,7 @@ const Bienvenida = () => {
                     </p>
                   </Col>
                   <Col lg={5} className="m-0 welcomeButton">
-                    <Link to="/buscar" style={{ textDecoration: "none" }}>
+                    <Link to={ROUTES.SEARCH} style={{ textDecoration: "none" }}>
                       <p
                         className="parrafo text-center align-items-center d-flex justify-content-center text-center m-0 p-5"
                         style={{ color: "white" }}
@@ -236,7 +240,7 @@ const Bienvenida = () => {
                   <Col lg={5} className="m-0 welcomeButton">
                     <Link
                       // scroll={scrollWithOffset}
-                      to="/acerca_de"
+                      to={ROUTES.ABOUT}
                       style={{ textDecoration: "none" }}
                     >
                       <p

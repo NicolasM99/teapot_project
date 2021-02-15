@@ -1,23 +1,24 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import Bienvenida from "./components/pages/Bienvenida.js";
-import Categorias from "./components/pages/Categorias.js";
-import Buscar from "./components/pages/Buscar.js";
-import AcercaDe from "./components/pages/AcercaDe.js";
-import Perfil from "./components/pages/Perfil.js";
-import MisProyectos from "./components/pages/MisProyectos.js";
-import PrimerRegistro from "./components/pages/PrimerRegistro.js";
-import CategoriaIndividual from "./components/pages/CategoriaIndividual.js";
-import NuevaCategoria from "./components/pages/NuevaCategoria";
-import { UserContext } from "./components/functions/UserProvider";
-import Usuarios from "./components/pages/Usuarios.js";
-import { firestore } from "./components/functions/Firebase.js";
-import SolicitudesProyectos from "./components/pages/SolicitudesProyectos";
-import NuevoProyecto from "./components/pages/NuevoProyecto.js";
-import ProyectoIndividual from "./components/pages/ProyectoIndividual.js";
-import EditarCategoria from "./components/pages/EditarCategoria.js";
-import "./App.css";
-const Container = ({ publicUserData, setPublicUserData }) => {
+import Bienvenida from "../components/pages/Bienvenida.js";
+import Categorias from "../components/pages/Categorias.js";
+import Buscar from "../components/pages/Buscar.js";
+import AcercaDe from "../components/pages/AcercaDe.js";
+import Perfil from "../components/pages/Perfil.js";
+import MisProyectos from "../components/pages/MisProyectos.js";
+import PrimerRegistro from "../components/pages/PrimerRegistro.js";
+import CategoriaIndividual from "../components/pages/CategoriaIndividual.js";
+import NuevaCategoria from "../components/pages/NuevaCategoria";
+import { UserContext } from "../components/functions/UserProvider";
+import Usuarios from "../components/pages/Usuarios.js";
+import { firestore } from "../components/functions/Firebase.js";
+import SolicitudesProyectos from "../components/pages/SolicitudesProyectos";
+import NuevoProyecto from "../components/pages/NuevoProyecto.js";
+import ProyectoIndividual from "../components/pages/ProyectoIndividual.js";
+import EditarCategoria from "../components/pages/EditarCategoria.js";
+import "../App.css";
+import { ROUTES } from "../constants/routes.js";
+const Router = ({ publicUserData, setPublicUserData }) => {
   const [categoryInfo, setCategoryInfo] = useState(null);
   const [projectInfo, setProjectInfo] = useState(null);
   const [userData, setUserData] = useState(null);
@@ -45,17 +46,17 @@ const Container = ({ publicUserData, setPublicUserData }) => {
     <div className="Wrapper">
       <Switch>
         <Route exact path="/">
-          <Redirect to="/inicio" />
+          <Redirect to={ROUTES.LANDING} />
         </Route>
-        <Route exact path="/inicio" component={Bienvenida} />
+        <Route exact path={ROUTES.LANDING} component={Bienvenida} />
         <Route
           exact
-          path="/categorias"
+          path={ROUTES.CATEGORIES}
           component={() => <Categorias setCategoryInfo={setCategoryInfo} />}
         />
         <Route
           exact
-          path="/buscar"
+          path={ROUTES.SEARCH}
           component={() => (
             <Buscar
               publicUserData={publicUserData}
@@ -63,15 +64,15 @@ const Container = ({ publicUserData, setPublicUserData }) => {
             />
           )}
         />
-        <Route exact path="/acerca_de" component={AcercaDe} />
+        <Route exact path={ROUTES.ABOUT} component={AcercaDe} />
         <Route
           exact
-          path="/mis_proyectos"
+          path={ROUTES.MY_PROJECTS}
           component={() => <MisProyectos setProjectInfo={setProjectInfo} />}
         />
         <Route
           exact
-          path="/categoria"
+          path={ROUTES.CATEGORY}
           component={() => (
             <CategoriaIndividual
               setProjectInfo={setProjectInfo}
@@ -81,7 +82,7 @@ const Container = ({ publicUserData, setPublicUserData }) => {
         />
         <Route
           exact
-          path="/proyecto"
+          path={ROUTES.PROJECT}
           component={() => (
             <ProyectoIndividual
               setPublicUserData={setPublicUserData}
@@ -92,7 +93,7 @@ const Container = ({ publicUserData, setPublicUserData }) => {
 
         <Route
           exact
-          path="/perfil"
+          path={ROUTES.PROFILE}
           component={() => (
             <Perfil
               user={user}
@@ -105,28 +106,28 @@ const Container = ({ publicUserData, setPublicUserData }) => {
         {user ? (
           <Route
             exact
-            path="/crear_perfil"
+            path={ROUTES.CREATE_PROFILE}
             component={() => <PrimerRegistro show_modal={true} />}
           />
         ) : null}
         {user && userData && userData.admin ? (
           <Route
             exact
-            path="/nueva_categoria"
+            path={ROUTES.NEW_CATEGORY}
             component={() => <NuevaCategoria />}
           />
         ) : null}
         {user && userData && userData.admin ? (
           <Route
             exact
-            path="/editar_categoria"
+            path={ROUTES.EDIT_CATEGORY}
             component={() => <EditarCategoria categoryInfo={categoryInfo} />}
           />
         ) : null}
         {user && userData ? (
           <Route
             exact
-            path="/nuevo_proyecto"
+            path={ROUTES.NEW_PROJECT}
             component={() => <NuevoProyecto />}
           />
         ) : null}
@@ -134,20 +135,20 @@ const Container = ({ publicUserData, setPublicUserData }) => {
         {user && userData && userData.admin ? (
           <Route
             exact
-            path="/usuarios"
+            path={ROUTES.USERS}
             component={() => <Usuarios setPublicUserData={setPublicUserData} />}
           />
         ) : null}
-        {user && userData && userData.admin ? (
+        {/* {user && userData && userData.admin ? (
           <Route
             exact
-            path="/solicitudes_proyectos"
+            path={"/solicitudes_proyectos"}
             component={() => <SolicitudesProyectos />}
           />
-        ) : null}
+        ) : null} */}
       </Switch>
     </div>
   );
 };
 
-export default Container;
+export default Router;

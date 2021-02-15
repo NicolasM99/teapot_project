@@ -14,6 +14,7 @@ import {
   faTimesCircle,
   faUpload,
 } from "@fortawesome/free-solid-svg-icons";
+import { ROUTES } from "../../constants/routes";
 
 const NuevaCategoria = () => {
   const isMountedRef = useRef(null);
@@ -122,7 +123,7 @@ const NuevaCategoria = () => {
             //}
           })
           .then(() => {
-            history.push("/categorias");
+            history.push(ROUTES.CATEGORIES);
             window.location.reload();
           });
         // //console.log(user.displayName);
@@ -284,7 +285,7 @@ const NuevaCategoria = () => {
                   <Button
                     className="m-4"
                     variant="danger"
-                    onClick={() => history.push("/categorias")}
+                    onClick={() => history.push(ROUTES.CATEGORIES)}
                   >
                     <FontAwesomeIcon icon={faTimesCircle} /> Cancelar
                   </Button>

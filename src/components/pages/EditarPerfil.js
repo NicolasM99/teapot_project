@@ -15,7 +15,7 @@ import {
 import "../styles/primer_registro.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faFilePdf, faUpload } from "@fortawesome/free-solid-svg-icons";
-
+import { ROUTES } from "../../constants/routes.js";
 const EditarPerfil = ({ showEditModal, setShowEditModal, existingData }) => {
   const history = useHistory();
   const { user } = useContext(UserContext);
@@ -302,7 +302,7 @@ const EditarPerfil = ({ showEditModal, setShowEditModal, existingData }) => {
         //}
       })
       .then(() => {
-        history.push("/perfil");
+        history.push(ROUTES.PROFILE);
         window.location.reload();
       });
     return () => (isMountedRef.current = false);

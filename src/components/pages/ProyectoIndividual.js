@@ -7,6 +7,7 @@ import { UserContext } from "../functions/UserProvider";
 import { firestore } from "../functions/Firebase.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faListAlt } from "@fortawesome/free-solid-svg-icons";
+import { ROUTES } from "../../constants/routes";
 
 const ProyectoIndividual = ({ projectInfo, setPublicUserData }) => {
   const isMountedRef = useRef(null);
@@ -60,7 +61,7 @@ const ProyectoIndividual = ({ projectInfo, setPublicUserData }) => {
           <div style={props}>
             <div className="wrapper">
               <div className="text-right">
-                <Link to="/categorias">
+                <Link to={ROUTES.CATEGORIES}>
                   <Button variant="primary">
                     <FontAwesomeIcon icon={faListAlt} /> <b>categorías</b>
                   </Button>
@@ -78,7 +79,7 @@ const ProyectoIndividual = ({ projectInfo, setPublicUserData }) => {
                           </h4>
                           <Link
                             style={{ color: "#07b897" }}
-                            to="/perfil"
+                            to={ROUTES.PROFILE}
                             onClick={() => handleUserProfile(userData)}
                             className="flex-row pl-2 d-flex align-items-center"
                           >

@@ -15,6 +15,7 @@ import {
   faTimesCircle,
   faUpload,
 } from "@fortawesome/free-solid-svg-icons";
+import { ROUTES } from "../../constants/routes";
 
 const EditarCategoria = ({ categoryInfo }) => {
   const isMountedRef = useRef(null);
@@ -129,7 +130,7 @@ const EditarCategoria = ({ categoryInfo }) => {
             //}
           })
           .then(() => {
-            history.push("/categorias");
+            history.push(ROUTES.CATEGORIES);
             window.location.reload();
           });
         // //console.log(user.displayName);
@@ -294,7 +295,7 @@ const EditarCategoria = ({ categoryInfo }) => {
                     <Button
                       className="m-4"
                       variant="danger"
-                      onClick={() => history.push("/categorias")}
+                      onClick={() => history.push(ROUTES.CATEGORIES)}
                     >
                       <FontAwesomeIcon icon={faTimesCircle} /> Cancelar
                     </Button>
@@ -305,7 +306,8 @@ const EditarCategoria = ({ categoryInfo }) => {
                   <b>
                     Parece que no has seleccionado una categoría. Por favor,
                     vuelve a la sección de{" "}
-                    <Link to="/categorias">Categorías</Link> y selecciona una
+                    <Link to={ROUTES.CATEGORIES}>Categorías</Link> y selecciona
+                    una
                   </b>
                 </p>
               )}

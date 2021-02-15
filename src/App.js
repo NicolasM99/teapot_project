@@ -4,7 +4,7 @@ import Categorias from "./components/pages/Categorias.js";
 import MyNavbar2 from "./components/MyNavbar2.js";
 import ParticlesScreen from "./components/ParticlesScreen";
 import PrimerRegistro from "./components/pages/PrimerRegistro.js";
-import Container from "./Container.js";
+import Router from "./router/Router.js";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "react-pro-sidebar/dist/css/styles.css";
 import {
@@ -26,7 +26,7 @@ import {
   provider,
 } from "./components/functions/Firebase.js";
 import { UserProvider } from "./components/functions/UserProvider.js";
-import ComponentTester from "./ComponentTester.js";
+// import ComponentTester from "./ComponentTester.js";
 
 const firebaseAppAuth = auth;
 
@@ -60,7 +60,7 @@ const App = ({ user }) => {
   }
   return (
     <UserProvider>
-      <HashRouter>
+      <BrowserRouter>
         <div className="container-fluid">
           <ParticlesScreen
             style={{ position: "absolute" }}
@@ -79,7 +79,7 @@ const App = ({ user }) => {
                 data-target="#myNavbar"
                 data-offset="0"
               >
-                <Container
+                <Router
                   publicUserData={publicUserData}
                   setPublicUserData={setPublicUserData}
                 />
@@ -87,7 +87,7 @@ const App = ({ user }) => {
             </div>
           </div>
         </div>
-      </HashRouter>
+      </BrowserRouter>
     </UserProvider>
   );
 };

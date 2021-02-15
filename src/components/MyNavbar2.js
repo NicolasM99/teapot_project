@@ -19,6 +19,7 @@ import {
   faStream,
   faUsersCog,
 } from "@fortawesome/free-solid-svg-icons";
+import { ROUTES } from "../constants/routes.js";
 import { Link } from "react-router-dom";
 
 const MyNavbar2 = (props) => {
@@ -62,7 +63,7 @@ const MyNavbar2 = (props) => {
         className="my-navbar p-0 col-lg-2 shadow-lg"
       >
         <div className="brandContainer text-center p-0">
-          <Navbar.Brand className="mx-0" href="#inicio">
+          <Navbar.Brand className="mx-0" as={Link} to={ROUTES.LANDING}>
             <div className="logo_container text-center">
               <img
                 className="multifolioLogo"
@@ -101,11 +102,12 @@ const MyNavbar2 = (props) => {
                 >
                   <Dropdown.Item
                     onClick={() => props.setPublicUserData(null)}
-                    href="#perfil"
+                    as={Link}
+                    to={ROUTES.PROFILE}
                   >
                     <FontAwesomeIcon icon={faUser} /> Mi perfil
                   </Dropdown.Item>
-                  <Dropdown.Item href="#mis_proyectos">
+                  <Dropdown.Item as={Link} to={ROUTES.MY_PROJECTS}>
                     <FontAwesomeIcon icon={faBriefcase} /> Mis proyectos
                   </Dropdown.Item>
 
@@ -114,13 +116,13 @@ const MyNavbar2 = (props) => {
                       {/* <Dropdown.Item href="#solicitudes_proyectos">
                         <FontAwesomeIcon icon={faStream} /> Solicitudes
                       </Dropdown.Item> */}
-                      <Dropdown.Item href="#usuarios">
+                      <Dropdown.Item as={Link} to={ROUTES.USERS}>
                         <FontAwesomeIcon icon={faUsersCog} /> Usuarios
                       </Dropdown.Item>
                     </>
                   )}
 
-                  <Dropdown.Item href="#inicio">
+                  <Dropdown.Item as={Link} to={ROUTES.LANDING}>
                     <div
                       onClick={() => {
                         signOut();
@@ -151,16 +153,16 @@ const MyNavbar2 = (props) => {
                 <FontAwesomeIcon icon={faSignInAlt} /> Iniciar sesión
               </button>
             )}
-            <Nav.Link href="#inicio">
+            <Nav.Link as={Link} to={ROUTES.LANDING}>
               <FontAwesomeIcon icon={faHome} /> Inicio
             </Nav.Link>
-            <Nav.Link href="#categorias">
+            <Nav.Link as={Link} to={ROUTES.CATEGORIES}>
               <FontAwesomeIcon icon={faListAlt} /> Categorias
             </Nav.Link>
-            <Nav.Link href="#buscar">
+            <Nav.Link as={Link} to={ROUTES.SEARCH}>
               <FontAwesomeIcon icon={faSearch} /> Buscar
             </Nav.Link>
-            <Nav.Link href="#acerca_de">
+            <Nav.Link as={Link} to={ROUTES.ABOUT}>
               <FontAwesomeIcon icon={faInfoCircle} /> Acerca de...
             </Nav.Link>
           </Nav>

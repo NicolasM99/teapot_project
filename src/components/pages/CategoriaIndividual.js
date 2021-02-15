@@ -12,6 +12,7 @@ import {
   faPencilAlt,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import { ROUTES } from "../../constants/routes.js";
 
 const CategoriaIndividual = ({ categoryInfo, setProjectInfo }) => {
   const isMountedRef = useRef(null);
@@ -67,7 +68,7 @@ const CategoriaIndividual = ({ categoryInfo, setProjectInfo }) => {
         })
         .catch((error) => console.error("Error al borrar el documento:", error))
         .then(() => {
-          history.push("/categorias");
+          history.push(ROUTES.CATEGORIES);
           window.location.reload();
         });
     }
@@ -127,7 +128,7 @@ const CategoriaIndividual = ({ categoryInfo, setProjectInfo }) => {
                   <Col className="text-left">
                     {categoryInfo && userData && userData.admin && (
                       <div>
-                        <Link to="/editar_categoria">
+                        <Link to={ROUTES.EDIT_CATEGORY}>
                           <Button className="m-1" variant="success">
                             <b>Editar categoría </b>
                             <FontAwesomeIcon icon={faPencilAlt} />
@@ -148,7 +149,7 @@ const CategoriaIndividual = ({ categoryInfo, setProjectInfo }) => {
                     )}
                   </Col>
                   <Col className="text-right">
-                    <Link to="/categorias">
+                    <Link to={ROUTES.CATEGORIES}>
                       <Button variant="primary">
                         <FontAwesomeIcon icon={faListAlt} /> <b>categorías</b>
                       </Button>
